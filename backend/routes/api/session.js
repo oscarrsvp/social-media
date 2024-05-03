@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const { handleValidationErrors, validateLogin } = require('../../utils/validation');
 const { setTokenCookie } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
@@ -22,7 +23,7 @@ router.get('/', (req, res) => {
 });
 
 // Log in
-router.post('/', async (req, res, next) => {
+router.post('/', validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
 
   const user = await User.unscoped().findOne({
