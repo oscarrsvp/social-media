@@ -32,7 +32,7 @@ module.exports = {
           birthday: '08,25,1987',
           relationship: 'married',
           city: 'Evanston',
-          hashedPassword: bcrypt.hashSync('password'),
+          hashedPassword: bcrypt.hashSync('password2'),
         },
         {
           firstName: 'Jasmine',
@@ -43,7 +43,7 @@ module.exports = {
           birthday: '06,07,1974',
           relationship: 'married',
           city: 'Oak Brook',
-          hashedPassword: bcrypt.hashSync('password'),
+          hashedPassword: bcrypt.hashSync('password3'),
         },
         {
           firstName: 'Donald',
@@ -53,7 +53,7 @@ module.exports = {
           birthday: '10,14,1990',
           relationship: 'single',
           city: 'Gurnee',
-          hashedPassword: bcrypt.hashSync('password'),
+          hashedPassword: bcrypt.hashSync('password4'),
         },
       ],
       { validate: true },
