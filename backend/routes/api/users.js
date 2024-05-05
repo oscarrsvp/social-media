@@ -1,10 +1,19 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const { setTokenCookie } = require('../../utils/auth');
+const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup } = require('../../utils/validation');
 const { User } = require('../../db/models');
 
 const router = express.Router();
+
+// Get User's Information
+router.get('/', requireAuth, async (req, res) => {
+  const userId = req.user.id;
+
+  const user = await User.findByPk(userId);
+
+  return res.json({ User: user });
+});
 
 // Sign up
 router.post('/', validateSignup, async (req, res) => {
@@ -25,6 +34,36 @@ router.post('/', validateSignup, async (req, res) => {
   return res.json({
     user: safeUser,
   });
+});
+
+// Update User's Information
+router.put('/', requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const {
+    firstName,
+    lastName,
+    middleName,
+    privacy,
+    gender,
+    birthday,
+    relationship,
+    city,
+  } = req.body;
+
+  const user = await User.findByPk(userId);
+
+  const updateUser = await user.update({
+    firstName,
+    lastName,
+    middleName,
+    privacy,
+    gender,
+    birthday,
+    relationship,
+    city,
+  });
+
+  return res.json(updateUser);
 });
 
 module.exports = router;
