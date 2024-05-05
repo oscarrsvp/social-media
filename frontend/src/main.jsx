@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { restoreCSRF, csrfFetch } from './store/csrf';
+import * as sessionActions from './store/sessionSlice';
 import store from './store/store';
 import App from './App.jsx';
 import './index.css';
@@ -11,6 +12,7 @@ if (import.meta.env.MODE !== 'production') {
 
   window.csrfFetch = csrfFetch;
   window.store = store;
+  window.sessionActions = sessionActions;
 }
 
 if (process.env.NODE_ENV !== 'production') {
