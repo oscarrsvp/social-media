@@ -61,7 +61,7 @@ export const sessionSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       return { ...state, user: action.payload };
     });
-    builder.addCase(removeUser.fulfilled, (state, _action) => {
+    builder.addCase(removeUser.fulfilled, (state) => {
       return { ...state, user: null };
     });
   },
