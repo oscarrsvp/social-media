@@ -1,3 +1,31 @@
+nav {
+    padding: 0px 20px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid #999999;
+    font-size: 18px;
+}
+
+.navLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .hidden {
     display: none;
+}
+
+.profile-dropdown {
+    position: absolute;
+    z-index: 100;
+    margin-top: 10px;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    width: 250px;
+    right: 20px;
+    border: 2px solid #000000;
 }
