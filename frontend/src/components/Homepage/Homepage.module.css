@@ -1,0 +1,35 @@
+#homePage {
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    height: calc(100vh - 70px);
+}
+
+.sideBar {
+    width: 250px;
+    background-color: red;
+}
+
+.feedContainer {
+    display: flex;
+    overflow: scroll;
+    flex-grow: 2;
+    justify-content: center;
+}
+
+.feed {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: moccasin;
+    overflow: scroll;
+    flex-grow: 2;
+    padding: 20px 0px;
+}
+
+.feed::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+}
