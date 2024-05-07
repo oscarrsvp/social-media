@@ -31,6 +31,35 @@ export const createPost = createAsyncThunk('post/newPost', async (post) => {
   }
 });
 
+export const getPost = createAsyncThunk('post/getPost', async (id) => {
+  try {
+    const response = await csrfFetch(`/api/posts/${id}`);
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    return { error: error };
+  }
+});
+
+export const updatePost = createAsyncThunk('post/updatePost', async (post) => {
+  const { id, photo, context } = post;
+  try {
+    const response = await csrfFetch(`/api/posts/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        photo,
+        context,
+      }),
+    });
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    return { error: error };
+  }
+});
+
 export const deletePost = createAsyncThunk('post/deletePost', async (id) => {
   try {
     const response = await csrfFetch(`/api/posts/${id}`, {
@@ -62,6 +91,14 @@ export const postSlice = createSlice({
     });
 
     builder.addCase(createPost.fulfilled, (state, action) => {
+      return { ...state, [action.payload.id]: action.payload };
+    });
+
+    builder.addCase(getPost.fulfilled, (state, action) => {
+      return { ...state, [action.payload.id]: action.payload };
+    });
+
+    builder.addCase(updatePost.fulfilled, (state, action) => {
       return { ...state, [action.payload.id]: action.payload };
     });
 
