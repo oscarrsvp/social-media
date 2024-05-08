@@ -8,6 +8,7 @@
 .sideBar {
     width: 250px;
     background-color: red;
+    color: #ffffff;
 }
 
 .feedContainer {
@@ -32,4 +33,21 @@
     -webkit-appearance: none;
     width: 0;
     height: 0;
+}
+
+.userPost {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #dad7cd;
+}
+
+.userPost img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
 }
