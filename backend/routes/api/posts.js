@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
-const { Post } = require('../../db/models');
+const { Post, User } = require('../../db/models');
 
 router.use(requireAuth);
 
 // Get User's Posts
 router.get('/', async (req, res) => {
-  const post = await Post.findAll();
+  const post = await Post.findAll({
+    include: User,
+    order: [['createdAt', 'DESC']],
+  });
 
   return res.json(post);
 });
@@ -23,6 +26,15 @@ router.post('/', async (req, res) => {
   });
 
   return res.status(201).json(newPost);
+});
+
+router.get('/:postId', async (req, res) => {
+  const { postId } = req.params;
+  const post = await Post.findByPk(postId);
+
+  if (!post) return res.status(404).json({ message: `Post not found` });
+
+  return res.json(post);
 });
 
 router.put('/:postId', async (req, res) => {
