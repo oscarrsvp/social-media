@@ -8,8 +8,7 @@ router.use(requireAuth);
 // Get all User's Posts
 router.get('/', async (req, res) => {
   const post = await Post.findAll({
-    include: User,
-    order: [['createdAt', 'DESC']],
+    include: [{ model: User }, { model: Comment }],
   });
 
   return res.json(post);
