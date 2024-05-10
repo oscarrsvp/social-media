@@ -36,7 +36,7 @@ function UserPost() {
             <p>{user.context}</p>
           </div>
 
-          <CommentSection post={user} />
+          <CommentSection post={user} comments={user.Comments} />
         </div>
       ))}
     </>

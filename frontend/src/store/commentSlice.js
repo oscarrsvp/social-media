@@ -15,13 +15,10 @@ export const fetchComments = createAsyncThunk('comment/postComments', async (id)
 
 export const createComment = createAsyncThunk('comment/createComment', async (data) => {
   try {
-    const { context, postId } = data;
+    const { postId } = data;
     const response = await csrfFetch(`/api/posts/${postId}/comment`, {
       method: 'POST',
-      body: JSON.stringify({
-        postId,
-        context,
-      }),
+      body: JSON.stringify(data),
     });
     const comment = await response.json();
 
@@ -31,22 +28,20 @@ export const createComment = createAsyncThunk('comment/createComment', async (da
   }
 });
 
-export const updateComment = createAsyncThunk(
-  'comment/updateComment',
-  async (data, id) => {
-    try {
-      const response = await csrfFetch(`/api/comments/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-      });
-      const comment = await response.json();
+export const updateComment = createAsyncThunk('comment/updateComment', async (data) => {
+  try {
+    const { id } = data;
+    const response = await csrfFetch(`/api/comments/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+    const comment = await response.json();
 
-      return comment;
-    } catch (error) {
-      return { error: error };
-    }
-  },
-);
+    return comment;
+  } catch (error) {
+    return { error: error };
+  }
+});
 
 export const deleteComment = createAsyncThunk('comment/deleteComment', async (data) => {
   try {

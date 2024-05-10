@@ -7,7 +7,7 @@
 
 .sideBar {
     width: 250px;
-    background-color: red;
+    background-color: #8ecae6;
     color: #ffffff;
 }
 
@@ -23,7 +23,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: moccasin;
     overflow: scroll;
     flex-grow: 2;
     padding: 20px 0px;
@@ -36,18 +35,26 @@
 }
 
 .userPost {
-    width: 80%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     background: #ffffff;
     margin: 10px 0;
-    padding: 15px;
+    padding: 10px 20px;
     border-radius: 10px;
-    background-color: #dad7cd;
+    background-color: #edede9;
 }
 
 .userPost img {
     width: 100%;
     object-fit: cover;
     border-radius: 5px;
+}
+
+.commentsVisible {
+    display: block;
+}
+
+.commentsHidden {
+    display: none;
 }
