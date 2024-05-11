@@ -8,10 +8,24 @@ router.use(requireAuth);
 // Get all User's Posts
 router.get('/', async (req, res) => {
   const post = await Post.findAll({
-    include: [{ model: User }, { model: Comment }],
+    include: [{ model: User }, { model: Comment, include: User }],
   });
 
-  return res.json(post);
+  const allPost = post.map((post) => {
+    const posts = post.toJSON();
+
+    const numComments = posts.Comments.length;
+    posts.numOfComments = numComments;
+
+    posts.Comments.forEach((comment) => {
+      comment.fullName = `${comment.User.firstName} ${comment.User.lastName}`;
+      delete comment.User;
+    });
+
+    return posts;
+  });
+
+  return res.json(allPost);
 });
 
 // Create a new Post
