@@ -113,11 +113,13 @@ export const postSlice = createSlice({
     builder.addCase(createComment.fulfilled, (state, action) => {
       const { postId } = action.payload;
       const post = state[postId];
+
       if (post) {
         return {
           ...state,
           [postId]: {
             ...post,
+            numOfComments: post.numOfComments + 1,
             Comments: [...post.Comments, action.payload],
           },
         };
@@ -150,6 +152,7 @@ export const postSlice = createSlice({
           ...state,
           [postId]: {
             ...post,
+            numOfComments: post.numOfComments - 1,
             Comments: post.Comments.filter((comment) => comment.id !== id),
           },
         };
