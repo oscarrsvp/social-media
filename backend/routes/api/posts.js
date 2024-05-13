@@ -114,6 +114,7 @@ router.post('/:postId/comment', async (req, res) => {
   const userId = req.user.id;
   const { postId } = req.params;
   const { context } = req.body;
+  const { firstName, lastName } = req.user;
 
   const post = await Post.findByPk(postId);
 
@@ -125,7 +126,10 @@ router.post('/:postId/comment', async (req, res) => {
     context,
   });
 
-  return res.status(201).json(newComment);
+  const comment = newComment.toJSON();
+  comment.fullName = `${firstName} ${lastName}`;
+
+  return res.status(201).json(comment);
 });
 
 module.exports = router;

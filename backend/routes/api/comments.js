@@ -10,6 +10,7 @@ router.put('/:commentId', async (req, res) => {
   const userId = req.user.id;
   const { context } = req.body;
   const { commentId } = req.params;
+  const { firstName, lastName } = req.user;
 
   const comment = await Comment.findByPk(commentId);
 
@@ -20,7 +21,10 @@ router.put('/:commentId', async (req, res) => {
       context,
     });
 
-    return res.json(updateComment);
+    const updatedComments = updateComment.toJSON();
+    updatedComments.fullName = `${firstName} ${lastName}`;
+
+    return res.json(updatedComments);
   }
 });
 
