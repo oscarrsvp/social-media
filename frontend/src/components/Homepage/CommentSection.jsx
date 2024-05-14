@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AiOutlineLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
-import { createComment, deleteComment } from '../../store/commentSlice';
-import OpenModalButton from '../OpenModalButton/OpenModalButton';
-import UpdateComment from '../UpdateInputs/UpdateComment';
+import { createComment } from '../../store/commentSlice';
+import Comments from './Comments';
 import styles from './Homepage.module.css';
 
 function CommentSection({ post, comments }) {
@@ -12,7 +11,6 @@ function CommentSection({ post, comments }) {
   const [comment, setComment] = useState('');
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState(false);
-  const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
 
   const handleComment = () => {
@@ -52,35 +50,7 @@ function CommentSection({ post, comments }) {
         </p>
       </div>
 
-      {showComments && (
-        <div className={styles.commentSection}>
-          {comments.map((comment) => (
-            <div key={comment.id} className={styles.postComments}>
-              <div className="flexBetween">
-                <div className="flexBetween">
-                  <p className={styles.userImage}></p>
-                  <h4>{comment.fullName}</h4>
-                </div>
-                <h5>Posted: {comment.createdAt}</h5>
-              </div>
-              <p className={styles.comments}>{comment.context}</p>
-              {sessionUser.id === comment.userId && (
-                <div>
-                  <OpenModalButton
-                    buttonText="Edit Comment"
-                    modalComponent={<UpdateComment comment={comment} />}
-                  />
-                  <button
-                    onClick={() => dispatch(deleteComment({ postId, id: comment.id }))}
-                  >
-                    Delete
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      {showComments && <Comments comments={comments} postId={postId} />}
     </div>
   );
 }
