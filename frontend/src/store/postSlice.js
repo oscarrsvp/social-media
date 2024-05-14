@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { csrfFetch } from './csrf';
-import { createComment, updateComment, deleteComment } from './commentSlice';
 
 // Thunk functions
 export const fetchPosts = createAsyncThunk('post/allPosts', async () => {
@@ -107,57 +106,6 @@ export const postSlice = createSlice({
       const posts = { ...state };
       delete posts[action.payload];
       return posts;
-    });
-
-    // Comment Slice
-    builder.addCase(createComment.fulfilled, (state, action) => {
-      const { postId } = action.payload;
-      const post = state[postId];
-
-      if (post) {
-        return {
-          ...state,
-          [postId]: {
-            ...post,
-            numOfComments: post.numOfComments + 1,
-            Comments: [...post.Comments, action.payload],
-          },
-        };
-      }
-      return state;
-    });
-
-    builder.addCase(updateComment.fulfilled, (state, action) => {
-      const { postId } = action.payload;
-      const post = state[postId];
-      if (post) {
-        return {
-          ...state,
-          [postId]: {
-            ...post,
-            Comments: post.Comments.map((comment) =>
-              comment.id === action.payload.id ? action.payload : comment,
-            ),
-          },
-        };
-      }
-      return state;
-    });
-
-    builder.addCase(deleteComment.fulfilled, (state, action) => {
-      const { postId, id } = action.payload;
-      const post = state[postId];
-      if (post) {
-        return {
-          ...state,
-          [postId]: {
-            ...post,
-            numOfComments: post.numOfComments - 1,
-            Comments: post.Comments.filter((comment) => comment.id !== id),
-          },
-        };
-      }
-      return state;
     });
   },
 });

@@ -9,6 +9,7 @@ const store = configureStore({
     session: sessionReducer,
     users: userReducer,
     posts: postReducer,
+    comments: commentReducer,
   },
 });
 

@@ -45,13 +45,13 @@ export const updateComment = createAsyncThunk('comment/updateComment', async (da
 
 export const deleteComment = createAsyncThunk('comment/deleteComment', async (data) => {
   try {
-    const { postId, id } = data;
+    const { id } = data;
     const response = await csrfFetch(`/api/comments/${id}`, {
       method: 'DELETE',
     });
     await response.json();
 
-    return { postId, id };
+    return data;
   } catch (error) {
     return { error: error };
   }
@@ -65,27 +65,24 @@ export const commentSlice = createSlice({
   reducers: {},
 
   extraReducers: (builder) => {
-    // builder.addCase(fetchComments.fulfilled, (state, action) => {
-    //   const comments = { ...state };
-    //   action.payload.forEach((comment) => {
-    //     if (!comments[comment.postId]) {
-    //       comments[comment.postId] = {};
-    //     }
-    //     comments[comment.postId][comment.id] = comment;
-    //   });
-    //   return comments;
-    // });
-    // builder.addCase(createComment.fulfilled, (state, action) => {
-    //   return { ...state, [action.payload.id]: action.payload };
-    // });
-    // builder.addCase(updateComment.fulfilled, (state, action) => {
-    //   return { ...state, [action.payload.id]: action.payload };
-    // });
-    // builder.addCase(deleteComment.fulfilled, (state, action) => {
-    //   const comments = { ...state };
-    //   delete comments[action.payload];
-    //   return comments;
-    // });
+    builder.addCase(fetchComments.fulfilled, (state, action) => {
+      const comments = {};
+      action.payload.forEach((comment) => {
+        comments[comment.id] = comment;
+      });
+      return comments;
+    });
+    builder.addCase(createComment.fulfilled, (state, action) => {
+      return { ...state, [action.payload.id]: action.payload };
+    });
+    builder.addCase(updateComment.fulfilled, (state, action) => {
+      return { ...state, [action.payload.id]: action.payload };
+    });
+    builder.addCase(deleteComment.fulfilled, (state, action) => {
+      const comments = { ...state };
+      delete comments[action.payload.id];
+      return comments;
+    });
   },
 });
 
