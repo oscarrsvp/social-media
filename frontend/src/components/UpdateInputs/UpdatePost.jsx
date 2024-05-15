@@ -5,8 +5,8 @@ import { useModal } from '../../context/Modal';
 
 function UpdatePost({ post }) {
   const { id } = post;
-  const [photo, setPhoto] = useState(post?.photo || '');
-  const [context, setContext] = useState(post?.context || '');
+  const [photo, setPhoto] = useState(post.photo || '');
+  const [context, setContext] = useState(post.context || '');
   const { closeModal } = useModal();
 
   const dispatch = useDispatch();
@@ -30,7 +30,9 @@ function UpdatePost({ post }) {
           onChange={(e) => setContext(e.target.value)}
           placeholder="Whats on your mind?"
         ></textarea>
-        <button onClick={handleUpdate}>Update Post</button>
+        <button className="btn update-btn" onClick={handleUpdate}>
+          Update Post
+        </button>
       </div>
     </>
   );

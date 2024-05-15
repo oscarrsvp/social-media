@@ -23,7 +23,9 @@ function UpdateComment({ comment }) {
           onChange={(e) => setContext(e.target.value)}
           placeholder="Whats on your mind?"
         ></input>
-        <button onClick={handleUpdate}>Update Comment</button>
+        <button className="btn update-btn" onClick={handleUpdate}>
+          Update Comment
+        </button>
       </div>
     </>
   );
