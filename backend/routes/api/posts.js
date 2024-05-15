@@ -8,7 +8,7 @@ router.use(requireAuth);
 // Get all User's Posts
 router.get('/', async (req, res) => {
   const post = await Post.findAll({
-    include: [{ model: User }, { model: Comment, include: User }],
+    include: [{ model: Comment }],
   });
 
   const allPost = post.map((post) => {
@@ -16,11 +16,6 @@ router.get('/', async (req, res) => {
 
     const numComments = posts.Comments.length;
     posts.numOfComments = numComments;
-
-    posts.Comments.forEach((comment) => {
-      comment.fullName = `${comment.User.firstName} ${comment.User.lastName}`;
-      delete comment.User;
-    });
 
     return posts;
   });
@@ -96,7 +91,7 @@ router.get('/:postId/comments', async (req, res) => {
 
   if (!post) return res.status(404).json({ message: `Post not found` });
 
-  const getCommentsFromPost = await Comment.findAll({
+  const getComments = await Comment.findAll({
     include: {
       model: User,
       attributes: ['firstName', 'lastName'],
@@ -106,7 +101,7 @@ router.get('/:postId/comments', async (req, res) => {
     },
   });
 
-  return res.json({ Comments: getCommentsFromPost });
+  return res.json({ Comments: getComments });
 });
 
 // Create a new Comment
@@ -114,7 +109,6 @@ router.post('/:postId/comment', async (req, res) => {
   const userId = req.user.id;
   const { postId } = req.params;
   const { context } = req.body;
-  const { firstName, lastName } = req.user;
 
   const post = await Post.findByPk(postId);
 
@@ -126,10 +120,7 @@ router.post('/:postId/comment', async (req, res) => {
     context,
   });
 
-  const comment = newComment.toJSON();
-  comment.fullName = `${firstName} ${lastName}`;
-
-  return res.status(201).json(comment);
+  return res.status(201).json(newComment);
 });
 
 module.exports = router;
