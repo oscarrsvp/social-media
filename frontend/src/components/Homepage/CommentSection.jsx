@@ -6,7 +6,7 @@ import { createComment } from '../../store/commentSlice';
 import Comments from './Comments';
 import styles from './Homepage.module.css';
 
-function CommentSection({ post, comments }) {
+function CommentSection({ post }) {
   const postId = post.id;
   const [comment, setComment] = useState('');
   const [showComments, setShowComments] = useState(false);
@@ -29,6 +29,7 @@ function CommentSection({ post, comments }) {
           <textarea
             type="text"
             value={comment}
+            placeholder="Write a comment..."
             onChange={(e) => setComment(e.target.value)}
           />
           <button onClick={handleComment}>Add new comment</button>
@@ -46,11 +47,11 @@ function CommentSection({ post, comments }) {
         </div>
 
         <p className="viewComments" onClick={() => setShowComments(!showComments)}>
-          {!showComments ? `View all ${post.numOfComments} comments` : 'Hide Comments'}
+          {!showComments ? `View all ${[post.numOfComments]} comments` : 'Hide Comments'}
         </p>
       </div>
 
-      {showComments && <Comments comments={comments} postId={postId} />}
+      {showComments && <Comments postId={postId} />}
     </div>
   );
 }

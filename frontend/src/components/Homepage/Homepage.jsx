@@ -41,8 +41,16 @@ function Homepage() {
           ))}
         </div>
       </div>
-      <div style={{ backgroundColor: '#8ecae6' }}>
-        <h2>FOLLOWERS/FOLLOWING</h2>
+      <div style={{ display: 'flex', alignItems: 'center', color: '#ffffff' }}>
+        <div style={{ backgroundColor: '#003049', height: '300px', marginRight: '20px' }}>
+          <h3>{fullName}'s Followers</h3>
+          <div>
+            <h2>FOLLOWERS/FOLLOWING</h2>
+          </div>
+          <div>
+            <h4>Who to Follow</h4>
+          </div>
+        </div>
       </div>
     </div>
   );
