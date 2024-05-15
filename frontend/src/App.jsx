@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { restoreUser } from './store/sessionSlice';
-import LoginForm from './components/LoginForm/LoginForm';
+import LandingPage from './components/LandingPage/LandingPage';
 import SignupForm from './components/SignupForm/SignupForm';
 import Navigation from './components/Navigation/Navigation';
+import Homepage from './components/Homepage/Homepage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -30,11 +31,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>,
+        element: <LandingPage />,
       },
       {
-        path: '/login',
-        element: <LoginForm />,
+        path: '/homepage',
+        element: <Homepage />,
       },
       {
         path: '/signup',

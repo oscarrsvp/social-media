@@ -11,23 +11,26 @@ function Navigation({ isLoaded }) {
       <ProfileButton user={sessionUser} />
     </li>
   ) : (
-    <>
-      <li>
-        <NavLink to="/login">Log In</NavLink>
-      </li>
-      <li>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </li>
-    </>
+    <>{''}</>
   );
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && sessionLinks}
-    </ul>
+    <>
+      {!sessionUser ? (
+        ''
+      ) : (
+        <nav>
+          <div>
+            <ul className="navLinks">
+              <li>
+                <NavLink to="/homepage">Home</NavLink>
+              </li>
+              {isLoaded && sessionLinks}
+            </ul>
+          </div>
+        </nav>
+      )}
+    </>
   );
 }
 

@@ -2,15 +2,20 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup } = require('../../utils/validation');
-const { User } = require('../../db/models');
+const { User, Post } = require('../../db/models');
 
 const router = express.Router();
 
 // Get User's Information
 router.get('/', requireAuth, async (req, res) => {
-  const userId = req.user.id;
-
-  const user = await User.findByPk(userId);
+  const user = await User.findAll({
+    include: [
+      {
+        model: Post,
+        order: [['createdAt', 'DESC']],
+      },
+    ],
+  });
 
   return res.json({ User: user });
 });

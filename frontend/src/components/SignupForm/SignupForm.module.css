@@ -1,0 +1,45 @@
+#signupForm {
+    height: 100vh;
+    gap: 20px;
+}
+
+.header {
+    text-align: center;
+    width: 500px;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.header p {
+    margin-bottom: 5px;
+}
+
+.SignupForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    padding: 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.SignupForm form {
+    margin: 15px 0;
+}
+
+.signUpBox {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 15px;
+    width: 500px;
+    text-align: center;
+}
+
+.signUpBox span {
+    font-size: 18px;
+    margin: 0px 8px;
+}
