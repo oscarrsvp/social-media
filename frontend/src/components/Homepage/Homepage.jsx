@@ -43,7 +43,7 @@ function Homepage() {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', color: '#ffffff' }}>
         <div style={{ backgroundColor: '#003049', height: '300px', marginRight: '20px' }}>
-          <h3>{fullName}'s Followers</h3>
+          <h3>{fullName}&apos;s Followers</h3>
           <div>
             <h2>FOLLOWERS/FOLLOWING</h2>
           </div>
