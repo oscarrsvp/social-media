@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 
 function Comments({ postId }) {
   const sessionUser = useSelector((state) => state.session.user);
-  const users = useSelector((state) => state.users);
   const comment = useSelector((state) => state.comments);
   const postComments = Object.values(comment);
   const dispatch = useDispatch();
@@ -17,6 +16,8 @@ function Comments({ postId }) {
     dispatch(fetchComments(postId));
   }, [dispatch, postId]);
 
+  if (!comment) return null;
+
   return (
     <div key={postId} className={styles.commentSection}>
       {postComments.map((comment) => (
@@ -24,9 +25,7 @@ function Comments({ postId }) {
           <div className="flexBetween">
             <div className="flexBetween">
               <p className={styles.userImage}></p>
-              <h4>
-                {users[comment?.userId]?.firstName} {users[comment?.userId]?.lastName}
-              </h4>
+              <h4>{comment?.fullName}</h4>
             </div>
             <h5>Posted: {createdAt(comment?.createdAt)}</h5>
           </div>
