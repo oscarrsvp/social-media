@@ -1,0 +1,64 @@
+#userPage {
+    display: flex;
+    overflow: hidden;
+    height: calc(100vh - 70px);
+}
+
+.sideBar {
+    width: 250px;
+    background-color: #003049;
+    color: #ffffff;
+}
+
+.profileImg {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.userContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.imgContainer {
+    width: 100%;
+}
+
+
+.userFeed {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    overflow: scroll;
+    margin-bottom: 20px;
+}
+
+.userCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: sticky;
+    left: 0;
+    top: 10px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    width: 300px;
+    height: 360px;
+}
+
+.userActions {
+    text-align: center;
+}
+
+.feed {
+    height: 800px;
+    margin-bottom: 25px;
+    /* overflow: scroll; */
+}

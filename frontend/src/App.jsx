@@ -6,6 +6,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import SignupForm from './components/SignupForm/SignupForm';
 import Navigation from './components/Navigation/Navigation';
 import Homepage from './components/Homepage/Homepage';
+import UserPage from './components/UserPage/UserPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignupForm />,
+      },
+      {
+        path: '/user/:userId',
+        element: <UserPage />,
       },
     ],
   },
