@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import CommentSection from './CommentSection';
@@ -11,17 +12,29 @@ function UserPost({ post, userId }) {
   const sessionUser = useSelector((state) => state.session.user);
   const users = useSelector((state) => state.users);
 
-  if (users.users === null) return <h1>Loading</h1>;
+  if (!users) return <h1>Loading</h1>;
 
-  const fullName = `${users[userId].firstName} ${users[userId].lastName}`;
+  const fullName = users
+    ? `${users[userId]?.firstName || ''} ${users[userId]?.lastName || ''}`
+    : '';
 
   return (
     <>
       <div className={styles.userPost}>
         <div className="flexBetween p-16">
           <div className="flexBetween">
-            <p className={styles.userImage}></p>
-            <h3>{fullName}</h3>
+            <p className={styles.userImage}>
+              <img
+                src={
+                  users[userId]?.UserPhotos && users[userId].UserPhotos.length > 0
+                    ? users[userId].UserPhotos[0].url
+                    : ''
+                }
+                alt=""
+              />
+            </p>
+
+            <Link to={`/user/${users[userId]?.id}`}>{fullName}</Link>
           </div>
           <BsThreeDotsVertical cursor={'pointer'} size={20} />
         </div>
