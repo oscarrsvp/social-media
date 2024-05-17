@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { SlUser } from 'react-icons/sl';
 import CommentSection from './CommentSection';
 import DeletePost from '../PostForm/DeletePost';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
@@ -21,17 +22,14 @@ function UserPost({ post, userId }) {
   return (
     <>
       <div className={styles.userPost}>
-        <div className="flexBetween p-16">
+        <div className={`flexBetween p-16 ${styles.userHeading}`}>
           <div className="flexBetween">
             <p className={styles.userImage}>
-              <img
-                src={
-                  users[userId]?.UserPhotos && users[userId].UserPhotos.length > 0
-                    ? users[userId].UserPhotos[0].url
-                    : ''
-                }
-                alt=""
-              />
+              {users[userId]?.UserPhotos.length > 0 ? (
+                <img src={users[userId].UserPhotos[0]?.url} alt="" />
+              ) : (
+                <SlUser size={20} display={'flex'} />
+              )}
             </p>
 
             <Link to={`/user/${users[userId]?.id}`}>{fullName}</Link>

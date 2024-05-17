@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
+import { SlUser } from 'react-icons/sl';
 import { fetchUser } from '../../store/userSlice';
 import UserPost from '../Homepage/UserPost';
 import styles from './UserPage.module.css';
@@ -31,9 +32,7 @@ function UserPage() {
       <div className={styles.userContainer}>
         <div className={styles.imgContainer}>
           <img
-            src={
-              user?.UserPhotos && user.UserPhotos.length > 0 ? user.UserPhotos[0].url : ''
-            }
+            src={user.UserPhotos.length > 0 ? user.UserPhotos[0].url : ''}
             alt=""
             style={{ width: '100%', height: '250px' }}
           />
@@ -41,28 +40,33 @@ function UserPage() {
         <div className={styles.userFeed}>
           <div className={styles.userCard}>
             <div>
-              <img
-                src={
-                  user?.UserPhotos && user.UserPhotos.length > 0
-                    ? user.UserPhotos[0].url
-                    : ''
-                }
-                alt=""
-                className={styles.profileImg}
-              />
-            </div>
-            <div className={styles.userActions}>
-              <h2>{`${user?.firstName} ${user?.lastName}`}</h2>
-              <p>Message</p>
-              <p>Photos</p>
-              {/* <p>Relationship Status: {user?.relationship}</p>
-            {user?.city ? <p>City: {user?.city}</p> : null}
-            <p>Gender: {user?.gender}</p>
-            <p>Birthday: {user?.birthday}</p> */}
+              <div>
+                {user?.UserPhotos.length > 0 ? (
+                  <img
+                    src={user.UserPhotos[0].url}
+                    alt=""
+                    className={styles.profileImg}
+                  />
+                ) : (
+                  <SlUser size={120} />
+                )}
+              </div>
+              <div className={styles.userActions}>
+                <h2>{`${user?.firstName} ${user?.lastName}`}</h2>
+                <p>Message</p>
+                <p>Photos</p>
+              </div>
+
+              <div>
+                <button className="btn">Follow</button>
+              </div>
             </div>
 
             <div>
-              <button className="btn">Follow</button>
+              <p>Relationship Status: {user?.relationship}</p>
+              {user?.city ? <p>City: {user?.city}</p> : null}
+              <p>Gender: {user?.gender}</p>
+              <p>Birthday: {user?.birthday}</p>
             </div>
           </div>
 
