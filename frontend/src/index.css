@@ -44,6 +44,11 @@ textarea {
   font-size: 16px;
 }
 
+img {
+  object-fit: cover;
+  object-position: center;
+}
+
 .flex {
   display: flex;
   justify-content: center;
@@ -81,7 +86,6 @@ textarea {
 
 .delete-btn {
   background-color: #c1121f;
-  font-size: 14px;
   padding: 4px;
   width: 100px;
 }
@@ -92,7 +96,6 @@ textarea {
 
 .update-btn {
   background-color: #669bbc;
-  font-size: 14px;
   padding: 4px;
   width: 120px;
 }

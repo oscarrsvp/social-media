@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup } = require('../../utils/validation');
-const { User, Post } = require('../../db/models');
+const { User, Post, UserPhoto } = require('../../db/models');
 
 const router = express.Router();
 
@@ -13,6 +13,9 @@ router.get('/', requireAuth, async (req, res) => {
       {
         model: Post,
         order: [['createdAt', 'DESC']],
+      },
+      {
+        model: UserPhoto,
       },
     ],
   });
@@ -69,6 +72,25 @@ router.put('/', requireAuth, async (req, res) => {
   });
 
   return res.json(updateUser);
+});
+
+// Get User By Id
+router.get('/:userId', requireAuth, async (req, res) => {
+  const { userId } = req.params;
+
+  const user = await User.findByPk(userId, {
+    include: [
+      {
+        model: Post,
+        order: [['createdAt', 'DESC']],
+      },
+      {
+        model: UserPhoto,
+      },
+    ],
+  });
+
+  return res.json({ User: user });
 });
 
 module.exports = router;

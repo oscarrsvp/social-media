@@ -12,7 +12,9 @@ function Homepage() {
   const posts = useSelector((state) => state.posts);
   const userPost = Object.values(posts);
   const dispatch = useDispatch();
-  const fullName = `${sessionUser.firstName} ${sessionUser.lastName}`;
+  const fullName = sessionUser
+    ? `${sessionUser.firstName || ''} ${sessionUser.lastName || ''}`
+    : null;
 
   useEffect(() => {
     dispatch(fetchPosts());

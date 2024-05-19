@@ -101,7 +101,16 @@ router.get('/:postId/comments', async (req, res) => {
     },
   });
 
-  return res.json({ Comments: getComments });
+  const comments = getComments.map((comment) => {
+    const comments = comment.toJSON();
+    comments.fullName = `${comments.User.firstName} ${comments.User.lastName}`;
+
+    delete comments.User;
+
+    return comments;
+  });
+
+  return res.json({ Comments: comments });
 });
 
 // Create a new Comment

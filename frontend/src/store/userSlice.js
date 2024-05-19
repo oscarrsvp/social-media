@@ -13,6 +13,17 @@ export const fetchUsers = createAsyncThunk('users/allUsers', async () => {
   }
 });
 
+export const fetchUser = createAsyncThunk('users/singleUser', async (userId) => {
+  try {
+    const response = await csrfFetch(`/api/users/${userId}`);
+    const data = await response.json();
+
+    return data.User;
+  } catch (error) {
+    return { message: error };
+  }
+});
+
 // Reducer
 const initialState = { users: null };
 
@@ -28,6 +39,10 @@ export const userSlice = createSlice({
         users[user.id] = user;
       });
       return users;
+    });
+
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      return { ...state, [action.payload.id]: action.payload };
     });
   },
 });
