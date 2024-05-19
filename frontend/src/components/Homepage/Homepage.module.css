@@ -47,7 +47,10 @@
 .userPost img {
     width: 100%;
     height: 400px;
-    object-fit: cover;
+}
+
+.userHeading {
+    border-bottom: 1px solid #edede9;
 }
 
 .userDetails {
@@ -60,7 +63,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0px 15px 15px 15px;
+    padding: 15px;
 }
 
 .postDetails p span {
@@ -73,7 +76,6 @@
 .postComments {
     padding: 10px;
     border-bottom: 1px solid #000000;
-    /* border-radius: 5px; */
 }
 
 .commentSection {
@@ -84,12 +86,18 @@
 }
 
 .userImage {
+    display: flex;
+    align-items: center;
     width: 30px;
     height: 30px;
     margin-right: 8px;
-    background-color: red;
     border-radius: 50%;
-    object-fit: cover;
+}
+
+.userImage img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
 
 .newComment {

@@ -32,7 +32,9 @@ function CommentSection({ post }) {
             placeholder="Write a comment..."
             onChange={(e) => setComment(e.target.value)}
           />
-          <button onClick={handleComment}>Add new comment</button>
+          <button className="btn update-btn" onClick={handleComment}>
+            Comment
+          </button>
         </div>
       )}
 

@@ -39,7 +39,7 @@ function UserPage() {
         </div>
         <div className={styles.userFeed}>
           <div className={styles.userCard}>
-            <div>
+            <div className={styles.userActions}>
               <div>
                 {user?.UserPhotos.length > 0 ? (
                   <img
@@ -51,7 +51,7 @@ function UserPage() {
                   <SlUser size={120} />
                 )}
               </div>
-              <div className={styles.userActions}>
+              <div>
                 <h2>{`${user?.firstName} ${user?.lastName}`}</h2>
                 <p>Message</p>
                 <p>Photos</p>
@@ -62,7 +62,7 @@ function UserPage() {
               </div>
             </div>
 
-            <div>
+            <div className={styles.userSection}>
               <p>Relationship Status: {user?.relationship}</p>
               {user?.city ? <p>City: {user?.city}</p> : null}
               <p>Gender: {user?.gender}</p>
