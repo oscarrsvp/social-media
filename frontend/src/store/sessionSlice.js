@@ -2,19 +2,29 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { csrfFetch } from './csrf';
 
 // Thunk functions
-export const login = createAsyncThunk('session/setUser', async (user) => {
-  const { email, password } = user;
-  const response = await csrfFetch('/api/session', {
-    method: 'POST',
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-  });
-  const data = await response.json();
+export const login = createAsyncThunk(
+  'session/setUser',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { email, password } = user;
+      const response = await csrfFetch('/api/session', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      const data = await response.json();
 
-  return data.user;
-});
+      return data.user;
+    } catch (err) {
+      if (!err.ok) {
+        const errors = await err.json();
+        return rejectWithValue(errors.errors);
+      }
+    }
+  },
+);
 
 export const restoreUser = createAsyncThunk('session/setUser', async () => {
   const response = await csrfFetch('/api/session');
@@ -23,22 +33,33 @@ export const restoreUser = createAsyncThunk('session/setUser', async () => {
   return data.user;
 });
 
-export const signup = createAsyncThunk('session/setUser', async (user) => {
-  const { firstName, lastName, email, password } = user;
+export const signup = createAsyncThunk(
+  'session/setUser',
+  async (user, { rejectWithValue }) => {
+    try {
+      const { firstName, lastName, email, password } = user;
 
-  const response = await csrfFetch('/api/users', {
-    method: 'POST',
-    body: JSON.stringify({
-      firstName,
-      lastName,
-      email,
-      password,
-    }),
-  });
+      const response = await csrfFetch('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+        }),
+      });
 
-  const data = await response.json();
-  return data.user;
-});
+      const data = await response.json();
+
+      return data.user;
+    } catch (err) {
+      if (!err.ok) {
+        const errors = await err.json();
+        return rejectWithValue(errors.errors);
+      }
+    }
+  },
+);
 
 export const removeUser = createAsyncThunk('session/removeUser', async () => {
   const response = await csrfFetch('/api/session', {
@@ -49,7 +70,7 @@ export const removeUser = createAsyncThunk('session/removeUser', async () => {
   return data.user;
 });
 
-const initialState = { user: null };
+const initialState = { user: null, error: null };
 
 // Slice & Reducers
 export const sessionSlice = createSlice({
@@ -59,13 +80,17 @@ export const sessionSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload, error: null };
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload;
+      }
     });
     builder.addCase(removeUser.fulfilled, (state) => {
       return { ...state, user: null };
     });
   },
-  defaultValue: { user: initialState },
 });
 
 export default sessionSlice.reducer;
