@@ -33,6 +33,14 @@ module.exports = {
           allowNull: false,
           unique: true,
         },
+        profileImage: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
+        headerImage: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
         privacy: {
           type: Sequelize.BOOLEAN,
         },
