@@ -25,8 +25,8 @@ function UserPost({ post, userId }) {
         <div className={`flexBetween p-16 ${styles.userHeading}`}>
           <div className="flexBetween">
             <p className={styles.userImage}>
-              {users[userId]?.UserPhotos.length > 0 ? (
-                <img src={users[userId].UserPhotos[0]?.url} alt="" />
+              {users[userId]?.profileImage ? (
+                <img src={users[userId].profileImage} alt="" />
               ) : (
                 <SlUser size={20} display={'flex'} />
               )}
@@ -45,7 +45,7 @@ function UserPost({ post, userId }) {
               <>
                 <DeletePost postId={post.id} userId={post.userId} />
                 <OpenModalButton
-                  buttonText="Update Button"
+                  buttonText="Update Post"
                   modalComponent={<UpdatePost post={post} />}
                   classNames={'btn update-btn'}
                 />

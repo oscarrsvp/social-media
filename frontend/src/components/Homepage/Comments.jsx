@@ -28,8 +28,8 @@ function Comments({ postId }) {
           <div className="flexBetween">
             <div className="flexBetween">
               <p className={styles.userImage}>
-                {user[comment?.userId]?.UserPhotos.length > 0 ? (
-                  <img src={user[comment?.userId].UserPhotos[0]?.url} alt="" />
+                {user[comment?.userId]?.profileImage ? (
+                  <img src={user[comment.userId]?.profileImage} alt="" />
                 ) : (
                   <SlUser size={20} display={'flex'} />
                 )}

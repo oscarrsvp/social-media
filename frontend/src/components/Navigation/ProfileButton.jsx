@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { SlUser } from 'react-icons/sl';
 import { removeUser } from '../../store/sessionSlice';
 
 function ProfileButton({ user }) {
@@ -38,7 +39,17 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={toggleMenu}>Profile Image</button>
+      {user.profileImage ? (
+        <img
+          onClick={toggleMenu}
+          className="profile-picture"
+          src={`${user.profileImage}`}
+          alt=""
+        />
+      ) : (
+        <SlUser size={20} cursor={'pointer'} onClick={toggleMenu} />
+      )}
+
       <ul className={ulClassName} ref={ulRef}>
         <li>
           {user.firstName} {user.lastName}
