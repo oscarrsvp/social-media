@@ -1,5 +1,4 @@
-const { validationResult } = require('express-validator');
-const { check } = require('express-validator');
+const { validationResult, check } = require('express-validator');
 
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
@@ -21,6 +20,7 @@ const validateLogin = [
   check('email')
     .exists({ checkFalsy: true })
     .notEmpty()
+    .isEmail()
     .withMessage('Please provide a valid email.'),
   check('password')
     .exists({ checkFalsy: true })
@@ -37,12 +37,12 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isLength({ min: 3 })
     .withMessage('Please provide a first name with at least 3 characters.'),
-  check('firstName').not().isEmail().withMessage('Username cannot be an email.'),
+  check('firstName').not().isEmail().withMessage('First name cannot be an email.'),
   check('lastName')
     .exists({ checkFalsy: true })
     .isLength({ min: 3 })
     .withMessage('Please provide a last name with at least 3 characters.'),
-  check('lastName').not().isEmail().withMessage('Username cannot be an email.'),
+  check('lastName').not().isEmail().withMessage('Last name cannot be an email.'),
   check('password')
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
