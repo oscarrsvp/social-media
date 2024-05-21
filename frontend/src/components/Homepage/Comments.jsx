@@ -11,15 +11,15 @@ import styles from './Homepage.module.css';
 function Comments({ postId }) {
   const sessionUser = useSelector((state) => state.session.user);
   const comment = useSelector((state) => state.comments);
-  const user = useSelector((state) => state.users);
-  const postComments = Object.values(comment);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchComments(postId));
   }, [dispatch, postId]);
 
-  if (comment.comments === null) return null;
+  if (!comment[postId]) return null;
+
+  const postComments = Object.values(comment[postId]);
 
   return (
     <div key={postId} className={styles.commentSection}>
@@ -28,8 +28,8 @@ function Comments({ postId }) {
           <div className="flexBetween">
             <div className="flexBetween">
               <p className={styles.userImage}>
-                {user[comment?.userId]?.profileImage ? (
-                  <img src={user[comment.userId]?.profileImage} alt="" />
+                {comment.profileImg ? (
+                  <img src={comment.profileImg} alt="" />
                 ) : (
                   <SlUser size={20} display={'flex'} />
                 )}

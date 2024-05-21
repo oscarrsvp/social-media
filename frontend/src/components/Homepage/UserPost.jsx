@@ -39,17 +39,17 @@ function UserPost({ post, userId }) {
 
         <div className={styles.postDetails}>
           <PostDetails post={post} fullName={fullName} />
-          <CommentSection post={post} comments={post.Comments} />
+          <CommentSection postId={post.id} />
           <div>
             {sessionUser.id === post.userId && (
-              <>
+              <div>
                 <DeletePost postId={post.id} userId={post.userId} />
                 <OpenModalButton
                   buttonText="Update Post"
                   modalComponent={<UpdatePost post={post} />}
                   classNames={'btn update-btn'}
                 />
-              </>
+              </div>
             )}
           </div>
         </div>

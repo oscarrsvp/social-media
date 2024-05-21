@@ -6,8 +6,7 @@ import { createComment } from '../../store/commentSlice';
 import Comments from './Comments';
 import styles from './Homepage.module.css';
 
-function CommentSection({ post }) {
-  const postId = post.id;
+function CommentSection({ postId }) {
   const [comment, setComment] = useState('');
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState(false);
@@ -19,11 +18,33 @@ function CommentSection({ post }) {
     dispatch(createComment({ context: comment, postId }));
     setComment('');
     setNewComment(!newComment);
+    if (showComments) return;
     setShowComments(!showComments);
   };
 
   return (
     <div>
+      <div className="flexBetween">
+        <div className="flex">
+          <div className="flex">
+            <AiOutlineLike cursor={'pointer'} size={20} />{' '}
+            <span className="icons">Like</span>
+          </div>
+          <div className="flex">
+            <FaRegComment
+              cursor={'pointer'}
+              size={20}
+              onClick={() => setNewComment(!newComment)}
+            />
+            <span className="icons">Comment</span>
+          </div>
+        </div>
+
+        <p className="viewComments" onClick={() => setShowComments(!showComments)}>
+          {!showComments ? `View comments` : 'Hide Comments'}
+        </p>
+      </div>
+
       {newComment && (
         <div className={styles.newComment}>
           <textarea
@@ -37,21 +58,6 @@ function CommentSection({ post }) {
           </button>
         </div>
       )}
-
-      <div className="flexBetween">
-        <div>
-          <AiOutlineLike cursor={'pointer'} size={20} className="icons" />
-          <FaRegComment
-            cursor={'pointer'}
-            size={20}
-            onClick={() => setNewComment(!newComment)}
-          />
-        </div>
-
-        <p className="viewComments" onClick={() => setShowComments(!showComments)}>
-          {!showComments ? `View all ${[post.numOfComments]} comments` : 'Hide Comments'}
-        </p>
-      </div>
 
       {showComments && <Comments postId={postId} />}
     </div>
