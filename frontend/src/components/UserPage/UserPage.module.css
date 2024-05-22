@@ -61,11 +61,10 @@
     background: #fff;
     padding: 30px;
     border-radius: 10px;
-    width: 260px;
+    width: 250px;
 }
 
 .feed {
     height: 800px;
     margin-bottom: 25px;
-    /* overflow: scroll; */
 }

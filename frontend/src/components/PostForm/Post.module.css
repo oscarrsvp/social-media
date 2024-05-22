@@ -1,0 +1,19 @@
+.createPost {
+    background-color: #ffffff;
+    padding: 16px;
+    width: 700px;
+}
+
+.userDetails {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    margin-left: 4px;
+}
+
+.profileImg {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
