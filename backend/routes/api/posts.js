@@ -119,7 +119,10 @@ router.post('/:postId/comment', async (req, res) => {
     context,
   });
 
-  return res.status(201).json(newComment);
+  const comment = newComment.toJSON();
+  comment.fullName = `${req.user.firstName} ${req.user.lastName}`;
+
+  return res.status(201).json(comment);
 });
 
 module.exports = router;
