@@ -68,20 +68,33 @@ export const commentSlice = createSlice({
     builder.addCase(fetchComments.fulfilled, (state, action) => {
       const comments = {};
       action.payload.forEach((comment) => {
-        comments[comment.id] = comment;
+        if (!comments[comment.postId]) {
+          comments[comment.postId] = {};
+        }
+        comments[comment.postId][comment.id] = comment;
       });
-      return comments;
+
+      return { ...state, ...comments };
     });
     builder.addCase(createComment.fulfilled, (state, action) => {
-      return { ...state, [action.payload.id]: action.payload };
+      const { postId, id } = action.payload;
+
+      if (!state[postId]) {
+        state[postId] = {};
+      }
+
+      state[postId][id] = action.payload;
     });
     builder.addCase(updateComment.fulfilled, (state, action) => {
-      return { ...state, [action.payload.id]: action.payload };
+      const { postId, id } = action.payload;
+
+      if (!state[postId]) {
+        state[postId] = {};
+      }
+      state[postId][id] = action.payload;
     });
     builder.addCase(deleteComment.fulfilled, (state, action) => {
-      const comments = { ...state };
-      delete comments[action.payload.id];
-      return comments;
+      delete state[action.payload.postId][action.payload.id];
     });
   },
 });
