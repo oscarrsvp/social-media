@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import { SlUser } from 'react-icons/sl';
-import { fetchUsers, fetchUser } from '../../store/userSlice';
+import { fetchUser } from '../../store/userSlice';
 import UserPost from '../Homepage/UserPost';
 import styles from './UserPage.module.css';
 
@@ -13,7 +13,6 @@ function UserPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers());
     dispatch(fetchUser(userId));
   }, [dispatch, userId]);
 

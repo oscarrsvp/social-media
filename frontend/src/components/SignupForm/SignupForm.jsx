@@ -14,7 +14,7 @@ function SignupForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+  if (sessionUser) return <Navigate to="/homepage" replace={true} />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ function SignupForm() {
   return (
     <div id={styles.signupForm} className="flexColumn">
       <div className={styles.header}>
-        <h1>Sign Up</h1>
+        <h1>Create your account</h1>
         <p>Share photos & save memories with your friends and family</p>
       </div>
       <div className={styles.SignupForm}>

@@ -23,41 +23,47 @@ function Comments({ postId }) {
 
   return (
     <div key={postId} className={styles.commentSection}>
-      {postComments.map((comment) => (
-        <div key={comment?.id} className={styles.postComments}>
-          <div className="flexBetween">
+      {postComments ? (
+        postComments.map((comment) => (
+          <div key={comment.id} className={styles.postComments}>
             <div className="flexBetween">
-              <p className={styles.userImage}>
-                {comment.profileImg ? (
-                  <img src={comment.profileImg} alt="" />
-                ) : (
-                  <SlUser size={20} display={'flex'} />
-                )}
-              </p>
-              <NavLink to={`/user/${comment.userId}`}>{comment?.fullName}</NavLink>
+              <div className="flexBetween">
+                <p className={styles.userImage}>
+                  {comment.profileImg ? (
+                    <img src={comment.profileImg} alt="" />
+                  ) : (
+                    <SlUser size={20} display={'flex'} />
+                  )}
+                </p>
+                <NavLink to={`/user/${comment.userId}`}>{comment.fullName}</NavLink>
+              </div>
+              <h5>Posted: {createdAt(comment.createdAt)}</h5>
             </div>
-            <h5>Posted: {createdAt(comment?.createdAt)}</h5>
+
+            <p className={styles.comments}>{comment.context}</p>
+
+            {sessionUser.id === comment.userId && (
+              <div>
+                <OpenModalButton
+                  buttonText="Edit Comment"
+                  modalComponent={<UpdateComment comment={comment} />}
+                  classNames={'btn update-btn'}
+                />
+                <button
+                  className="btn delete-btn"
+                  onClick={() =>
+                    dispatch(deleteComment({ id: comment.id, postId: comment.postId }))
+                  }
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
-
-          <p className={styles.comments}>{comment?.context}</p>
-
-          {sessionUser.id === comment?.userId && (
-            <div>
-              <OpenModalButton
-                buttonText="Edit Comment"
-                modalComponent={<UpdateComment comment={comment} />}
-                classNames={'btn update-btn'}
-              />
-              <button
-                className="btn delete-btn"
-                onClick={() => dispatch(deleteComment({ id: comment?.id }))}
-              >
-                Delete
-              </button>
-            </div>
-          )}
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No comments</p>
+      )}
     </div>
   );
 }

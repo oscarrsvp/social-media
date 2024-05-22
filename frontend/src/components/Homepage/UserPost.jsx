@@ -28,7 +28,7 @@ function UserPost({ post, userId }) {
               {users[userId]?.profileImage ? (
                 <img src={users[userId].profileImage} alt="" />
               ) : (
-                <SlUser size={20} display={'flex'} />
+                <SlUser size={20} />
               )}
             </p>
 
@@ -43,12 +43,12 @@ function UserPost({ post, userId }) {
           <div>
             {sessionUser.id === post.userId && (
               <div>
-                <DeletePost postId={post.id} userId={post.userId} />
                 <OpenModalButton
                   buttonText="Update Post"
                   modalComponent={<UpdatePost post={post} />}
                   classNames={'btn update-btn'}
                 />
+                <DeletePost postId={post.id} userId={post.userId} />
               </div>
             )}
           </div>
