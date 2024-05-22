@@ -21,6 +21,10 @@ function LoginForm() {
     });
   };
 
+  const handleDemoUser = () => {
+    return dispatch(login({ email: 'jennysmith@aa.io', password: 'password' }));
+  };
+
   return (
     <>
       <div className={styles.loginForm}>
@@ -50,6 +54,10 @@ function LoginForm() {
 
           <button className="btn" type="submit">
             Log In
+          </button>
+
+          <button className="btn" onClick={handleDemoUser}>
+            Demo User
           </button>
         </form>
       </div>
