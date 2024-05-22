@@ -121,6 +121,7 @@ router.post('/:postId/comment', async (req, res) => {
 
   const comment = newComment.toJSON();
   comment.fullName = `${req.user.firstName} ${req.user.lastName}`;
+  comment.profileImg = req.user.profileImage;
 
   return res.status(201).json(comment);
 });
