@@ -73,7 +73,9 @@ function UserPage() {
 
           <div className={styles.feed}>
             {userPost.length > 0
-              ? postByDate.map((post) => <UserPost post={post} userId={userId} />)
+              ? postByDate.map((post) => (
+                  <UserPost post={post} userId={userId} key={post.id} />
+                ))
               : 'No Posts'}
           </div>
         </div>
