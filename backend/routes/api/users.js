@@ -79,10 +79,15 @@ router.get('/:userId', requireAuth, async (req, res) => {
     include: [
       {
         model: Post,
+        where: { userId },
         order: [['createdAt', 'DESC']],
+        required: true,
+        separate: true,
       },
       {
         model: UserPhoto,
+        required: false,
+        separate: true,
       },
     ],
   });
