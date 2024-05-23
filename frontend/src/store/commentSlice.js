@@ -7,7 +7,7 @@ export const fetchComments = createAsyncThunk('comment/postComments', async (id)
     const response = await csrfFetch(`/api/posts/${id}/comments`);
     const data = await response.json();
 
-    return data.Comments;
+    return { Comments: data.Comments, id };
   } catch (error) {
     return { error: error };
   }
@@ -66,8 +66,13 @@ export const commentSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(fetchComments.fulfilled, (state, action) => {
+      const postId = action.payload.id;
+      const comment = action.payload.Comments;
+
+      if (!comment.length) return { ...state, [postId]: {} };
+
       const comments = {};
-      action.payload.forEach((comment) => {
+      comment.forEach((comment) => {
         if (!comments[comment.postId]) {
           comments[comment.postId] = {};
         }

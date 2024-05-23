@@ -23,7 +23,7 @@ function Comments({ postId }) {
 
   return (
     <div key={postId} className={styles.commentSection}>
-      {postComments ? (
+      {postComments.length ? (
         postComments.map((comment) => (
           <div key={comment.id} className={styles.postComments}>
             <div className="flexBetween">
