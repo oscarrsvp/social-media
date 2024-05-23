@@ -5,6 +5,25 @@
     border-radius: 5px;
 }
 
+:global(.deleteModal) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+}
+
+:global(.deleteModal p) {
+    margin: 4px 0;
+    font-size: 18px;
+}
+
+:global(.deleteModal button) {
+    width: 250px;
+    margin: 5px 0;
+}
+
+
 .userDetails {
     display: flex;
     align-items: center;
