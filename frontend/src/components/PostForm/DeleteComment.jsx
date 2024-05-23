@@ -1,30 +1,30 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { deletePost } from '../../store/postSlice';
+import { deleteComment } from '../../store/commentSlice';
 
-function DeletePost({ postId, userId }) {
+function DeleteComment({ commentId, postId, userId }) {
   const sessionUser = useSelector((state) => state.session.user);
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(deletePost(postId));
+    dispatch(deleteComment({ id: commentId, postId }));
     closeModal();
   };
 
   return (
     <>
       {sessionUser.id === userId && (
-        <div className="deleteModal">
+        <div className={`deleteModal`}>
           <h1>Confirm Delete?</h1>
-          <p>Are you sure you want to delete this post?</p>
+          <p>Are you sure you want to delete this comment?</p>
 
           <button className="btn delete-btn" onClick={handleDelete}>
-            Delete Post
+            Yes (Delete Comment)
           </button>
 
           <button className="btn" onClick={closeModal}>
-            No (Keep Post)
+            No (Keep Comment)
           </button>
         </div>
       )}
@@ -32,4 +32,4 @@ function DeletePost({ postId, userId }) {
   );
 }
 
-export default DeletePost;
+export default DeleteComment;

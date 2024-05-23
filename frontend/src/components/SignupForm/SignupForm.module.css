@@ -1,6 +1,8 @@
 #signupForm {
     height: 100vh;
+    width: 100%;
     gap: 20px;
+    flex-grow: 2;
 }
 
 .header {
@@ -32,10 +34,6 @@
     width: 450px;
     margin: 15px 0;
 }
-
-/* .SignupForm form input {
-    background-color: #edede9; */
-/* } */
 
 .SignupForm form button {
     width: 100%;

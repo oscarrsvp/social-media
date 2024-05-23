@@ -13,6 +13,17 @@ export const fetchPosts = createAsyncThunk('post/allPosts', async () => {
   }
 });
 
+export const fetchUserPosts = createAsyncThunk('post/userPosts', async (id) => {
+  try {
+    const response = await csrfFetch(`/api/posts/user/${id}`);
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    return { error: error };
+  }
+});
+
 export const createPost = createAsyncThunk('post/newPost', async (post) => {
   const { photo, context } = post;
   try {
@@ -79,10 +90,20 @@ const initialState = { post: null };
 export const postSlice = createSlice({
   name: 'post',
   initialState,
-  reducers: {},
+  reducers: {
+    clearPosts: () => initialState,
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
+      const posts = {};
+      action.payload.forEach((post) => {
+        posts[post.id] = post;
+      });
+      return posts;
+    });
+
+    builder.addCase(fetchUserPosts.fulfilled, (state, action) => {
       const posts = {};
       action.payload.forEach((post) => {
         posts[post.id] = post;
@@ -109,5 +130,7 @@ export const postSlice = createSlice({
     });
   },
 });
+
+export const { clearPosts } = postSlice.actions;
 
 export default postSlice.reducer;

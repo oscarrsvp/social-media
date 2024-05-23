@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteComment, fetchComments } from '../../store/commentSlice';
+import { fetchComments } from '../../store/commentSlice';
 import { createdAt } from '../../utils/globallyFns';
 import { SlUser } from 'react-icons/sl';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import UpdateComment from '../UpdateInputs/UpdateComment';
+import DeleteComment from '../PostForm/DeleteComment';
 import styles from './Homepage.module.css';
 
 function Comments({ postId }) {
@@ -45,18 +46,22 @@ function Comments({ postId }) {
             {sessionUser.id === comment.userId && (
               <div>
                 <OpenModalButton
-                  buttonText="Edit Comment"
+                  buttonText={'Edit'}
                   modalComponent={<UpdateComment comment={comment} />}
                   classNames={'btn update-btn'}
                 />
-                <button
-                  className="btn delete-btn"
-                  onClick={() =>
-                    dispatch(deleteComment({ id: comment.id, postId: comment.postId }))
+
+                <OpenModalButton
+                  buttonText="Delete"
+                  modalComponent={
+                    <DeleteComment
+                      commentId={comment.id}
+                      postId={comment.postId}
+                      userId={comment.userId}
+                    />
                   }
-                >
-                  Delete
-                </button>
+                  classNames={'btn delete-btn'}
+                />
               </div>
             )}
           </div>

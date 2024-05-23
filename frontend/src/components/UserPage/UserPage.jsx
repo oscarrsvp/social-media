@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import { SlUser } from 'react-icons/sl';
 import { fetchUser } from '../../store/userSlice';
+import { fetchUserPosts, clearPosts } from '../../store/postSlice';
+import { featureComingSoon } from '../../utils/globallyFns';
 import UserPost from '../Homepage/UserPost';
 import styles from './UserPage.module.css';
 
@@ -10,15 +12,23 @@ function UserPage() {
   const { userId } = useParams();
   const sessionUser = useSelector((state) => state.session.user);
   const user = useSelector((state) => state.users[userId]);
+  const posts = useSelector((state) => state.posts);
+  const userPost = Object.values(posts);
   const dispatch = useDispatch();
 
+  const postByDate = userPost.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
   useEffect(() => {
+    dispatch(clearPosts());
     dispatch(fetchUser(userId));
+    dispatch(fetchUserPosts(userId));
   }, [dispatch, userId]);
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
-  if (!user) return <h1>Loading...</h1>;
+  if (!user || posts.post === null) return <h1>Loading...</h1>;
 
   return (
     <div id={styles.userPage}>
@@ -47,7 +57,9 @@ function UserPage() {
               </div>
 
               <div>
-                <button className="btn">Follow</button>
+                <button onClick={(e) => featureComingSoon(e)} className="btn">
+                  Follow
+                </button>
               </div>
             </div>
 
@@ -60,10 +72,9 @@ function UserPage() {
           </div>
 
           <div className={styles.feed}>
-            {user.Posts &&
-              user?.Posts.map((post) => (
-                <UserPost post={post} userId={userId} key={post.id} />
-              ))}
+            {userPost.length > 0
+              ? postByDate.map((post) => <UserPost post={post} userId={userId} />)
+              : 'No Posts'}
           </div>
         </div>
       </div>
