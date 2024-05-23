@@ -34,6 +34,29 @@ module.exports = {
           userId: 2,
           context: 'I just found some cheap live french oysters! what a deal',
         },
+        {
+          userId: 1,
+          photo:
+            'https://images.unsplash.com/photo-1532635278-872c8b2b3efe?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context:
+            'Four friends, endless laughter, and the perfect poolside paradise! 🌴💦 #SummerFun',
+        },
+        {
+          userId: 3,
+          photo:
+            'https://images.unsplash.com/photo-1561134013-859b398e7f5c?q=80&w=3550&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context:
+            'Pausing in the middle of nowhere, just to capture this moment. 📸✨ #SpontaneousSelfie',
+        },
+        {
+          userId: 5,
+          context:
+            "This don't feel like home anymore It's just wall, doors, and floors That only I can afford Remember when it used to mean more, mean more I got money in the top drawer That ain't much, but we not poor You're mine and I'm yours ❤️",
+        },
+        {
+          userId: 4,
+          context: 'Life is better in a Jeep. 🏕️ #JeepLove',
+        },
       ],
       { validate: true },
     );

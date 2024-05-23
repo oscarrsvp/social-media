@@ -7,7 +7,7 @@ export const fetchComments = createAsyncThunk('comment/postComments', async (id)
     const response = await csrfFetch(`/api/posts/${id}/comments`);
     const data = await response.json();
 
-    return data.Comments;
+    return { Comments: data.Comments, id };
   } catch (error) {
     return { error: error };
   }
@@ -66,22 +66,40 @@ export const commentSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(fetchComments.fulfilled, (state, action) => {
+      const postId = action.payload.id;
+      const comment = action.payload.Comments;
+
+      if (!comment.length) return { ...state, [postId]: {} };
+
       const comments = {};
-      action.payload.forEach((comment) => {
-        comments[comment.id] = comment;
+      comment.forEach((comment) => {
+        if (!comments[comment.postId]) {
+          comments[comment.postId] = {};
+        }
+        comments[comment.postId][comment.id] = comment;
       });
-      return comments;
+
+      return { ...state, ...comments };
     });
     builder.addCase(createComment.fulfilled, (state, action) => {
-      return { ...state, [action.payload.id]: action.payload };
+      const { postId, id } = action.payload;
+
+      if (!state[postId]) {
+        state[postId] = {};
+      }
+
+      state[postId][id] = action.payload;
     });
     builder.addCase(updateComment.fulfilled, (state, action) => {
-      return { ...state, [action.payload.id]: action.payload };
+      const { postId, id } = action.payload;
+
+      if (!state[postId]) {
+        state[postId] = {};
+      }
+      state[postId][id] = action.payload;
     });
     builder.addCase(deleteComment.fulfilled, (state, action) => {
-      const comments = { ...state };
-      delete comments[action.payload.id];
-      return comments;
+      delete state[action.payload.postId][action.payload.id];
     });
   },
 });

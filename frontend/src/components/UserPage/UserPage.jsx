@@ -22,17 +22,10 @@ function UserPage() {
 
   return (
     <div id={styles.userPage}>
-      <div className={styles.sideBar}>
-        SIDEBAR
-        <div>My Feed -- Back to /homepage</div>
-        <div>Explore -- This will be a link</div>
-        <div>Message -- Link to chat page</div>
-      </div>
-
       <div className={styles.userContainer}>
         <div className={styles.imgContainer}>
           <img
-            src={user.UserPhotos.length > 0 ? user.UserPhotos[0].url : ''}
+            src={user ? user.headerImage : ''}
             alt=""
             style={{ width: '100%', height: '250px' }}
           />
@@ -41,12 +34,8 @@ function UserPage() {
           <div className={styles.userCard}>
             <div className={styles.userActions}>
               <div>
-                {user?.UserPhotos.length > 0 ? (
-                  <img
-                    src={user.UserPhotos[0].url}
-                    alt=""
-                    className={styles.profileImg}
-                  />
+                {user.profileImage ? (
+                  <img src={user.profileImage} alt="" className={styles.profileImg} />
                 ) : (
                   <SlUser size={120} />
                 )}

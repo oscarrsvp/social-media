@@ -7,20 +7,9 @@ router.use(requireAuth);
 
 // Get all User's Posts
 router.get('/', async (req, res) => {
-  const post = await Post.findAll({
-    include: [{ model: Comment }],
-  });
+  const post = await Post.findAll();
 
-  const allPost = post.map((post) => {
-    const posts = post.toJSON();
-
-    const numComments = posts.Comments.length;
-    posts.numOfComments = numComments;
-
-    return posts;
-  });
-
-  return res.json(allPost);
+  return res.json(post);
 });
 
 // Create a new Post
@@ -94,7 +83,7 @@ router.get('/:postId/comments', async (req, res) => {
   const getComments = await Comment.findAll({
     include: {
       model: User,
-      attributes: ['firstName', 'lastName'],
+      attributes: ['firstName', 'lastName', 'profileImage'],
     },
     where: {
       postId,
@@ -104,6 +93,7 @@ router.get('/:postId/comments', async (req, res) => {
   const comments = getComments.map((comment) => {
     const comments = comment.toJSON();
     comments.fullName = `${comments.User.firstName} ${comments.User.lastName}`;
+    comments.profileImg = comments.User.profileImage;
 
     delete comments.User;
 
@@ -129,7 +119,11 @@ router.post('/:postId/comment', async (req, res) => {
     context,
   });
 
-  return res.status(201).json(newComment);
+  const comment = newComment.toJSON();
+  comment.fullName = `${req.user.firstName} ${req.user.lastName}`;
+  comment.profileImg = req.user.profileImage;
+
+  return res.status(201).json(comment);
 });
 
 module.exports = router;

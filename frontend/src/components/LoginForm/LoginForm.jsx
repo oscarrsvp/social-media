@@ -1,25 +1,28 @@
 import { useState } from 'react';
 import { login } from '../../store/sessionSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import styles from './LoginForm.module.css';
 
 function LoginForm() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Navigate to="/homepage" replace={true} />;
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(login({ email, password })).catch(async (res) => {
-      const data = await res.json();
-      if (data?.errors) setErrors(data.errors);
+    const userLogin = dispatch(login({ email, password }));
+
+    return userLogin.then(async (res) => {
+      const data = await res.payload;
+      if (data) setErrors(data);
     });
+  };
+
+  const handleDemoUser = () => {
+    return dispatch(login({ email: 'jennysmith@aa.io', password: 'password' }));
   };
 
   return (
@@ -36,6 +39,7 @@ function LoginForm() {
               required
             />
           </label>
+          {errors.email && <p className="error">{errors.email}</p>}
           <label>
             <input
               type="password"
@@ -45,9 +49,15 @@ function LoginForm() {
               required
             />
           </label>
-          {errors.email && <p>{errors.email}</p>}
+
+          {errors.credential && <p className="error">{errors.credential}</p>}
+
           <button className="btn" type="submit">
             Log In
+          </button>
+
+          <button className="btn" onClick={handleDemoUser}>
+            Demo User
           </button>
         </form>
       </div>

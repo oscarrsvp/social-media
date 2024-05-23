@@ -12,9 +12,10 @@ function Homepage() {
   const posts = useSelector((state) => state.posts);
   const userPost = Object.values(posts);
   const dispatch = useDispatch();
-  const fullName = sessionUser
-    ? `${sessionUser.firstName || ''} ${sessionUser.lastName || ''}`
-    : null;
+
+  const postByDate = userPost.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -28,24 +29,14 @@ function Homepage() {
 
   return (
     <div id={styles.homePage}>
-      <div className={styles.sideBar}>
-        SIDEBAR
-        <div>News Feed</div>
-        <div>Explore -- This will be a link</div>
-        <div>Message -- Link to chat page</div>
-      </div>
-      <div className={styles.feedContainer}>
-        <div className={styles.feed}>
-          <h2>Welcome, {fullName}</h2>
-          <CreatePost />
-          {userPost.map((post) => (
-            <UserPost post={post} userId={post.userId} key={post.id} />
-          ))}
-        </div>
+      <div className={styles.feed}>
+        <CreatePost />
+        {postByDate.map((post) => (
+          <UserPost post={post} userId={post.userId} key={post.id} />
+        ))}
       </div>
       <div style={{ display: 'flex', alignItems: 'center', color: '#ffffff' }}>
         <div style={{ backgroundColor: '#003049', height: '300px', marginRight: '20px' }}>
-          <h3>{fullName}&apos;s Followers</h3>
           <div>
             <h2>FOLLOWERS/FOLLOWING</h2>
           </div>

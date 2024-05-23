@@ -3,19 +3,7 @@
     justify-content: space-between;
     overflow: hidden;
     height: calc(100vh - 70px);
-}
-
-.sideBar {
-    width: 250px;
-    background-color: #003049;
-    color: #ffffff;
-}
-
-.feedContainer {
-    display: flex;
-    overflow: scroll;
     flex-grow: 2;
-    justify-content: center;
 }
 
 .feed {
@@ -35,12 +23,12 @@
 }
 
 .userPost {
-    width: 630px;
+    width: 750px;
     display: flex;
     flex-direction: column;
     background: #ffffff;
     margin: 10px 0;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #ffffff;
 }
 
@@ -106,6 +94,7 @@
 
 .comments {
     margin: 8px 0;
+    padding-left: 4px
 }
 
 .commentsVisible {

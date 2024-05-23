@@ -14,26 +14,28 @@ function SignupForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+  if (sessionUser) return <Navigate to="/homepage" replace={true} />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors({});
-      return dispatch(
+
+      const userSignup = dispatch(
         signup({
           email,
           firstName,
           lastName,
           password,
         }),
-      ).catch(async (res) => {
-        const data = await res.json();
-        if (data?.errors) {
-          setErrors(data.errors);
-        }
+      );
+
+      return userSignup.then(async (res) => {
+        const data = await res.payload;
+        if (data) setErrors(data);
       });
     }
+
     return setErrors({
       confirmPassword: 'Confirm Password field must be the same as the Password field',
     });
@@ -42,7 +44,7 @@ function SignupForm() {
   return (
     <div id={styles.signupForm} className="flexColumn">
       <div className={styles.header}>
-        <h1>Sign Up</h1>
+        <h1>Create your account</h1>
         <p>Share photos & save memories with your friends and family</p>
       </div>
       <div className={styles.SignupForm}>
@@ -56,7 +58,7 @@ function SignupForm() {
               required
             />
           </label>
-          {errors.email && <p>{errors.email}</p>}
+          {errors.email && <p className="error">{errors.email}</p>}
           <label>
             <input
               type="text"
@@ -66,7 +68,7 @@ function SignupForm() {
               required
             />
           </label>
-          {errors.firstName && <p>{errors.firstName}</p>}
+          {errors.firstName && <p className="error">{errors.firstName}</p>}
           <label>
             <input
               type="text"
@@ -76,7 +78,7 @@ function SignupForm() {
               required
             />
           </label>
-          {errors.lastName && <p>{errors.lastName}</p>}
+          {errors.lastName && <p className="error">{errors.lastName}</p>}
           <label>
             <input
               type="password"
@@ -86,7 +88,7 @@ function SignupForm() {
               required
             />
           </label>
-          {errors.password && <p>{errors.password}</p>}
+          {errors.password && <p className="error">{errors.password}</p>}
           <label>
             <input
               type="password"
@@ -96,7 +98,7 @@ function SignupForm() {
               required
             />
           </label>
-          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+          {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
           <button className="btn" type="submit">
             Sign Up
           </button>

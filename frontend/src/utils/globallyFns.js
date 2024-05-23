@@ -10,3 +10,8 @@ export const createdAt = (date) => {
 
   return formattedDate;
 };
+
+export const featureComingSoon = (e) => {
+  e.preventDefault();
+  alert('Feature Coming Soon! 🚧');
+};
