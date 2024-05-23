@@ -1,7 +1,8 @@
 .createPost {
     background-color: #ffffff;
     padding: 16px;
-    width: 700px;
+    width: 750px;
+    border-radius: 5px;
 }
 
 .userDetails {

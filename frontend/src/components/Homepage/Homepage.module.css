@@ -3,19 +3,7 @@
     justify-content: space-between;
     overflow: hidden;
     height: calc(100vh - 70px);
-}
-
-.sideBar {
-    width: 250px;
-    background-color: #003049;
-    color: #ffffff;
-}
-
-.feedContainer {
-    display: flex;
-    overflow: scroll;
     flex-grow: 2;
-    justify-content: center;
 }
 
 .feed {
@@ -35,7 +23,7 @@
 }
 
 .userPost {
-    width: 700px;
+    width: 750px;
     display: flex;
     flex-direction: column;
     background: #ffffff;
