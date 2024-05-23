@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AiOutlineLike } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { createComment } from '../../store/commentSlice';
+import { featureComingSoon } from '../../utils/globallyFns';
 import Comments from './Comments';
 import styles from './Homepage.module.css';
 
@@ -27,7 +28,11 @@ function CommentSection({ postId }) {
       <div className="flexBetween">
         <div className="flex">
           <div className="flex">
-            <AiOutlineLike cursor={'pointer'} size={20} />{' '}
+            <AiOutlineLike
+              cursor={'pointer'}
+              size={20}
+              onClick={(e) => featureComingSoon(e)}
+            />
             <span className="icons">Like</span>
           </div>
           <div className="flex">
