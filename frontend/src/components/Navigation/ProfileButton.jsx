@@ -47,7 +47,7 @@ function ProfileButton({ user }) {
           alt=""
         />
       ) : (
-        <SlUser size={20} cursor={'pointer'} onClick={toggleMenu} />
+        <SlUser size={25} cursor={'pointer'} fill={'#ffffff'} onClick={toggleMenu} />
       )}
 
       <ul className={ulClassName} ref={ulRef}>

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { AiOutlineHome } from 'react-icons/ai';
 import { IoPersonOutline, IoSettingsOutline } from 'react-icons/io5';
 import { FaRegEnvelope, FaRegCompass } from 'react-icons/fa';
+import { SlUser } from 'react-icons/sl';
 import { featureComingSoon } from '../../utils/globallyFns';
 import styles from './Sidebar.module.css';
 
@@ -16,7 +17,12 @@ function Sidebar() {
   return (
     <div className={styles.sideBar}>
       <div className={styles.sideBarUser}>
-        <img src={user.profileImage} alt="" />
+        {user.profileImage ? (
+          <img src={user.profileImage} alt="" />
+        ) : (
+          <SlUser size={65} className="default-picture" />
+        )}
+
         <h1>{fullName}</h1>
       </div>
 

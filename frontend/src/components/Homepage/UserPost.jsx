@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { SlUser } from 'react-icons/sl';
+import { featureComingSoon } from '../../utils/globallyFns';
 import CommentSection from './CommentSection';
 import DeletePost from '../PostForm/DeletePost';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
@@ -34,7 +35,11 @@ function UserPost({ post, userId }) {
 
             <Link to={`/user/${users[userId]?.id}`}>{fullName}</Link>
           </div>
-          <BsThreeDotsVertical cursor={'pointer'} size={20} />
+          <BsThreeDotsVertical
+            cursor={'pointer'}
+            size={20}
+            onClick={(e) => featureComingSoon(e)}
+          />
         </div>
 
         <div className={styles.postDetails}>
@@ -48,7 +53,11 @@ function UserPost({ post, userId }) {
                   modalComponent={<UpdatePost post={post} />}
                   classNames={'btn update-btn'}
                 />
-                <DeletePost postId={post.id} userId={post.userId} />
+                <OpenModalButton
+                  buttonText="Delete Post"
+                  modalComponent={<DeletePost postId={post.id} userId={post.userId} />}
+                  classNames={'btn delete-btn'}
+                />
               </div>
             )}
           </div>

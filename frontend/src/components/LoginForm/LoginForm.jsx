@@ -21,7 +21,8 @@ function LoginForm() {
     });
   };
 
-  const handleDemoUser = () => {
+  const handleDemoUser = (e) => {
+    e.preventDefault();
     return dispatch(login({ email: 'jennysmith@aa.io', password: 'password' }));
   };
 
@@ -36,7 +37,6 @@ function LoginForm() {
               value={email}
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </label>
           {errors.email && <p className="error">{errors.email}</p>}
@@ -46,7 +46,6 @@ function LoginForm() {
               value={password}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
           </label>
 
@@ -55,8 +54,7 @@ function LoginForm() {
           <button className="btn" type="submit">
             Log In
           </button>
-
-          <button className="btn" onClick={handleDemoUser}>
+          <button className="btn" onClick={(e) => handleDemoUser(e)}>
             Demo User
           </button>
         </form>
