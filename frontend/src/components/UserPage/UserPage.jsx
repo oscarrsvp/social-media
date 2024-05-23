@@ -22,13 +22,6 @@ function UserPage() {
 
   return (
     <div id={styles.userPage}>
-      <div className={styles.sideBar}>
-        SIDEBAR
-        <div>My Feed -- Back to /homepage</div>
-        <div>Explore -- This will be a link</div>
-        <div>Message -- Link to chat page</div>
-      </div>
-
       <div className={styles.userContainer}>
         <div className={styles.imgContainer}>
           <img

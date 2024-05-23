@@ -7,6 +7,7 @@ import SignupForm from './components/SignupForm/SignupForm';
 import Navigation from './components/Navigation/Navigation';
 import Homepage from './components/Homepage/Homepage';
 import UserPage from './components/UserPage/UserPage';
+import Sidebar from './components/Sidebar/Sidebar';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -21,7 +22,10 @@ function Layout() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded && <Outlet />}
+      <div className="feedContainer">
+        <Sidebar />
+        {isLoaded && <Outlet />}
+      </div>
     </>
   );
 }

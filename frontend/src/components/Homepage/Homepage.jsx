@@ -29,19 +29,11 @@ function Homepage() {
 
   return (
     <div id={styles.homePage}>
-      <div className={styles.sideBar}>
-        SIDEBAR
-        <div>News Feed</div>
-        <div>Explore -- This will be a link</div>
-        <div>Message -- Link to chat page</div>
-      </div>
-      <div className={styles.feedContainer}>
-        <div className={styles.feed}>
-          <CreatePost />
-          {postByDate.map((post) => (
-            <UserPost post={post} userId={post.userId} key={post.id} />
-          ))}
-        </div>
+      <div className={styles.feed}>
+        <CreatePost />
+        {postByDate.map((post) => (
+          <UserPost post={post} userId={post.userId} key={post.id} />
+        ))}
       </div>
       <div style={{ display: 'flex', alignItems: 'center', color: '#ffffff' }}>
         <div style={{ backgroundColor: '#003049', height: '300px', marginRight: '20px' }}>
