@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import { SlUser } from 'react-icons/sl';
-import { fetchUser } from '../../store/userSlice';
+import { fetchUser, fetchFollowing } from '../../store/userSlice';
 import { fetchUserPosts, clearPosts } from '../../store/postSlice';
 import { featureComingSoon } from '../../utils/globallyFns';
 import UserPost from '../Homepage/UserPost';
@@ -23,6 +23,7 @@ function UserPage() {
   useEffect(() => {
     dispatch(clearPosts());
     dispatch(fetchUser(userId));
+    dispatch(fetchFollowing(userId));
     dispatch(fetchUserPosts(userId));
   }, [dispatch, userId]);
 

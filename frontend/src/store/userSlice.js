@@ -24,8 +24,19 @@ export const fetchUser = createAsyncThunk('users/singleUser', async (userId) => 
   }
 });
 
+export const fetchFollowing = createAsyncThunk('users/following', async (userId) => {
+  try {
+    const response = await csrfFetch(`/api/users/${userId}/following`);
+    const data = await response.json();
+
+    return data.following;
+  } catch (error) {
+    return { message: error };
+  }
+});
+
 // Reducer
-const initialState = { users: null };
+const initialState = { users: null, following: null };
 
 export const userSlice = createSlice({
   name: 'users',
@@ -43,6 +54,10 @@ export const userSlice = createSlice({
 
     builder.addCase(fetchUser.fulfilled, (state, action) => {
       return { ...state, [action.payload.id]: action.payload };
+    });
+
+    builder.addCase(fetchFollowing.fulfilled, (state, action) => {
+      return { ...state, following: action.payload };
     });
   },
 });
