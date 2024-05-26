@@ -2,7 +2,8 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup } = require('../../utils/validation');
-const { User, Post, UserPhoto } = require('../../db/models');
+const { User, Post, UserPhoto, Follower } = require('../../db/models');
+const follower = require('../../db/models/follower');
 
 const router = express.Router();
 
@@ -78,14 +79,16 @@ router.get('/:userId', requireAuth, async (req, res) => {
   const user = await User.findByPk(userId, {
     include: [
       {
-        model: Post,
-        where: { userId },
-        order: [['createdAt', 'DESC']],
-        required: true,
+        model: Follower,
+        as: 'User',
+        attributes: ['followerId'],
+        required: false,
         separate: true,
       },
       {
-        model: UserPhoto,
+        model: Follower,
+        as: 'Follower',
+        attributes: ['userId'],
         required: false,
         separate: true,
       },
@@ -93,6 +96,47 @@ router.get('/:userId', requireAuth, async (req, res) => {
   });
 
   return res.json({ User: user });
+});
+
+// Following List By User Id
+router.get('/:userId/following', requireAuth, async (req, res) => {
+  const { userId } = req.params;
+
+  const following = await Follower.findAll({
+    where: {
+      followerId: userId,
+    },
+    include: [
+      {
+        model: User,
+        as: 'User',
+        attributes: ['firstName', 'lastName', 'profileImage'],
+      },
+    ],
+    attributes: ['userId'],
+  });
+
+  const followingList = following.map((follow) => {
+    const followers = follow.toJSON();
+    followers.fullName = `${followers.User.firstName} ${followers.User.lastName}`;
+    followers.profileImage = followers.User.profileImage;
+
+    delete followers.User;
+
+    return followers;
+  });
+
+  return res.json({ following: followingList });
+});
+
+// Follow User
+router.post('/:userId/follow', requireAuth, async (req, res) => {
+  const { userId } = req.params;
+  const followerId = req.user.id;
+
+  const follow = await Follower.create({ userId, followerId });
+
+  return res.json({ follow });
 });
 
 module.exports = router;
