@@ -47,6 +47,11 @@
     gap: 10px;
 }
 
+.userDetails p {
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+
 .postDetails {
     display: flex;
     flex-direction: column;
@@ -94,7 +99,9 @@
 
 .comments {
     margin: 8px 0;
-    padding-left: 4px
+    padding-left: 4px;
+    text-overflow: ellipsis;
+    word-break: break-all;
 }
 
 .commentsVisible {
