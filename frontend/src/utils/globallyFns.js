@@ -15,3 +15,8 @@ export const featureComingSoon = (e) => {
   e.preventDefault();
   alert('Feature Coming Soon! 🚧');
 };
+
+export const validateImage = (url) => {
+  const imageURLs = ['.jpg', '.png', '.jpeg'];
+  return imageURLs.some((format) => url.toLowerCase().endsWith(format));
+};
