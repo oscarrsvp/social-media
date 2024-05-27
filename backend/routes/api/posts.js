@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
+const { validatePost, validateComment } = require('../../utils/validation');
 const { User, Post, Comment } = require('../../db/models');
 
 router.use(requireAuth);
@@ -25,7 +26,7 @@ router.get('/user/:userId', async (req, res) => {
 });
 
 // Create a new Post
-router.post('/', async (req, res) => {
+router.post('/', validatePost, async (req, res) => {
   const userId = req.user.id;
   const { photo, context } = req.body;
 
@@ -49,7 +50,7 @@ router.get('/:postId', async (req, res) => {
 });
 
 // Edit a Post
-router.put('/:postId', async (req, res) => {
+router.put('/:postId', validatePost, async (req, res) => {
   const userId = req.user.id;
   const { postId } = req.params;
   const { photo, context } = req.body;
@@ -116,7 +117,7 @@ router.get('/:postId/comments', async (req, res) => {
 });
 
 // Create a new Comment
-router.post('/:postId/comment', async (req, res) => {
+router.post('/:postId/comment', validateComment, async (req, res) => {
   const userId = req.user.id;
   const { postId } = req.params;
   const { context } = req.body;

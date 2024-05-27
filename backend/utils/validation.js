@@ -50,8 +50,30 @@ const validateSignup = [
   handleValidationErrors,
 ];
 
+const validatePost = [
+  check('context')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1 })
+    .withMessage('Post cannot be empty.')
+    .isLength({ max: 250 })
+    .withMessage('Post content must be 250 characters or less.'),
+  handleValidationErrors,
+];
+
+const validateComment = [
+  check('context')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1 })
+    .withMessage(`Comment cannot be empty.`)
+    .isLength({ max: 250 })
+    .withMessage('Comment must be 250 characters or less.'),
+  handleValidationErrors,
+];
+
 module.exports = {
   handleValidationErrors,
   validateLogin,
   validateSignup,
+  validatePost,
+  validateComment,
 };
