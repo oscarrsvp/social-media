@@ -103,7 +103,7 @@ export const commentSlice = createSlice({
       state[postId][id] = action.payload;
     });
 
-    builder.addCase(createComment.rejected, (state, action) => {
+    builder.addCase(createComment.rejected, (state) => {
       return { ...state };
     });
 
