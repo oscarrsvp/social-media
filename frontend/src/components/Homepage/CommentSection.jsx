@@ -11,16 +11,24 @@ function CommentSection({ postId }) {
   const [comment, setComment] = useState('');
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState(false);
+  const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 
   const handleComment = () => {
-    if (comment.length === 0) return alert('Please provide a value');
+    const newComment = dispatch(createComment({ context: comment, postId }));
 
-    dispatch(createComment({ context: comment, postId }));
-    setComment('');
-    setNewComment(!newComment);
-    if (showComments) return;
-    setShowComments(!showComments);
+    return newComment.then(async (res) => {
+      const data = await res;
+
+      if (data.error) {
+        setErrors(data.payload);
+      } else {
+        setComment('');
+        setNewComment(!newComment);
+        if (showComments) return;
+        setShowComments(!showComments);
+      }
+    });
   };
 
   return (
@@ -33,14 +41,12 @@ function CommentSection({ postId }) {
               size={20}
               onClick={(e) => featureComingSoon(e)}
             />
-            <span className="icons">Like</span>
+            <span className="icons" onClick={(e) => featureComingSoon(e)}>
+              Like
+            </span>
           </div>
-          <div className="flex">
-            <FaRegComment
-              cursor={'pointer'}
-              size={20}
-              onClick={() => setNewComment(!newComment)}
-            />
+          <div className="flex" onClick={() => setNewComment(!newComment)}>
+            <FaRegComment cursor={'pointer'} size={20} />
             <span className="icons">Comment</span>
           </div>
         </div>
@@ -58,6 +64,7 @@ function CommentSection({ postId }) {
             placeholder="Write a comment..."
             onChange={(e) => setComment(e.target.value)}
           />
+          {errors.context && <p className="error">{errors.context}</p>}
           <button className="btn update-btn" onClick={handleComment}>
             Comment
           </button>
