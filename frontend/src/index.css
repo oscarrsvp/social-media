@@ -10,13 +10,15 @@ body {
 }
 
 input,
-textarea {
+textarea,
+select {
   background-color: #edede9;
   border: 1px solid #dad7cd;
   font-size: 16px;
 }
 
-input {
+input,
+select {
   width: 100%;
   margin: 12px 0;
   padding: 10px;
@@ -36,6 +38,7 @@ li {
 h1 {
   font-weight: 500;
   margin: 10px 0;
+  text-align: center;
 }
 
 textarea {
