@@ -29,11 +29,12 @@
     height: 250px;
 }
 
-.imgContainer button {
+
+.imgButton {
     position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%);
+    right: 10px;
+    bottom: 20px;
+    cursor: pointer;
 }
 
 .userFeed {
@@ -91,6 +92,7 @@
 .userInfo {
     display: flex;
     flex-direction: column;
+    width: 190px;
 }
 
 .userInfo p {
