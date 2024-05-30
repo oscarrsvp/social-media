@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { formatDate } from '../../utils/globallyFns';
+import { featureComingSoon } from '../../utils/globallyFns';
 import UpdateUserDetails from '../UpdateInputs/UpdateUserDetails';
 import styles from './UserPage.module.css';
 
@@ -29,9 +30,12 @@ function UserDetails({ user }) {
 
           {sessionUser.id === user.id ? (
             <>
-              <button className="btn update-btn" onClick={() => setUpdate(!update)}>
+              <button className="btn" onClick={(e) => featureComingSoon(e)}>
                 Update Information
               </button>
+              {/* <button className="btn update-btn" onClick={() => setUpdate(!update)}>
+                Update Information
+              </button> */}
             </>
           ) : null}
         </>
