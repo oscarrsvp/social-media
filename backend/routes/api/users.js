@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { validateSignup } = require('../../utils/validation');
+const { validateSignup, validateUser } = require('../../utils/validation');
 const { User, Post, UserPhoto } = require('../../db/models');
 
 const router = express.Router();
@@ -42,12 +42,14 @@ router.post('/', validateSignup, async (req, res) => {
 });
 
 // Update User's Information
-router.put('/', requireAuth, async (req, res) => {
+router.put('/', requireAuth, validateUser, async (req, res) => {
   const userId = req.user.id;
   const {
     firstName,
     lastName,
     middleName,
+    profileImage,
+    headerImage,
     privacy,
     gender,
     birthday,
@@ -61,6 +63,8 @@ router.put('/', requireAuth, async (req, res) => {
     firstName,
     lastName,
     middleName,
+    profileImage,
+    headerImage,
     privacy,
     gender,
     birthday,
