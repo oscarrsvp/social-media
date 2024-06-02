@@ -45,6 +45,11 @@ function UserPage() {
           </div>
 
           <div className={styles.feed}>
+            {sessionUser.id === user.id && (
+              <>
+                <CreatePost />
+              </>
+            )}
             {userPost.length > 0 ? (
               postByDate.map((post) => (
                 <UserPost post={post} userId={userId} key={post.id} />
