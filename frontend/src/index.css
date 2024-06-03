@@ -34,8 +34,12 @@ input[type=file] {
 
 a {
   text-decoration: none;
-  color: #8ecae6;
+  color: #003049;
   font-size: 18px;
+}
+
+a:hover {
+  color: #025e90;
 }
 
 li {

@@ -33,8 +33,16 @@
 }
 
 .userPost img {
+    cursor: pointer;
     width: 100%;
+}
+
+.postImage {
     height: 400px;
+}
+
+.fullImage {
+    height: 100%;
 }
 
 .userHeading {
@@ -49,7 +57,8 @@
 
 .userDetails p {
     text-overflow: ellipsis;
-    word-break: break-all;
+    word-break: break-word;
+    line-height: 1.4;
 }
 
 .postDetails {
