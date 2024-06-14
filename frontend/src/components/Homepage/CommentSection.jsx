@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AiOutlineLike } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { FaRegComment } from 'react-icons/fa';
 import { createComment } from '../../store/commentSlice';
 import { featureComingSoon } from '../../utils/globallyFns';
+import { likePost, dislikePost } from '../../store/postSlice';
 import Comments from './Comments';
 import styles from './Homepage.module.css';
 
-function CommentSection({ postId }) {
+function CommentSection({ postId, postLikes }) {
+  const sessionUser = useSelector((state) => state.session.user);
   const [comment, setComment] = useState('');
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState(false);
@@ -36,11 +38,21 @@ function CommentSection({ postId }) {
       <div className="flexBetween">
         <div className="flex">
           <div className="flex">
-            <AiOutlineLike
-              cursor={'pointer'}
-              size={20}
-              onClick={(e) => featureComingSoon(e)}
-            />
+            {postLikes[sessionUser.id] ? (
+              <AiFillHeart
+                cursor={'pointer'}
+                fill={'red'}
+                size={20}
+                onClick={() => dispatch(dislikePost({ postId, userId: sessionUser.id }))}
+              />
+            ) : (
+              <AiOutlineHeart
+                cursor={'pointer'}
+                size={20}
+                onClick={() => dispatch(likePost(postId))}
+              />
+            )}
+
             <span className="icons" onClick={(e) => featureComingSoon(e)}>
               Like
             </span>
