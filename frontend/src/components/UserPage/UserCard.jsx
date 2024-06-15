@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { SlUser } from 'react-icons/sl';
 // import { updateUser } from '../../store/userSlice';
 // import { updateProfileImage } from '../../store/sessionSlice';
@@ -8,7 +8,6 @@ import styles from './UserPage.module.css';
 function UserCard({ user }) {
   const sessionUser = useSelector((state) => state.session.user);
   const fullName = `${user.firstName} ${user.lastName}`;
-  const dispatch = useDispatch();
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
