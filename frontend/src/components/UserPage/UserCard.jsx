@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { SlUser } from 'react-icons/sl';
-import { updateUser } from '../../store/userSlice';
-import { updateProfileImage } from '../../store/sessionSlice';
+// import { updateUser } from '../../store/userSlice';
+// import { updateProfileImage } from '../../store/sessionSlice';
 import { featureComingSoon } from '../../utils/globallyFns';
 import styles from './UserPage.module.css';
 
@@ -10,13 +10,13 @@ function UserCard({ user }) {
   const fullName = `${user.firstName} ${user.lastName}`;
   const dispatch = useDispatch();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    dispatch(updateProfileImage(profileImg));
+  //   dispatch(updateProfileImage(profileImg));
 
-    return dispatch(updateUser({ profileImage: profileImg }));
-  };
+  //   return dispatch(updateUser({ profileImage: profileImg }));
+  // };
 
   return (
     <div className={styles.userActions}>

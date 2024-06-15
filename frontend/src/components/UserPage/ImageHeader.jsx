@@ -21,12 +21,12 @@ function ImageHeader({ sessionUserId, user }) {
     setHeaderImg('');
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
 
-    setIsActive(!isActive);
-    setHeaderImg(file);
-  };
+  //   setIsActive(!isActive);
+  //   setHeaderImg(file);
+  // };
 
   return (
     <div className={styles.imgContainer}>
