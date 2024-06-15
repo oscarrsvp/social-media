@@ -100,6 +100,30 @@ module.exports = {
           city: 'Chicago',
           hashedPassword: bcrypt.hashSync('password6'),
         },
+        {
+          firstName: 'Benjamin',
+          lastName: 'Mixon',
+          email: 'benjaminmixon@aa.io',
+          profileImage:
+            'https://images.unsplash.com/photo-1669475535978-7479ef74e14f?q=80&w=3409&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          headerImage:
+            'https://images.unsplash.com/photo-1636474097055-561065036462?q=80&w=4125&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          gender: 'male',
+          birthday: '03/12/1981',
+          hashedPassword: bcrypt.hashSync('password'),
+        },
+        {
+          firstName: 'Katrine',
+          lastName: 'Spencer',
+          email: 'katrinespencer@aa.io',
+          profileImage:
+            'https://images.unsplash.com/photo-1603217039863-aa0c865404f7?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          headerImage:
+            'https://images.unsplash.com/photo-1592780828756-c418d71faa1f?q=80&w=4140&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          gender: 'female',
+          birthday: '07/25/1997',
+          hashedPassword: bcrypt.hashSync('password'),
+        },
       ],
       { validate: true },
     );
