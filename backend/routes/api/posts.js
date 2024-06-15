@@ -2,27 +2,66 @@ const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
 const { validatePost, validateComment } = require('../../utils/validation');
-const { User, Post, Comment } = require('../../db/models');
+const { User, Post, Comment, PostLike } = require('../../db/models');
 
 router.use(requireAuth);
 
 // Get all User's Posts
 router.get('/', async (req, res) => {
-  const post = await Post.findAll();
+  const post = await Post.findAll({
+    include: {
+      model: PostLike,
+      where: {
+        liked: true,
+      },
+      attributes: ['userId'],
+      required: true,
+      separate: true,
+    },
+  });
 
-  return res.json(post);
+  const postLiked = post.map((post) => {
+    const like = post.toJSON();
+    like.likes = {};
+    like.PostLikes.forEach((user) => {
+      like.likes[user.userId] = true;
+    });
+    delete like.PostLikes;
+    return like;
+  });
+
+  return res.json(postLiked);
 });
 
 // Get all Post by userId
 router.get('/user/:userId', async (req, res) => {
   const { userId } = req.params;
   const post = await Post.findAll({
+    include: {
+      model: PostLike,
+      where: {
+        liked: true,
+      },
+      attributes: ['userId'],
+      required: true,
+      separate: true,
+    },
     where: {
       userId,
     },
   });
 
-  return res.json(post);
+  const postLiked = post.map((post) => {
+    const like = post.toJSON();
+    like.likes = {};
+    like.PostLikes.forEach((user) => {
+      like.likes[user.userId] = true;
+    });
+    delete like.PostLikes;
+    return like;
+  });
+
+  return res.json(postLiked);
 });
 
 // Create a new Post
@@ -36,7 +75,10 @@ router.post('/', validatePost, async (req, res) => {
     context,
   });
 
-  return res.status(201).json(newPost);
+  const postLikes = newPost.toJSON();
+  postLikes.likes = {};
+
+  return res.status(201).json(postLikes);
 });
 
 // Get a Post by Id
@@ -137,6 +179,44 @@ router.post('/:postId/comment', validateComment, async (req, res) => {
   comment.profileImg = req.user.profileImage;
 
   return res.status(201).json(comment);
+});
+
+// Like a Post
+router.post('/:postId/likes', async (req, res) => {
+  const { postId } = req.params;
+  const { liked } = req.body;
+  const userId = req.user.id;
+
+  const post = await Post.findByPk(postId);
+
+  if (!post) return res.status(404).json({ message: `Post not found` });
+
+  const postLike = await PostLike.create({
+    userId,
+    postId,
+    liked,
+  });
+
+  return res.json(postLike);
+});
+
+// Unlike a Post
+router.delete('/:postId/likes', async (req, res) => {
+  const { postId } = req.params;
+  const userId = req.user.id;
+
+  const postLike = await PostLike.findOne({
+    where: {
+      userId,
+      postId,
+    },
+  });
+
+  if (!postLike) return res.status(404).json({ message: `Post not found` });
+
+  await postLike.destroy();
+
+  return res.json({ message: `Post unliked` });
 });
 
 module.exports = router;

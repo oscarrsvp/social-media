@@ -1,3 +1,4 @@
+import { SlUser } from 'react-icons/sl';
 import { useSelector } from 'react-redux';
 
 function DisplayName() {
@@ -6,7 +7,12 @@ function DisplayName() {
 
   return (
     <div className="center m-8">
-      <img className="profileImg" src={sessionUser.profileImage} alt="user-image" />
+      {sessionUser.profileImage ? (
+        <img className="profileImg" src={sessionUser.profileImage} alt="user-image" />
+      ) : (
+        <SlUser size={25} className="icons" />
+      )}
+
       <h3>{fullName}</h3>
     </div>
   );

@@ -97,6 +97,36 @@ export const deletePost = createAsyncThunk('post/deletePost', async (id) => {
   }
 });
 
+export const likePost = createAsyncThunk('post/likePost', async (postId) => {
+  try {
+    const response = await csrfFetch(`/api/posts/${postId}/likes`, {
+      method: 'POST',
+      body: JSON.stringify({
+        liked: true,
+      }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return { error };
+  }
+});
+
+export const dislikePost = createAsyncThunk('post/dislikePost', async (post) => {
+  try {
+    const { postId } = post;
+    const response = await csrfFetch(`/api/posts/${postId}/likes`, {
+      method: 'DELETE',
+    });
+    await response.json();
+
+    return post;
+  } catch (error) {
+    return { error };
+  }
+});
+
 const initialState = { post: null };
 
 export const postSlice = createSlice({
@@ -148,6 +178,17 @@ export const postSlice = createSlice({
       const posts = { ...state };
       delete posts[action.payload];
       return posts;
+    });
+
+    builder.addCase(likePost.fulfilled, (state, action) => {
+      const { userId, postId } = action.payload;
+      state[postId].likes[userId] = true;
+    });
+
+    builder.addCase(dislikePost.fulfilled, (state, action) => {
+      const { postId, userId } = action.payload;
+      const posts = { ...state };
+      delete posts[postId].likes[userId];
     });
   },
 });

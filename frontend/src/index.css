@@ -10,23 +10,37 @@ body {
 }
 
 input,
-textarea {
+textarea,
+select {
   background-color: #edede9;
   border: 1px solid #dad7cd;
   font-size: 16px;
 }
 
-input {
+input,
+select {
   width: 100%;
   margin: 12px 0;
   padding: 10px;
   border-radius: 5px;
 }
 
+input[type=file] {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
 a {
   text-decoration: none;
-  color: #8ecae6;
+  color: #003049;
   font-size: 18px;
+}
+
+a:hover {
+  color: #025e90;
+  text-decoration: underline;
 }
 
 li {
@@ -36,6 +50,7 @@ li {
 h1 {
   font-weight: 500;
   margin: 10px 0;
+  text-align: center;
 }
 
 textarea {
@@ -74,6 +89,7 @@ img {
 .center {
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
 .profile-picture {

@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         hooks: true,
       });
+      User.hasMany(models.PostLike, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hooks: true,
+      });
     }
   }
   User.init(
@@ -86,12 +91,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       privacy: DataTypes.BOOLEAN,
-      gender: {
-        type: DataTypes.STRING,
-        validate: {
-          isAlpha: true,
-        },
-      },
+      gender: DataTypes.STRING,
       birthday: DataTypes.STRING,
       relationship: DataTypes.STRING,
       city: DataTypes.STRING,

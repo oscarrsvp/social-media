@@ -35,18 +35,38 @@ const validateSignup = [
     .withMessage('Please provide a valid email.'),
   check('firstName')
     .exists({ checkFalsy: true })
-    .isLength({ min: 3 })
-    .withMessage('Please provide a first name with at least 3 characters.'),
+    .isLength({ min: 4 })
+    .withMessage('Please provide a first name with at least 4 characters.'),
   check('firstName').not().isEmail().withMessage('First name cannot be an email.'),
   check('lastName')
     .exists({ checkFalsy: true })
-    .isLength({ min: 3 })
-    .withMessage('Please provide a last name with at least 3 characters.'),
+    .isLength({ min: 4 })
+    .withMessage('Please provide a last name with at least 4 characters.'),
   check('lastName').not().isEmail().withMessage('Last name cannot be an email.'),
   check('password')
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
     .withMessage('Password must be 6 characters or more.'),
+  handleValidationErrors,
+];
+
+const validateUser = [
+  check('relationship')
+    .optional({ checkFalsy: true })
+    .isLength({ min: 1 })
+    .withMessage('Relationship status must not be empty.'),
+  check('city')
+    .optional({ checkFalsy: true })
+    .isLength({ max: 50 })
+    .withMessage('City must be 50 characters or less.'),
+  check('gender')
+    .optional({ checkFalsy: true })
+    .isIn(['Male', 'Female', 'Other'])
+    .withMessage('Gender must be male, female, or other.'),
+  check('birthday')
+    .optional({ checkFalsy: true })
+    .isISO8601()
+    .withMessage('Birthday must be a valid date.'),
   handleValidationErrors,
 ];
 
@@ -74,6 +94,7 @@ module.exports = {
   handleValidationErrors,
   validateLogin,
   validateSignup,
+  validateUser,
   validatePost,
   validateComment,
 };

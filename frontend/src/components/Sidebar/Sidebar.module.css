@@ -8,6 +8,7 @@
     color: #000000;
     padding: 16px;
     border-right: 1px solid #000000;
+    font-size: 18px;
 }
 
 .sideBarUser {
@@ -18,8 +19,8 @@
 }
 
 .sideBarUser img {
-    height: 60px;
-    width: 60px;
+    height: 90px;
+    width: 90px;
     border-radius: 50%;
 }
 
@@ -37,6 +38,14 @@
     gap: 5px;
     padding: 10px;
     color: #003049;
+    font-size: 20px;
+}
+
+.sideLinks a:hover {
+    color: #025e90;
+    background-color: #edede9;
+    border-radius: 5px;
+    text-decoration: none;
 }
 
 .sideLinks h4 {
