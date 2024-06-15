@@ -1,12 +1,11 @@
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { SlUser } from 'react-icons/sl';
 import styles from './FollowingSection.module.css';
 
 function FollowingSection({ userId }) {
   const users = useSelector((state) => state.users);
   const currentFollowing = Object.values(users);
-
-  console.log(users, 'ssss');
-  console.log(currentFollowing, 'following');
 
   if (users.users === null) return <h1>Loading...</h1>;
 
@@ -20,10 +19,15 @@ function FollowingSection({ userId }) {
               <div className={styles.user} key={`following${user.id}`}>
                 {user.id === userId ? null : (
                   <>
-                    <img className="profileImg" src={user.profileImage} alt="" />
-                    <h3>
+                    {user.profileImage ? (
+                      <img className="profileImg" src={user.profileImage} alt="" />
+                    ) : (
+                      <SlUser className={styles.noProfileImg} />
+                    )}
+
+                    <Link to={`/user/${user.id}`}>
                       {user.firstName} {user.lastName}
-                    </h3>
+                    </Link>
                   </>
                 )}
               </div>
