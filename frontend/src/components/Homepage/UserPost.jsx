@@ -44,7 +44,7 @@ function UserPost({ post, userId }) {
 
         <div className={styles.postDetails}>
           <PostDetails post={post} fullName={fullName} />
-          <CommentSection postId={post.id} />
+          <CommentSection postId={post.id} postLikes={post.likes} />
           <div>
             {sessionUser.id === post.userId && (
               <div>

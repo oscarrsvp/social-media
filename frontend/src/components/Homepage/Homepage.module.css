@@ -11,8 +11,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: scroll;
     flex-grow: 2;
+    gap: 16px;
+    overflow: scroll;
     padding: 20px 0px;
 }
 
@@ -27,14 +28,21 @@
     display: flex;
     flex-direction: column;
     background: #ffffff;
-    margin: 10px 0;
     border-radius: 5px;
     background-color: #ffffff;
 }
 
 .userPost img {
+    cursor: pointer;
     width: 100%;
+}
+
+.postImage {
     height: 400px;
+}
+
+.fullImage {
+    height: 100%;
 }
 
 .userHeading {
@@ -45,6 +53,12 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.userDetails p {
+    text-overflow: ellipsis;
+    word-break: break-word;
+    line-height: 1.4;
 }
 
 .postDetails {
@@ -94,7 +108,9 @@
 
 .comments {
     margin: 8px 0;
-    padding-left: 4px
+    padding-left: 4px;
+    text-overflow: ellipsis;
+    word-break: break-all;
 }
 
 .commentsVisible {

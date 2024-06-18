@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           len: [1 - 250],
+          notEmpty: true,
         },
       },
     },

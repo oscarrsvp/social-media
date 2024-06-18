@@ -76,7 +76,13 @@ const initialState = { user: null, error: null };
 export const sessionSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    updateProfileImage(state, action) {
+      if (state.user) {
+        state.user.profileImage = action.payload;
+      }
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
@@ -93,4 +99,5 @@ export const sessionSlice = createSlice({
   },
 });
 
+export const { updateProfileImage } = sessionSlice.actions;
 export default sessionSlice.reducer;

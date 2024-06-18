@@ -1,16 +1,26 @@
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineHome } from 'react-icons/ai';
 import { IoPersonOutline, IoSettingsOutline } from 'react-icons/io5';
 import { FaRegEnvelope, FaRegCompass } from 'react-icons/fa';
 import { SlUser } from 'react-icons/sl';
+import { LuLogOut } from 'react-icons/lu';
+import { removeUser } from '../../store/sessionSlice';
 import { featureComingSoon } from '../../utils/globallyFns';
 import styles from './Sidebar.module.css';
 
 function Sidebar() {
   const user = useSelector((state) => state.session.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   if (!user) return null;
+
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch(removeUser());
+    return navigate('/', { replace: true });
+  };
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
@@ -63,6 +73,11 @@ function Sidebar() {
         <li>
           <NavLink to={' '} onClick={(e) => featureComingSoon(e)}>
             <IoSettingsOutline /> Settings
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={' '} onClick={logout}>
+            <LuLogOut /> Log Out
           </NavLink>
         </li>
       </ul>

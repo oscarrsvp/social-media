@@ -24,6 +24,27 @@ export const fetchUser = createAsyncThunk('users/singleUser', async (userId) => 
   }
 });
 
+export const updateUser = createAsyncThunk(
+  'users/updateUser',
+  async (user, { rejectWithValue }) => {
+    try {
+      const response = await csrfFetch(`/api/users/`, {
+        method: 'PUT',
+        body: JSON.stringify(user),
+      });
+
+      const data = await response.json();
+
+      return data;
+    } catch (err) {
+      if (!err.ok) {
+        const errors = await err.json();
+        return rejectWithValue(errors.errors);
+      }
+    }
+  },
+);
+
 export const fetchFollowing = createAsyncThunk('users/following', async (userId) => {
   try {
     const response = await csrfFetch(`/api/users/${userId}/following`);
@@ -53,6 +74,10 @@ export const userSlice = createSlice({
     });
 
     builder.addCase(fetchUser.fulfilled, (state, action) => {
+      return { ...state, [action.payload.id]: action.payload };
+    });
+
+    builder.addCase(updateUser.fulfilled, (state, action) => {
       return { ...state, [action.payload.id]: action.payload };
     });
 

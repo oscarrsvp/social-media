@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SlUser } from 'react-icons/sl';
 import { createPost } from '../../store/postSlice';
+import { validateImage } from '../../utils/globallyFns';
 import styles from './Post.module.css';
 
 function CreatePost() {
   const [photo, setPhoto] = useState('');
   const [context, setContext] = useState('');
+  const [errors, setErrors] = useState({});
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const fullName = `${sessionUser.firstName || ''} ${sessionUser.lastName || ''}`;
@@ -14,10 +16,46 @@ function CreatePost() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(createPost({ photo, context }));
-    setContext('');
-    setPhoto('');
+    try {
+      setErrors({});
+      if (photo) {
+        if (!validateImage(photo)) {
+          setErrors({ photo: 'Image format is invalid' });
+          return;
+        }
+      }
+
+      const newPost = dispatch(createPost({ photo, context }));
+
+      return newPost.then(async (res) => {
+        const data = await res;
+        if (data.error) {
+          setErrors(data.payload);
+        } else {
+          setPhoto('');
+          setContext('');
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    // setErrors({});
+
+    // const newPost = dispatch(createPost({ photo, context }));
+
+    // return newPost.then(async (res) => {
+    //   const data = await res;
+
+    //   if (data.error) {
+    //     setErrors(data.payload);
+    //   } else {
+    //     setPhoto('');
+    //     setContext('');
+    //   }
+    // });
   };
+
   return (
     <div className={styles.createPost}>
       <div className={styles.userDetails}>
@@ -36,6 +74,7 @@ function CreatePost() {
             value={context}
             onChange={(e) => setContext(e.target.value)}
           ></textarea>
+          {errors.context && <p className="error">{errors.context}</p>}
         </label>
 
         <label>
@@ -46,6 +85,7 @@ function CreatePost() {
             onChange={(e) => setPhoto(e.target.value)}
           />
         </label>
+        {errors.photo && <p className="error">{errors.photo}</p>}
         <button className="btn success-btn" type="submit">
           Share Post
         </button>

@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
+const { validateComment } = require('../../utils/validation');
 const { Comment } = require('../../db/models');
 
 router.use(requireAuth);
 
 // Update a Comment
-router.put('/:commentId', async (req, res) => {
+router.put('/:commentId', validateComment, async (req, res) => {
   const userId = req.user.id;
   const { context } = req.body;
   const { commentId } = req.params;
@@ -23,6 +24,7 @@ router.put('/:commentId', async (req, res) => {
 
     const updatedComments = updateComment.toJSON();
     updatedComments.fullName = `${firstName} ${lastName}`;
+    updatedComments.profileImg = req.user.profileImage;
 
     return res.json(updatedComments);
   }

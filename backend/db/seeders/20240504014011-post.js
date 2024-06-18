@@ -50,12 +50,46 @@ module.exports = {
         },
         {
           userId: 5,
+          photo:
+            'https://images.unsplash.com/photo-1652561751125-91629417d6ae?q=80&w=3503&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: '#Relax',
+        },
+        {
+          userId: 5,
           context:
             "This don't feel like home anymore It's just wall, doors, and floors That only I can afford Remember when it used to mean more, mean more I got money in the top drawer That ain't much, but we not poor You're mine and I'm yours ❤️",
         },
         {
           userId: 4,
           context: 'Life is better in a Jeep. 🏕️ #JeepLove',
+        },
+        {
+          userId: 7,
+          photo:
+            'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=4140&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: 'Always on work mode',
+        },
+        {
+          userId: 7,
+          photo:
+            'https://images.squarespace-cdn.com/content/v1/55664553e4b0e48846329dc0/1461612416929-CM6HTBRBLAC9X3W013K6/artworks-000044586328-yw1m22-original.jpg',
+          context: 'Dropping soon...',
+        },
+        {
+          userId: 7,
+          context: 'By 1979 hip hop music had become a mainstream genre.',
+        },
+        {
+          userId: 8,
+          photo:
+            'https://www.vintagemovieposters.co.uk/wp-content/uploads/2023/02/IMG_0861-scaled.jpeg',
+          context: 'Scarface was released on Dec 9, 1983',
+        },
+        {
+          userId: 8,
+          photo:
+            'https://m.media-amazon.com/images/M/MV5BMzhmNGMzMDMtZDM0Yi00MmVmLWExYjAtZDhjZjcxZDM0MzJhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg',
+          context: 'A MUST SEE!!!! #bestMovie',
         },
       ],
       { validate: true },

@@ -8,6 +8,10 @@ nav {
     font-size: 18px;
 }
 
+nav a {
+    color: #ffffff;
+}
+
 .navLinks {
     display: flex;
     justify-content: space-between;

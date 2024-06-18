@@ -5,6 +5,7 @@ import { fetchPosts } from '../../store/postSlice';
 import { fetchUsers } from '../../store/userSlice';
 import CreatePost from '../PostForm/CreatePost';
 import UserPost from './UserPost';
+import FollowingSection from '../FollowingSection/FollowingSection';
 import styles from './Homepage.module.css';
 
 function Homepage() {
@@ -25,7 +26,7 @@ function Homepage() {
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
-  if (posts.post === null) return <h1>Loading</h1>;
+  if (posts.post === null) return <h1>Loading...</h1>;
 
   return (
     <div id={styles.homePage}>
@@ -35,16 +36,8 @@ function Homepage() {
           <UserPost post={post} userId={post.userId} key={post.id} />
         ))}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', color: '#ffffff' }}>
-        <div style={{ backgroundColor: '#003049', height: '300px', marginRight: '20px' }}>
-          <div>
-            <h2>FOLLOWERS/FOLLOWING</h2>
-          </div>
-          <div>
-            <h4>Who to Follow</h4>
-          </div>
-        </div>
-      </div>
+
+      <FollowingSection userId={sessionUser.id} />
     </div>
   );
 }
