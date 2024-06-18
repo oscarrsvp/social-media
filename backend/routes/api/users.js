@@ -9,12 +9,13 @@ const router = express.Router();
 // Get User's Information
 router.get('/', requireAuth, async (req, res) => {
   const user = await User.findAll({
-    include: [
-      {
-        model: Post,
-        order: [['createdAt', 'DESC']],
-      },
-    ],
+    attributes: ['id', 'firstName', 'lastName', 'profileImage'],
+    // include: [
+    //   {
+    //     model: Post,
+    //     order: [['createdAt', 'DESC']],
+    //   },
+    // ],
   });
 
   return res.json({ User: user });
@@ -75,6 +76,28 @@ router.put('/', requireAuth, validateUser, async (req, res) => {
   return res.json(updateUser);
 });
 
+// Following List By current User
+router.get('/following', requireAuth, async (req, res) => {
+  const userId = req.user.id;
+
+  const following = await Follower.findAll({
+    where: {
+      userId,
+    },
+    include: [
+      {
+        model: User,
+        as: 'Followers',
+        attributes: ['id', 'firstName', 'lastName', 'profileImage'],
+        required: false,
+      },
+    ],
+    attributes: ['followerId'],
+  });
+
+  return res.json(following);
+});
+
 // Get User By Id
 router.get('/:userId', requireAuth, async (req, res) => {
   const { userId } = req.params;
@@ -83,53 +106,30 @@ router.get('/:userId', requireAuth, async (req, res) => {
     include: [
       {
         model: Follower,
-        as: 'User',
+        as: 'Following',
         attributes: ['followerId'],
         required: false,
-        separate: true,
-      },
-      {
-        model: Follower,
-        as: 'Follower',
-        attributes: ['userId'],
-        required: false,
-        separate: true,
-      },
-    ],
-  });
-
-  return res.json({ User: user });
-});
-
-// Following List By User Id
-router.get('/:userId/following', requireAuth, async (req, res) => {
-  const { userId } = req.params;
-
-  const following = await Follower.findAll({
-    where: {
-      followerId: userId,
-    },
-    include: [
-      {
-        model: User,
-        as: 'User',
-        attributes: ['firstName', 'lastName', 'profileImage'],
+        include: [
+          {
+            model: User,
+            as: 'Followers',
+            attributes: ['id', 'firstName', 'lastName', 'profileImage'],
+          },
+        ],
       },
     ],
-    attributes: ['userId'],
   });
 
-  const followingList = following.map((follow) => {
-    const followers = follow.toJSON();
-    followers.fullName = `${followers.User.firstName} ${followers.User.lastName}`;
-    followers.profileImage = followers.User.profileImage;
+  const userData = user.toJSON();
 
-    delete followers.User;
-
-    return followers;
+  userData.followingList = {};
+  userData.Following.forEach((follow) => {
+    userData.followingList[follow.followerId] = { ...follow.Followers };
   });
 
-  return res.json({ following: followingList });
+  delete userData.Following;
+
+  return res.json({ User: userData });
 });
 
 // Follow User
