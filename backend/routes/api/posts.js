@@ -2,22 +2,38 @@ const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../utils/auth');
 const { validatePost, validateComment } = require('../../utils/validation');
-const { User, Post, Comment, PostLike } = require('../../db/models');
+const { User, Post, Comment, PostLike, Follower } = require('../../db/models');
 
 router.use(requireAuth);
 
 // Get all User's Posts
 router.get('/', async (req, res) => {
-  const post = await Post.findAll({
-    include: {
-      model: PostLike,
-      where: {
-        liked: true,
-      },
-      attributes: ['userId'],
-      required: true,
-      separate: true,
+  const userId = req.user.id;
+  const userFollowing = await Follower.findAll({
+    where: {
+      userId,
     },
+    attributes: ['followerId'],
+  });
+
+  const followingIds = userFollowing.map((follow) => follow.followerId);
+  followingIds.push(userId);
+
+  const post = await Post.findAll({
+    where: {
+      userId: followingIds,
+    },
+    include: [
+      {
+        model: PostLike,
+        where: {
+          liked: true,
+        },
+        attributes: ['userId'],
+        required: true,
+        separate: true,
+      },
+    ],
   });
 
   const postLiked = post.map((post) => {
