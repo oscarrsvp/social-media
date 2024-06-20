@@ -2,20 +2,28 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup, validateUser } = require('../../utils/validation');
-const { User, Post, UserPhoto, Follower } = require('../../db/models');
+const { User, Follower } = require('../../db/models');
 
 const router = express.Router();
 
 // Get User's Information
 router.get('/', requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const userFollowingList = await Follower.findAll({
+    where: {
+      userId,
+    },
+    attributes: ['followerId'],
+  });
+
+  const followingIds = userFollowingList.map((follow) => follow.followerId);
+  followingIds.push(userId);
+
   const user = await User.findAll({
     attributes: ['id', 'firstName', 'lastName', 'profileImage'],
-    // include: [
-    //   {
-    //     model: Post,
-    //     order: [['createdAt', 'DESC']],
-    //   },
-    // ],
+    where: {
+      id: followingIds,
+    },
   });
 
   return res.json({ User: user });
@@ -137,9 +145,39 @@ router.post('/:userId/follow', requireAuth, async (req, res) => {
   const { userId } = req.params;
   const followerId = req.user.id;
 
-  const follow = await Follower.create({ userId, followerId });
+  const user = await User.findByPk(userId);
 
-  return res.json({ follow });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  await Follower.create({ followerId: userId, userId: followerId });
+
+  const response = {
+    id: userId,
+    profileImage: user.profileImage,
+    firstName: user.firstName,
+    lastName: user.lastName,
+  };
+
+  return res.json(response);
+});
+
+//Unfollow User
+router.delete('/:userId/follow', requireAuth, async (req, res) => {
+  const { userId } = req.params;
+  const followerId = req.user.id;
+
+  const follow = await Follower.findOne({
+    where: {
+      followerId: userId,
+      userId: followerId,
+    },
+  });
+
+  await follow.destroy();
+
+  return res.json({ message: 'Successfully unfollow user' });
 });
 
 module.exports = router;
