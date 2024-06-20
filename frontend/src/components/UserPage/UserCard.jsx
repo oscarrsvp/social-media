@@ -1,5 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { SlUser } from 'react-icons/sl';
+import { followUser, unfollowUser } from '../../store/followSlice';
 // import { updateUser } from '../../store/userSlice';
 // import { updateProfileImage } from '../../store/sessionSlice';
 import { featureComingSoon } from '../../utils/globallyFns';
@@ -7,7 +8,9 @@ import styles from './UserPage.module.css';
 
 function UserCard({ user }) {
   const sessionUser = useSelector((state) => state.session.user);
+  const followingList = useSelector((state) => state.following);
   const fullName = `${user.firstName} ${user.lastName}`;
+  const dispatch = useDispatch();
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -34,9 +37,15 @@ function UserCard({ user }) {
 
       {sessionUser.id !== user.id ? (
         <div>
-          <button onClick={(e) => featureComingSoon(e)} className="btn">
-            Follow
-          </button>
+          {followingList[user.id] ? (
+            <button className="btn" onClick={() => dispatch(unfollowUser(user.id))}>
+              Unfollow
+            </button>
+          ) : (
+            <button className="btn" onClick={() => dispatch(followUser(user.id))}>
+              Follow
+            </button>
+          )}
         </div>
       ) : (
         <button className="btn" onClick={(e) => featureComingSoon(e)}>
