@@ -1,13 +1,20 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { SlUser } from 'react-icons/sl';
+import { fetchFollowing } from '../../store/followSlice';
 import styles from './FollowingSection.module.css';
 
 function FollowingSection({ userId }) {
-  const users = useSelector((state) => state.users);
-  const currentFollowing = Object.values(users);
+  const following = useSelector((state) => state.following);
+  const currentFollowing = Object.values(following);
+  const dispatch = useDispatch();
 
-  if (users.users === null) return <h1>Loading...</h1>;
+  useEffect(() => {
+    dispatch(fetchFollowing());
+  }, [dispatch]);
+
+  if (following.followingList === null) return <h1>Loading...</h1>;
 
   return (
     <div className={styles.followingSection}>
