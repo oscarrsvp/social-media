@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SlUser } from 'react-icons/sl';
 import { createPost } from '../../store/postSlice';
@@ -9,9 +9,18 @@ function CreatePost() {
   const [photo, setPhoto] = useState('');
   const [context, setContext] = useState('');
   const [errors, setErrors] = useState({});
+  const [disabled, setDisabled] = useState(true);
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const fullName = `${sessionUser.firstName || ''} ${sessionUser.lastName || ''}`;
+
+  useEffect(() => {
+    if (!context.trim()) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }, [context]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,21 +48,6 @@ function CreatePost() {
     } catch (err) {
       console.error(err);
     }
-
-    // setErrors({});
-
-    // const newPost = dispatch(createPost({ photo, context }));
-
-    // return newPost.then(async (res) => {
-    //   const data = await res;
-
-    //   if (data.error) {
-    //     setErrors(data.payload);
-    //   } else {
-    //     setPhoto('');
-    //     setContext('');
-    //   }
-    // });
   };
 
   return (
@@ -70,7 +64,7 @@ function CreatePost() {
       <form onSubmit={handleSubmit}>
         <label>
           <textarea
-            placeholder="What's on your mind?"
+            placeholder={`What's on your mind, ${sessionUser.firstName}?`}
             value={context}
             onChange={(e) => setContext(e.target.value)}
           ></textarea>
@@ -86,7 +80,7 @@ function CreatePost() {
           />
         </label>
         {errors.photo && <p className="error">{errors.photo}</p>}
-        <button className="btn success-btn" type="submit">
+        <button className="btn success-btn" type="submit" disabled={disabled}>
           Share Post
         </button>
       </form>
