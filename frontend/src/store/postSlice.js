@@ -155,15 +155,11 @@ export const postSlice = createSlice({
 
     builder.addCase(createPost.fulfilled, (state, action) => {
       const posts = { ...state };
-      delete posts.error;
       return { ...posts, [action.payload.id]: action.payload };
     });
 
     builder.addCase(createPost.rejected, (state, action) => {
-      if (action.payload) {
-        const err = action.payload.context;
-        state.error = err;
-      }
+      return { ...state };
     });
 
     builder.addCase(getPost.fulfilled, (state, action) => {
