@@ -23,6 +23,12 @@
     height: 0;
 }
 
+.feed h1 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(50%);
+}
+
 .userPost {
     width: 750px;
     display: flex;

@@ -67,6 +67,11 @@ img {
   object-position: center;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .flex {
   display: flex;
   justify-content: center;
@@ -136,6 +141,15 @@ img {
 
 .update-btn:hover {
   background-color: #72afd4;
+}
+
+.success-btn {
+  background-color: #008000;
+  padding: 8px;
+}
+
+.success-btn:hover {
+  background-color: #00a000;
 }
 
 .p-16 {

@@ -23,6 +23,18 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 12px;
+    font-size: 18px;
+}
+
+.discoverUser {
+    display: flex;
+    flex-direction: column;
+}
+
+.discoverUser a:hover {
+    text-decoration: none;
+    color: #ffffff;
 }
 
 .user {
