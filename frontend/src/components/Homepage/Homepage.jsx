@@ -20,7 +20,6 @@ function Homepage() {
 
   useEffect(() => {
     dispatch(fetchPosts());
-
     dispatch(fetchUsers());
   }, [dispatch]);
 
@@ -32,6 +31,9 @@ function Homepage() {
     <div id={styles.homePage}>
       <div className={styles.feed}>
         <CreatePost />
+        {userPost.length === 0 ? (
+          <h1>No posts to display. Create your first post now!</h1>
+        ) : null}
         {postByDate.map((post) => (
           <UserPost post={post} userId={post.userId} key={post.id} />
         ))}

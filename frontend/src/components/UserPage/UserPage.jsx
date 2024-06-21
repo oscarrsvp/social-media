@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
-import { fetchUser, fetchFollowing } from '../../store/userSlice';
+import { fetchUser } from '../../store/userSlice';
 import { fetchUserPosts, clearPosts } from '../../store/postSlice';
+import { fetchFollowing } from '../../store/followSlice';
 import ImageHeader from './ImageHeader';
 import UserCard from './UserCard';
 import UserDetails from './UserDetails';
@@ -25,8 +26,8 @@ function UserPage() {
   useEffect(() => {
     dispatch(clearPosts());
     dispatch(fetchUser(userId));
-    dispatch(fetchFollowing(userId));
     dispatch(fetchUserPosts(userId));
+    dispatch(fetchFollowing());
   }, [dispatch, userId]);
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
@@ -57,12 +58,11 @@ function UserPage() {
               ))
             ) : (
               <>
-                {sessionUser.id === user.id && (
-                  <>
-                    <CreatePost />
-                  </>
+                {sessionUser.id === user.id ? (
+                  <h1>You don&apos;t have any posts</h1>
+                ) : (
+                  <h1>{user.firstName} doesn&apos;t have any posts</h1>
                 )}
-                <h1>User doesn&apos;t have any post</h1>
               </>
             )}
           </div>
