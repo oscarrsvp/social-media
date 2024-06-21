@@ -20,8 +20,16 @@ function FollowingSection({ userId }) {
     <div className={styles.followingSection}>
       <div>
         <div className={styles.userFollowing}>
-          <h2>FOLLOWING</h2>
+          <h2>Following</h2>
           <div className={styles.userSection}>
+            {currentFollowing.length === 0 ? (
+              <div className={styles.discoverUser}>
+                <p>Visit the Explore page to discover new users</p>
+                <Link to={'/explore'} className="btn">
+                  Explore
+                </Link>
+              </div>
+            ) : null}
             {currentFollowing.map((user) => (
               <div className={styles.user} key={`following${user.id}`}>
                 {user.id === userId ? null : (
