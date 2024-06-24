@@ -50,8 +50,7 @@ function Sidebar() {
 
         <li>
           <NavLink
-            to={' '}
-            onClick={(e) => featureComingSoon(e)}
+            to={'/explore'}
             className={({ isActive }) => [isActive ? 'active' : '']}
           >
             <FaRegCompass /> Explore
