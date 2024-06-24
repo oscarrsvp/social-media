@@ -45,6 +45,17 @@ export const updateUser = createAsyncThunk(
   },
 );
 
+export const fetchExploreUsers = createAsyncThunk('users/explorePage', async () => {
+  try {
+    const response = await csrfFetch('/api/users/explore');
+    const data = await response.json();
+
+    return data.User;
+  } catch (error) {
+    return { message: error };
+  }
+});
+
 // Reducer
 const initialState = { users: null };
 
@@ -68,6 +79,14 @@ export const userSlice = createSlice({
 
     builder.addCase(updateUser.fulfilled, (state, action) => {
       return { ...state, [action.payload.id]: action.payload };
+    });
+
+    builder.addCase(fetchExploreUsers.fulfilled, (state, action) => {
+      const users = {};
+      action.payload.forEach((user) => {
+        users[user.id] = user;
+      });
+      return users;
     });
   },
 });

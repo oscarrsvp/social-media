@@ -24,6 +24,17 @@ export const fetchUserPosts = createAsyncThunk('post/userPosts', async (id) => {
   }
 });
 
+export const fetchExplorePost = createAsyncThunk('post/explorePosts', async () => {
+  try {
+    const response = await csrfFetch('/api/posts/explore');
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    return { error: error };
+  }
+});
+
 export const createPost = createAsyncThunk(
   'post/newPost',
   async (post, { rejectWithValue }) => {
@@ -146,6 +157,14 @@ export const postSlice = createSlice({
     });
 
     builder.addCase(fetchUserPosts.fulfilled, (state, action) => {
+      const posts = {};
+      action.payload.forEach((post) => {
+        posts[post.id] = post;
+      });
+      return posts;
+    });
+
+    builder.addCase(fetchExplorePost.fulfilled, (state, action) => {
       const posts = {};
       action.payload.forEach((post) => {
         posts[post.id] = post;
