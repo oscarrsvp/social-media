@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { validatePost, validateComment } = require('../../utils/validation');
 const { User, Post, Comment, PostLike, Follower } = require('../../db/models');
@@ -37,6 +38,55 @@ router.get('/', async (req, res) => {
   });
 
   const postLiked = post.map((post) => {
+    const like = post.toJSON();
+    like.likes = {};
+    like.PostLikes.forEach((user) => {
+      like.likes[user.userId] = true;
+    });
+    delete like.PostLikes;
+    return like;
+  });
+
+  return res.json(postLiked);
+});
+
+// Get all Posts current user is not following
+router.get('/explore', async (req, res) => {
+  const userId = req.user.id;
+
+  const userFollowingList = await Follower.findAll({
+    where: {
+      userId,
+    },
+    attributes: ['followerId'],
+  });
+
+  const followingIds = userFollowingList.map((follow) => follow.followerId);
+  followingIds.push(userId);
+
+  const posts = await Post.findAll({
+    where: {
+      userId: {
+        [Op.notIn]: followingIds,
+      },
+      photo: {
+        [Op.not]: null,
+      },
+    },
+    include: [
+      {
+        model: PostLike,
+        where: {
+          liked: true,
+        },
+        attributes: ['userId'],
+        required: true,
+        separate: true,
+      },
+    ],
+  });
+
+  const postLiked = posts.map((post) => {
     const like = post.toJSON();
     like.likes = {};
     like.PostLikes.forEach((user) => {

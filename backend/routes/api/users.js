@@ -1,8 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const { Op } = require('sequelize');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup, validateUser } = require('../../utils/validation');
-const { User, Follower } = require('../../db/models');
+const { User, Post, Follower } = require('../../db/models');
 
 const router = express.Router();
 
@@ -104,6 +105,38 @@ router.get('/following', requireAuth, async (req, res) => {
   });
 
   return res.json(following);
+});
+
+// Get All Users, current User is not following
+router.get('/explore', requireAuth, async (req, res) => {
+  const userId = req.user.id;
+
+  const userFollowingList = await Follower.findAll({
+    where: {
+      userId,
+    },
+    attributes: ['followerId'],
+  });
+
+  const followingIds = userFollowingList.map((follow) => follow.followerId);
+  followingIds.push(userId);
+
+  const user = await User.findAll({
+    attributes: ['id', 'firstName', 'lastName', 'profileImage'],
+    where: {
+      id: {
+        [Op.notIn]: followingIds,
+      },
+    },
+    include: [
+      {
+        model: Post,
+        required: false,
+      },
+    ],
+  });
+
+  return res.json({ User: user });
 });
 
 // Get User By Id
