@@ -1,0 +1,20 @@
+#exploreFeed {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: calc(100vh - 70px);
+    flex-grow: 2;
+}
+
+.postFeed {
+    display: flex;
+    /* justify-content: center; */
+    flex-wrap: wrap;
+    gap: 12px;
+    overflow: scroll;
+    padding: 20px;
+}
+
+.postFeed>div {
+    width: 410px;
+}
