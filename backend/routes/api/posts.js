@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { validatePost, validateComment } = require('../../utils/validation');
 const { User, Post, Comment, PostLike, Follower } = require('../../db/models');
@@ -163,7 +163,17 @@ router.put('/:postId', validatePost, async (req, res) => {
   const { postId } = req.params;
   const { photo, context } = req.body;
 
-  const post = await Post.findByPk(postId);
+  const post = await Post.findByPk(postId, {
+    include: {
+      model: PostLike,
+      where: {
+        liked: true,
+      },
+      attributes: ['userId'],
+      required: true,
+      separate: true,
+    },
+  });
 
   if (!post) return res.status(404).json({ message: `Post not found` });
 
@@ -173,7 +183,13 @@ router.put('/:postId', validatePost, async (req, res) => {
       context,
     });
 
-    return res.json(updatePost);
+    const updatedPost = updatePost.toJSON();
+    updatedPost.likes = {};
+    post.toJSON().PostLikes.forEach((user) => {
+      updatedPost.likes[user.userId] = true;
+    });
+
+    return res.json(updatedPost);
   }
 });
 
