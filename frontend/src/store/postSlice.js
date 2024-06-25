@@ -177,7 +177,7 @@ export const postSlice = createSlice({
       return { ...posts, [action.payload.id]: action.payload };
     });
 
-    builder.addCase(createPost.rejected, (state, action) => {
+    builder.addCase(createPost.rejected, (state) => {
       return { ...state };
     });
 
