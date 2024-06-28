@@ -85,6 +85,16 @@ router.put('/', requireAuth, validateUser, async (req, res) => {
   return res.json(updateUser);
 });
 
+// Current User Information
+router.get('/current', requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const user = await User.findByPk(userId);
+
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  return res.json(user);
+});
+
 // Following List By current User
 router.get('/following', requireAuth, async (req, res) => {
   const userId = req.user.id;
