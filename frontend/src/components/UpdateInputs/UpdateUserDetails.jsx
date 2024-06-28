@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/userSlice';
+import { updateFullName } from '../../store/sessionSlice';
 
-function UpdateUserDetails({ user, update }) {
+function UpdateUserDetails({ user }) {
+  const [firstName, setFirstName] = useState(user.firstName || '');
+  const [lastName, setLastName] = useState(user.lastName || '');
+  const [middleName, setMiddleName] = useState(user.middleName || '');
+  const [privacy, setPrivacy] = useState(user.privacy || '');
   const [relationship, setRelationship] = useState(user.relationship || '');
   const [city, setCity] = useState(user.city || '');
   const [gender, setGender] = useState(user.gender || '');
@@ -15,6 +20,8 @@ function UpdateUserDetails({ user, update }) {
     setErrors({});
 
     const userDetails = {
+      firstName,
+      lastName,
       relationship,
       city,
       gender,
@@ -25,17 +32,61 @@ function UpdateUserDetails({ user, update }) {
 
     return updateDetails.then(async (res) => {
       const data = await res;
+      dispatch(updateFullName({ firstName, lastName }));
       if (res.error) {
         setErrors(data.payload);
-      } else {
-        update((prev) => !prev);
       }
     });
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="userSettings">
+        <label>
+          First Name:
+          <input
+            type="text"
+            name="name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Last Name:
+          <input
+            type="text"
+            name="name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Middle Name:
+          <input
+            type="text"
+            name="name"
+            value={middleName}
+            onChange={(e) => setMiddleName(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Privacy:
+          <select
+            name="privacy"
+            value={privacy}
+            onChange={(e) => setPrivacy(e.target.value)}
+          >
+            <option value="" disabled>
+              Select Privacy Settings
+            </option>
+            <option value="Public">Public</option>
+            <option value="Private">Private</option>
+          </select>
+        </label>
+
         <label>
           Relationship Status:
           <select
@@ -88,11 +139,8 @@ function UpdateUserDetails({ user, update }) {
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
-        <button type="submit" className="btn">
-          Save
-        </button>
-        <button type="button" className="btn" onClick={() => update((prev) => !prev)}>
-          Cancel
+        <button type="submit" className="btn" onClick={(e) => handleSubmit(e)}>
+          Save Changes
         </button>
       </form>
     </div>
