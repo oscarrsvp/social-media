@@ -24,6 +24,17 @@ export const fetchUser = createAsyncThunk('users/singleUser', async (userId) => 
   }
 });
 
+export const fetchCurrentUser = createAsyncThunk('users/currentUser', async () => {
+  try {
+    const response = await csrfFetch('/api/users/current');
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    return { message: error };
+  }
+});
+
 export const updateUser = createAsyncThunk(
   'users/updateUser',
   async (user, { rejectWithValue }) => {
@@ -77,7 +88,12 @@ export const userSlice = createSlice({
       return { ...state, [action.payload.id]: action.payload };
     });
 
+    builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
+      return { ...state, [action.payload.id]: action.payload };
+    });
+
     builder.addCase(updateUser.fulfilled, (state, action) => {
+      console.log(action.payload, 'updated user data');
       return { ...state, [action.payload.id]: action.payload };
     });
 
