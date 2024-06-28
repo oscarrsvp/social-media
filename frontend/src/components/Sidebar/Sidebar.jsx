@@ -49,10 +49,7 @@ function Sidebar() {
         </li>
 
         <li>
-          <NavLink
-            to={'/explore'}
-            className={({ isActive }) => [isActive ? 'active' : '']}
-          >
+          <NavLink to={'/explore'}>
             <FaRegCompass /> Explore
           </NavLink>
         </li>
@@ -70,7 +67,7 @@ function Sidebar() {
           <h4>Account</h4>
         </li>
         <li>
-          <NavLink to={' '} onClick={(e) => featureComingSoon(e)}>
+          <NavLink to="/settings">
             <IoSettingsOutline /> Settings
           </NavLink>
         </li>

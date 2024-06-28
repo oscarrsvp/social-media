@@ -9,6 +9,7 @@ import Homepage from './components/Homepage/Homepage';
 import UserPage from './components/UserPage/UserPage';
 import Sidebar from './components/Sidebar/Sidebar';
 import ExplorePage from './components/ExplorePage/ExplorePage';
+import SettingPage from './components/SettingsPage/SettingPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: '/explore',
         element: <ExplorePage />,
+      },
+      {
+        path: '/settings',
+        element: <SettingPage />,
       },
     ],
   },
