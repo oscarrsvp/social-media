@@ -1,0 +1,23 @@
+.settingSection {
+    width: 60%;
+    margin: 24px auto;
+    font-size: 18px;
+}
+
+.settingSection h1 {
+    font-size: 2.2rem;
+    margin-bottom: 16px;
+}
+
+:global(.userSettings input) {
+    background-color: #ffffff;
+}
+
+:global(.userSettings select) {
+    background-color: #ffffff;
+}
+
+:global(.userSettings a:hover) {
+    color: #ffffff;
+    text-decoration: none;
+}
