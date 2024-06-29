@@ -51,6 +51,19 @@ const validateSignup = [
 ];
 
 const validateUser = [
+  check('firstName')
+    .isLength({ min: 4 })
+    .withMessage('First name must be 4 characters or more.'),
+  check('firstName').not().isEmail().withMessage('First name cannot be an email.'),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 4 })
+    .withMessage('Please provide a last name with at least 4 characters.'),
+  check('lastName').not().isEmail().withMessage('Last name cannot be an email.'),
+  check('middleName')
+    .optional({ checkFalsy: true })
+    .isLength({ max: 30 })
+    .withMessage('Middle name must be 30 characters or less.'),
   check('relationship')
     .optional({ checkFalsy: true })
     .isLength({ min: 1 })

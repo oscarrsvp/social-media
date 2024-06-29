@@ -26,7 +26,7 @@ module.exports = {
           allowNull: false,
         },
         middleName: {
-          type: Sequelize.STRING(50),
+          type: Sequelize.STRING(30),
         },
         email: {
           type: Sequelize.STRING(256),

@@ -69,6 +69,8 @@ router.put('/', requireAuth, validateUser, async (req, res) => {
 
   const user = await User.findByPk(userId);
 
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
   const updateUser = await user.update({
     firstName,
     lastName,

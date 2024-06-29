@@ -77,14 +77,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       middleName: {
         type: DataTypes.STRING,
-        validate: {
-          len: [4, 50],
-          isNotEmail(value) {
-            if (Validator.isEmail(value)) {
-              throw new Error('Cannot be an email.');
-            }
-          },
-        },
       },
       email: {
         type: DataTypes.STRING,
