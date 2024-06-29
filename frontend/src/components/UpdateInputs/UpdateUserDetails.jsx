@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { updateUser } from '../../store/userSlice';
 import { updateFullName } from '../../store/sessionSlice';
 
 function UpdateUserDetails({ user }) {
+  const [updateStatus, setupdateStatus] = useState(false);
   const [firstName, setFirstName] = useState(user.firstName || '');
   const [lastName, setLastName] = useState(user.lastName || '');
   const [middleName, setMiddleName] = useState(user.middleName || '');
-  const [privacy, setPrivacy] = useState(user.privacy || '');
+  // const [privacy, setPrivacy] = useState(user.privacy || '');
   const [relationship, setRelationship] = useState(user.relationship || '');
   const [city, setCity] = useState(user.city || '');
   const [gender, setGender] = useState(user.gender || '');
@@ -22,6 +24,7 @@ function UpdateUserDetails({ user }) {
     const userDetails = {
       firstName,
       lastName,
+      middleName,
       relationship,
       city,
       gender,
@@ -32,10 +35,13 @@ function UpdateUserDetails({ user }) {
 
     return updateDetails.then(async (res) => {
       const data = await res;
-      dispatch(updateFullName({ firstName, lastName }));
       if (res.error) {
         setErrors(data.payload);
+        setupdateStatus(false);
+        return;
       }
+      dispatch(updateFullName({ firstName, lastName }));
+      setupdateStatus(true);
     });
   };
 
@@ -51,6 +57,7 @@ function UpdateUserDetails({ user }) {
             onChange={(e) => setFirstName(e.target.value)}
           />
         </label>
+        {errors.firstName && <p className="error">{errors.firstName}</p>}
 
         <label>
           Last Name:
@@ -61,6 +68,7 @@ function UpdateUserDetails({ user }) {
             onChange={(e) => setLastName(e.target.value)}
           />
         </label>
+        {errors.lastName && <p className="error">{errors.lastName}</p>}
 
         <label>
           Middle Name:
@@ -71,8 +79,9 @@ function UpdateUserDetails({ user }) {
             onChange={(e) => setMiddleName(e.target.value)}
           />
         </label>
+        {errors.middleName && <p className="error">{errors.middleName}</p>}
 
-        <label>
+        {/* <label>
           Privacy:
           <select
             name="privacy"
@@ -85,7 +94,7 @@ function UpdateUserDetails({ user }) {
             <option value="Public">Public</option>
             <option value="Private">Private</option>
           </select>
-        </label>
+        </label> */}
 
         <label>
           Relationship Status:
@@ -142,7 +151,11 @@ function UpdateUserDetails({ user }) {
         <button type="submit" className="btn" onClick={(e) => handleSubmit(e)}>
           Save Changes
         </button>
+        <Link to={`/user/${user.id}`} className="btn">
+          Go to Page
+        </Link>
       </form>
+      {updateStatus && <p className="success">User details updated successfully!</p>}
     </div>
   );
 }
