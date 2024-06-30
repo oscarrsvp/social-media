@@ -1,11 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import { fetchExploreUsers } from '../../store/userSlice';
 import { fetchExplorePost } from '../../store/postSlice';
 import UserPost from '../Homepage/UserPost';
 import styles from './ExplorePage.module.css';
 
 function ExlorePage() {
+  const sessionUser = useSelector((state) => state.session.user);
   const usersPost = useSelector((state) => state.posts);
   const posts = Object.values(usersPost);
   const dispatch = useDispatch();
@@ -14,6 +16,8 @@ function ExlorePage() {
     dispatch(fetchExploreUsers());
     dispatch(fetchExplorePost());
   }, [dispatch]);
+
+  if (!sessionUser) return <Navigate to="/" replace={true} />;
 
   if (usersPost.post === null) return <h1>Loading</h1>;
 
