@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { fetchCurrentUser, clearUsers } from '../../store/userSlice';
 import UpdateUserDetails from '../UpdateInputs/UpdateUserDetails';
 import styles from './SettingPage.module.css';
@@ -13,6 +14,8 @@ function SettingPage() {
     dispatch(clearUsers());
     dispatch(fetchCurrentUser());
   }, [dispatch]);
+
+  if (!sessionUser) return <Navigate to="/" replace={true} />;
 
   if (!user) return <h1>Loading</h1>;
 
