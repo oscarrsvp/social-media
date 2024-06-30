@@ -1,18 +1,22 @@
 #exploreFeed {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: scroll;
     height: calc(100vh - 70px);
     flex-grow: 2;
 }
 
+#exploreFeed h1 {
+    font-size: 2.3rem;
+    margin: 16px 0;
+}
+
 .postFeed {
     display: flex;
-    /* justify-content: center; */
     flex-wrap: wrap;
     gap: 12px;
-    overflow: scroll;
     padding: 20px;
+    align-items: flex-start;
 }
 
 .postFeed>div {
