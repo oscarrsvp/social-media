@@ -70,6 +70,7 @@ router.get('/explore', async (req, res) => {
         [Op.notIn]: followingIds,
       },
       photo: {
+        [Op.ne]: '',
         [Op.not]: null,
       },
     },
