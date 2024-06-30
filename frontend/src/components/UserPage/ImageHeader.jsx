@@ -44,6 +44,7 @@ function ImageHeader({ sessionUserId, user }) {
                   name="image"
                   id="image"
                   value={headerImg}
+                  placeholder="Enter Image URL"
                   onChange={(e) => setHeaderImg(e.target.value)}
                 />
                 <div>
