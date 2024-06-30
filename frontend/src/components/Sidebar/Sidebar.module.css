@@ -26,7 +26,6 @@
 
 .sideLinks {
     display: flex;
-    height: 200px;
     flex-direction: column;
     gap: 8px;
 }

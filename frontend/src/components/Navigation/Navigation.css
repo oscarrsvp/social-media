@@ -33,3 +33,15 @@ nav a {
     right: 20px;
     border: 2px solid #000000;
 }
+
+.profile-dropdown li {
+    margin: 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+}
+
+.profile-dropdown button {
+    width: 100%;
+}

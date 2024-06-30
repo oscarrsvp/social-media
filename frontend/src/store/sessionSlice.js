@@ -82,6 +82,13 @@ export const sessionSlice = createSlice({
         state.user.profileImage = action.payload;
       }
     },
+
+    updateFullName(state, action) {
+      if (state.user) {
+        state.user.firstName = action.payload.firstName;
+        state.user.lastName = action.payload.lastName;
+      }
+    },
   },
 
   extraReducers: (builder) => {
@@ -99,5 +106,5 @@ export const sessionSlice = createSlice({
   },
 });
 
-export const { updateProfileImage } = sessionSlice.actions;
+export const { updateProfileImage, updateFullName } = sessionSlice.actions;
 export default sessionSlice.reducer;

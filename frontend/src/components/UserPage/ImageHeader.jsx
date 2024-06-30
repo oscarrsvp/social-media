@@ -2,18 +2,20 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { updateUser } from '../../store/userSlice';
-import { featureComingSoon } from '../../utils/globallyFns';
 import styles from './UserPage.module.css';
 
 function ImageHeader({ sessionUserId, user }) {
   const [isActive, setIsActive] = useState(false);
-  const [headerImg, setHeaderImg] = useState('');
+  const [headerImg, setHeaderImg] = useState('' || user.headerImage);
   const dispatch = useDispatch();
 
   const updateHeader = async (e) => {
     e.preventDefault();
+    const { firstName, lastName, profileImage } = user;
 
-    return dispatch(updateUser({ headerImage: headerImg }));
+    dispatch(updateUser({ headerImage: headerImg, firstName, lastName, profileImage }));
+    setIsActive(!isActive);
+    return;
   };
 
   const resetImg = () => {
@@ -36,11 +38,26 @@ function ImageHeader({ sessionUserId, user }) {
         <div className={styles.imgButton}>
           <form>
             {isActive ? (
-              <button className="btn" onClick={resetImg}>
-                Cancel
-              </button>
+              <>
+                <input
+                  type="text"
+                  name="image"
+                  id="image"
+                  value={headerImg}
+                  placeholder="Enter Image URL"
+                  onChange={(e) => setHeaderImg(e.target.value)}
+                />
+                <div>
+                  <button className="btn" onClick={updateHeader}>
+                    Add
+                  </button>
+                  <button className="btn" onClick={resetImg}>
+                    Cancel
+                  </button>
+                </div>
+              </>
             ) : (
-              <label htmlFor="image" onClick={(e) => featureComingSoon(e)}>
+              <label htmlFor="image" onClick={() => setIsActive(true)}>
                 <input
                   type="file"
                   name="image"
@@ -52,12 +69,6 @@ function ImageHeader({ sessionUserId, user }) {
                 </span>
               </label>
             )}
-
-            {isActive ? (
-              <button className="btn" onClick={updateHeader}>
-                Add
-              </button>
-            ) : null}
           </form>
         </div>
       ) : null}
