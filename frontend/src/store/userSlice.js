@@ -39,7 +39,7 @@ export const updateUser = createAsyncThunk(
   'users/updateUser',
   async (user, { rejectWithValue }) => {
     try {
-      const response = await csrfFetch(`/api/users/`, {
+      const response = await csrfFetch(`/api/users`, {
         method: 'PUT',
         body: JSON.stringify(user),
       });
@@ -73,7 +73,9 @@ const initialState = { users: null };
 export const userSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    clearUsers: () => initialState,
+  },
 
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
@@ -93,7 +95,6 @@ export const userSlice = createSlice({
     });
 
     builder.addCase(updateUser.fulfilled, (state, action) => {
-      console.log(action.payload, 'updated user data');
       return { ...state, [action.payload.id]: action.payload };
     });
 
@@ -106,5 +107,7 @@ export const userSlice = createSlice({
     });
   },
 });
+
+export const { clearUsers } = userSlice.actions;
 
 export default userSlice.reducer;
