@@ -2,11 +2,12 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineHome } from 'react-icons/ai';
 import { IoPersonOutline, IoSettingsOutline } from 'react-icons/io5';
-import { FaRegEnvelope, FaRegCompass } from 'react-icons/fa';
+import { FaRegCompass } from 'react-icons/fa';
+// import {FaRegEnvelope} from 'react-icons/fa';
 import { SlUser } from 'react-icons/sl';
 import { LuLogOut } from 'react-icons/lu';
 import { removeUser } from '../../store/sessionSlice';
-import { featureComingSoon } from '../../utils/globallyFns';
+// import { featureComingSoon } from '../../utils/globallyFns';
 import styles from './Sidebar.module.css';
 
 function Sidebar() {
@@ -54,11 +55,11 @@ function Sidebar() {
           </NavLink>
         </li>
 
-        <li>
+        {/* <li>
           <NavLink to={' '} onClick={(e) => featureComingSoon(e)}>
             <FaRegEnvelope /> Messages
           </NavLink>
-        </li>
+        </li> */}
       </ul>
 
       <div className={styles.divider}></div>
