@@ -12,7 +12,8 @@ export const createdAt = (date) => {
 };
 
 export const formatDate = (date) => {
-  const getDate = new Date(date.replace(/-/g, '/'));
+  const dates = date.split('T')[0];
+  const getDate = new Date(dates.replace(/-/g, '/'));
   const formattedDate = getDate.toLocaleString('default', {
     day: 'numeric',
     month: 'long',
@@ -20,6 +21,17 @@ export const formatDate = (date) => {
   });
 
   return formattedDate;
+};
+
+export const formatDateForInput = (date) => {
+  if (!date) return '';
+
+  const getDate = new Date(date);
+
+  const year = getDate.getUTCFullYear();
+  const month = String(getDate.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(getDate.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
 
 export const featureComingSoon = (e) => {

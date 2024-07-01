@@ -19,6 +19,12 @@ module.exports = {
           context: 'Finding joy in every step 🌲👣 #HikingAdventures #FriendshipGoals',
         },
         {
+          userId: 1,
+          photo:
+            'https://images.unsplash.com/photo-1593034509785-5b17ba49f683?q=80&w=3744&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: 'Picnic with my besties #SummerVibes #PicnicGoals',
+        },
+        {
           userId: 2,
           photo:
             'https://reefcasa.com/wp-content/uploads/2022/12/All-in-one-mini-reef.jpg',
@@ -86,10 +92,52 @@ module.exports = {
           context: 'Scarface was released on Dec 9, 1983',
         },
         {
+          userId: 7,
+          photo:
+            'https://images.unsplash.com/photo-1584679109594-56fffe50d527?q=80&w=4230&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: 'On Repeat #TheChronic',
+        },
+        {
           userId: 8,
           photo:
             'https://m.media-amazon.com/images/M/MV5BMzhmNGMzMDMtZDM0Yi00MmVmLWExYjAtZDhjZjcxZDM0MzJhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg',
           context: 'A MUST SEE!!!! #bestMovie',
+        },
+        {
+          userId: 8,
+          photo:
+            'https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: '#Ootd',
+        },
+        {
+          userId: 8,
+          photo:
+            'https://images.unsplash.com/photo-1616530940355-351fabd9524b?q=80&w=3024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: '#FavoriteMovies',
+        },
+        {
+          userId: 2,
+          photo:
+            'https://images.unsplash.com/photo-1516683037151-9a17603a8dc7?q=80&w=3408&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: 'Clownfish hosting a Anemone #ReefLife',
+        },
+        {
+          userId: 3,
+          photo:
+            'https://images.unsplash.com/photo-1604603565810-9f2a167d6b6e?q=80&w=3702&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: 'Exercising keeps me sane #FitnessJourney',
+        },
+        {
+          userId: 4,
+          photo:
+            'https://images.unsplash.com/photo-1588899451848-d1e3418c126f?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: 'Enjoy taking my Jeep off-road #JeepLife',
+        },
+        {
+          userId: 5,
+          photo:
+            'https://images.unsplash.com/photo-1611409776165-6b37cd22fd91?q=80&w=2736&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          context: '#Dior',
         },
       ],
       { validate: true },

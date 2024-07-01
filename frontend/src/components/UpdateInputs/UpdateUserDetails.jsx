@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { formatDateForInput } from '../../utils/globallyFns';
 import { updateUser } from '../../store/userSlice';
 import { updateFullName } from '../../store/sessionSlice';
 
@@ -13,7 +14,7 @@ function UpdateUserDetails({ user }) {
   const [relationship, setRelationship] = useState(user.relationship || '');
   const [city, setCity] = useState(user.city || '');
   const [gender, setGender] = useState(user.gender || '');
-  const [birthday, setBirthday] = useState(user.birthday || '');
+  const [birthday, setBirthday] = useState(formatDateForInput(user.birthday) || '');
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { fetchExploreUsers } from '../../store/userSlice';
-import { fetchExplorePost } from '../../store/postSlice';
+import { fetchExplorePost, clearPosts } from '../../store/postSlice';
 import UserPost from '../Homepage/UserPost';
 import styles from './ExplorePage.module.css';
 
@@ -13,6 +13,7 @@ function ExlorePage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(clearPosts());
     dispatch(fetchExploreUsers());
     dispatch(fetchExplorePost());
   }, [dispatch]);
