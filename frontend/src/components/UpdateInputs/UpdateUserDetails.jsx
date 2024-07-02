@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { formatDateForInput } from '../../utils/globallyFns';
 import { updateUser } from '../../store/userSlice';
 import { updateFullName } from '../../store/sessionSlice';
 
@@ -14,7 +13,7 @@ function UpdateUserDetails({ user }) {
   const [relationship, setRelationship] = useState(user.relationship || '');
   const [city, setCity] = useState(user.city || '');
   const [gender, setGender] = useState(user.gender || '');
-  const [birthday, setBirthday] = useState(formatDateForInput(user.birthday) || '');
+  // const [birthday, setBirthday] = useState(formatDateForInput(user.birthday) || '');
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
 
@@ -29,7 +28,6 @@ function UpdateUserDetails({ user }) {
       relationship,
       city,
       gender,
-      birthday,
     };
 
     const updateDetails = dispatch(updateUser(userDetails));
@@ -140,7 +138,7 @@ function UpdateUserDetails({ user }) {
             <option value="Other">Other</option>
           </select>
         </label>
-        <label>
+        {/* <label>
           Birthday:
           <input
             type="date"
@@ -149,7 +147,7 @@ function UpdateUserDetails({ user }) {
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
-        {errors.birthday && <p className="error">{errors.birthday}</p>}
+        {errors.birthday && <p className="error">{errors.birthday}</p>} */}
         <button type="submit" className="btn" onClick={(e) => handleSubmit(e)}>
           Save Changes
         </button>

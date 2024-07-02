@@ -16,9 +16,9 @@ function UserDetails({ user }) {
           </p>
           <p>City: {user.city ? <strong>{user.city}</strong> : 'N/A'}</p>
           <p>Gender: {user.gender ? <strong>{user.gender}</strong> : 'N/A'}</p>
-          <p>
+          {/* <p>
             Birthday: <strong>{user.birthday ? formatDate(user.birthday) : 'N/A'}</strong>
-          </p>
+          </p> */}
         </div>
 
         {sessionUser.id === user.id ? (

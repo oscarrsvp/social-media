@@ -16,10 +16,10 @@ function UserCard({ user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, birthday } = user;
+    const { firstName, lastName } = user;
 
     dispatch(updateProfileImage(profileImg));
-    dispatch(updateUser({ profileImage: profileImg, firstName, lastName, birthday }));
+    dispatch(updateUser({ profileImage: profileImg, firstName, lastName }));
     setIsActive(!isActive);
     return;
   };
