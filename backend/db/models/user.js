@@ -97,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       privacy: DataTypes.BOOLEAN,
       gender: DataTypes.STRING,
-      birthday: DataTypes.DATEONLY,
+      birthday: DataTypes.DATE,
       relationship: DataTypes.STRING,
       city: DataTypes.STRING,
       hashedPassword: {
