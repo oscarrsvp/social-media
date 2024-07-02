@@ -11,9 +11,11 @@ function ImageHeader({ sessionUserId, user }) {
 
   const updateHeader = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, profileImage } = user;
+    const { firstName, lastName, profileImage, birthday } = user;
 
-    dispatch(updateUser({ headerImage: headerImg, firstName, lastName, profileImage }));
+    dispatch(
+      updateUser({ headerImage: headerImg, firstName, lastName, profileImage, birthday }),
+    );
     setIsActive(!isActive);
     return;
   };
