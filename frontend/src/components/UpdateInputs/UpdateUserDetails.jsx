@@ -149,6 +149,7 @@ function UpdateUserDetails({ user }) {
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
+        {errors.birthday && <p className="error">{errors.birthday}</p>}
         <button type="submit" className="btn" onClick={(e) => handleSubmit(e)}>
           Save Changes
         </button>

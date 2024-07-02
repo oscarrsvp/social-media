@@ -77,7 +77,9 @@ const validateUser = [
     .optional({ checkFalsy: true })
     .isIn(['Male', 'Female', 'Other'])
     .withMessage('Gender must be male, female, or other.'),
-  check('birthday').optional({ checkFalsy: true }),
+  check('birthday')
+    .exists({ checkFalsy: true })
+    .withMessage('Birthday must be a valid date.'),
   handleValidationErrors,
 ];
 
