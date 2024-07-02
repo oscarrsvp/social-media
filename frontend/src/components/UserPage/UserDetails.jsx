@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { formatDate } from '../../utils/globallyFns';
 import styles from './UserPage.module.css';
 
 function UserDetails({ user }) {
