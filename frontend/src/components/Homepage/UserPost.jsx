@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { SlUser } from 'react-icons/sl';
 import { featureComingSoon } from '../../utils/globallyFns';
 import CommentSection from './CommentSection';
 import DeletePost from '../PostForm/DeletePost';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import UpdatePost from '../UpdateInputs/UpdatePost';
 import PostDetails from './PostDetails';
+import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './Homepage.module.css';
 
 function UserPost({ post, userId }) {
@@ -29,7 +29,7 @@ function UserPost({ post, userId }) {
               {users[userId]?.profileImage ? (
                 <img src={users[userId].profileImage} alt="" />
               ) : (
-                <SlUser size={20} />
+                <img src={BlankImage} />
               )}
             </p>
 

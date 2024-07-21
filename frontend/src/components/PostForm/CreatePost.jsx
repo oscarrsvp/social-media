@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SlUser } from 'react-icons/sl';
 import { createPost } from '../../store/postSlice';
 import { validateImage } from '../../utils/globallyFns';
+import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './Post.module.css';
 
 function CreatePost() {
@@ -56,7 +56,7 @@ function CreatePost() {
         {sessionUser.profileImage ? (
           <img src={sessionUser.profileImage} alt="" className={styles.profileImg} />
         ) : (
-          <SlUser size={20} />
+          <img src={BlankImage} className={styles.profileImg} />
         )}
         <h3>{fullName}</h3>
       </div>

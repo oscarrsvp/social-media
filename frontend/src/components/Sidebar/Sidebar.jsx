@@ -4,10 +4,9 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { IoPersonOutline, IoSettingsOutline } from 'react-icons/io5';
 import { FaRegCompass } from 'react-icons/fa';
 // import {FaRegEnvelope} from 'react-icons/fa';
-import { SlUser } from 'react-icons/sl';
 import { LuLogOut } from 'react-icons/lu';
 import { removeUser } from '../../store/sessionSlice';
-// import { featureComingSoon } from '../../utils/globallyFns';
+import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './Sidebar.module.css';
 
 function Sidebar() {
@@ -31,7 +30,7 @@ function Sidebar() {
         {user.profileImage ? (
           <img src={user.profileImage} alt="" />
         ) : (
-          <SlUser size={65} className="default-picture" />
+          <img src={BlankImage} className="default-picture" />
         )}
 
         <h1>{fullName}</h1>

@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { updateUser } from '../../store/userSlice';
+import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './UserPage.module.css';
 
 function ImageHeader({ sessionUserId, user }) {
   const [isActive, setIsActive] = useState(false);
   const [headerImg, setHeaderImg] = useState('' || user.headerImage);
+  const { profileImage } = user;
   const dispatch = useDispatch();
 
   const updateHeader = async (e) => {
@@ -32,7 +34,13 @@ function ImageHeader({ sessionUserId, user }) {
 
   return (
     <div className={styles.imgContainer}>
-      <img src={user.headerImage} alt="" />
+      <img src={user.headerImage} alt="" className={styles.bannerImg} />
+
+      {profileImage ? (
+        <img src={profileImage} alt="user-img" className={styles.profileImg} />
+      ) : (
+        <img src={BlankImage} className={styles.profileImg} />
+      )}
 
       {user.id === sessionUserId ? (
         <div className={styles.imgButton}>

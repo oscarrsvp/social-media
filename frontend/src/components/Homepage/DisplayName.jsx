@@ -1,4 +1,4 @@
-import { SlUser } from 'react-icons/sl';
+import BlankImage from '../../assets/blank-profile-picture.png';
 import { useSelector } from 'react-redux';
 
 function DisplayName() {
@@ -10,7 +10,7 @@ function DisplayName() {
       {sessionUser.profileImage ? (
         <img className="profileImg" src={sessionUser.profileImage} alt="user-image" />
       ) : (
-        <SlUser size={25} className="icons" />
+        <img src={BlankImage} className="profileImg" />
       )}
 
       <h3>{fullName}</h3>

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { SlUser } from 'react-icons/sl';
 import { fetchFollowing } from '../../store/followSlice';
+import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './FollowingSection.module.css';
 
 function FollowingSection({ userId }) {
@@ -37,7 +37,7 @@ function FollowingSection({ userId }) {
                     {user.profileImage ? (
                       <img className="profileImg" src={user.profileImage} alt="" />
                     ) : (
-                      <SlUser className={styles.noProfileImg} />
+                      <img src={BlankImage} className={styles.noProfileImg} />
                     )}
 
                     <Link to={`/user/${user.id}`}>
