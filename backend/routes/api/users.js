@@ -67,7 +67,11 @@ router.put('/', requireAuth, validateUser, async (req, res) => {
     city,
   } = req.body;
 
-  const user = await User.findByPk(userId);
+  const user = await User.findByPk(userId, {
+    attributes: {
+      include: ['createdAt'],
+    },
+  });
 
   if (!user) return res.status(404).json({ message: 'User not found' });
 
@@ -171,6 +175,9 @@ router.get('/:userId', requireAuth, async (req, res) => {
         ],
       },
     ],
+    attributes: {
+      include: ['createdAt'],
+    },
   });
 
   const userData = user.toJSON();

@@ -71,8 +71,8 @@ const validateUser = [
     .withMessage('Relationship status must not be empty.'),
   check('city')
     .optional({ checkFalsy: true })
-    .isLength({ max: 50 })
-    .withMessage('City must be 50 characters or less.'),
+    .isLength({ max: 35 })
+    .withMessage('City must be 35 characters or less.'),
   check('gender')
     .optional({ checkFalsy: true })
     .isIn(['Male', 'Female', 'Other'])
