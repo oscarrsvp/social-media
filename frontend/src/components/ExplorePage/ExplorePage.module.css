@@ -1,9 +1,7 @@
 #exploreFeed {
     display: flex;
-    flex-direction: column;
-    overflow: scroll;
-    height: calc(100vh - 70px);
-    flex-grow: 2;
+    gap: 20px;
+    width: 1200px;
 }
 
 #exploreFeed h1 {
@@ -15,10 +13,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    padding: 20px;
-    align-items: flex-start;
 }
 
 .postFeed>div {
-    width: 410px;
+    flex: 1 1 auto;
+    width: 380px;
 }

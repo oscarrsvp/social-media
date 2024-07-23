@@ -1,20 +1,14 @@
 #homePage {
     display: flex;
-    justify-content: space-between;
-    overflow: hidden;
-    height: calc(100vh - 70px);
-    flex-grow: 2;
+    gap: 20px;
+    width: 1200px;
 }
 
 .feed {
-    width: 650px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 2;
     gap: 16px;
-    overflow: scroll;
-    padding: 20px 0px;
 }
 
 .feed::-webkit-scrollbar {
@@ -125,4 +119,10 @@
 
 .commentsHidden {
     display: none;
+}
+
+.SidebarR {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }

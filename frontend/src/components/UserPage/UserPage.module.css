@@ -1,34 +1,44 @@
 #userPage {
     display: flex;
-    overflow: hidden;
-    height: calc(100vh - 70px);
-    flex-grow: 2;
+    gap: 20px;
+    width: 1200px;
+}
+
+.userHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 750px;
 }
 
 .profileImg {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
+    border: 8px solid #ffffff;
+    position: absolute;
+    top: 150px;
 }
 
 .userContainer {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    align-items: center;
 }
 
 .imgContainer {
+    display: flex;
+    justify-content: center;
     width: 100%;
     position: relative;
 }
 
-.imgContainer img {
+.bannerImg {
     width: 100%;
     height: 250px;
+    border-radius: 5px;
 }
-
 
 .imgButton {
     position: absolute;
@@ -40,21 +50,14 @@
 .userFeed {
     display: flex;
     justify-content: space-evenly;
-    position: relative;
-    overflow: scroll;
-    padding: 0 20px;
-    margin: 20px 0;
+    margin: 20px 0 0 0;
 }
 
 .userCard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    position: sticky;
-    left: 0;
-    top: 0;
-    overflow: scroll;
+    gap: 16px;
 }
 
 .userCard::-webkit-scrollbar {
@@ -64,11 +67,13 @@
 }
 
 .userActions {
-    width: 280px;
-    padding: 20px 10px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 190px;
+    width: 100%;
+    padding: 12px 4px;
 }
 
 .actions {
@@ -80,12 +85,18 @@
 
 .userSection {
     display: flex;
+    align-items: flex-start;
     flex-direction: column;
-    align-items: center;
     background: #fff;
-    padding: 20px 10px;
+    padding: 20px 15px;
     border-radius: 10px;
-    width: 280px;
+    width: 350px;
+}
+
+.userSection h3 {
+    border-bottom: 1px solid #edede9;
+    padding-bottom: 8px;
+    width: 100%;
 }
 
 .userSection a:hover {
@@ -96,17 +107,17 @@
 .userInfo {
     display: flex;
     flex-direction: column;
-    width: 190px;
-}
-
-.userInfo p {
-    margin: 5px 0;
+    width: 100%;
+    line-height: 2;
+    margin-top: 8px;
 }
 
 .feed {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    height: 800px;
-    margin-bottom: 25px;
+}
+
+.followSection {
+    text-align: center;
 }

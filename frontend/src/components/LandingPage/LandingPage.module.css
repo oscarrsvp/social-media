@@ -7,6 +7,10 @@
     flex-grow: 2;
 }
 
+div:has(div.landingPage) {
+    padding: 0;
+}
+
 .sections {
     width: 50%;
     height: 100vh;

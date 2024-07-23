@@ -184,13 +184,17 @@ button:disabled {
 }
 
 .default-picture {
-  border: 2px solid #003049;
+  border: 6px solid #edede9;
   border-radius: 50%;
+  height: 90px;
+  width: 90px;
 }
 
 .feedContainer {
   display: flex;
-  overflow: scroll;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 16px;
 }
 
 .active {
