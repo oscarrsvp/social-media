@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SlUser } from 'react-icons/sl';
 import { followUser, unfollowUser } from '../../store/followSlice';
 import { updateUser } from '../../store/userSlice';
 import { updateProfileImage } from '../../store/sessionSlice';
@@ -26,17 +25,8 @@ function UserCard({ user }) {
 
   return (
     <div className={styles.userActions}>
-      <div>
-        {user.profileImage ? (
-          <img src={user.profileImage} alt="" className={styles.profileImg} />
-        ) : (
-          <SlUser size={150} />
-        )}
-      </div>
       <div className={styles.actions}>
         <h2>{fullName}</h2>
-        <p>Message</p>
-        <p>Photos</p>
         {isActive ? (
           <>
             <input
@@ -49,39 +39,39 @@ function UserCard({ user }) {
             />
           </>
         ) : null}
-      </div>
 
-      {sessionUser.id !== user.id ? (
-        <div>
-          {followingList[user.id] ? (
-            <button className="btn" onClick={() => dispatch(unfollowUser(user.id))}>
-              Unfollow
-            </button>
-          ) : (
-            <button className="btn" onClick={() => dispatch(followUser(user.id))}>
-              Follow
-            </button>
-          )}
-        </div>
-      ) : (
-        <>
-          {isActive ? (
-            <div>
-              <button className="btn" onClick={(e) => handleSubmit(e)}>
-                Edit Picture
+        {sessionUser.id !== user.id ? (
+          <>
+            {followingList[user.id] ? (
+              <button className="btn" onClick={() => dispatch(unfollowUser(user.id))}>
+                Unfollow
               </button>
+            ) : (
+              <button className="btn" onClick={() => dispatch(followUser(user.id))}>
+                Follow
+              </button>
+            )}
+          </>
+        ) : (
+          <>
+            {isActive ? (
+              <div>
+                <button className="btn" onClick={(e) => handleSubmit(e)}>
+                  Edit Picture
+                </button>
 
+                <button className="btn" onClick={() => setIsActive((prev) => !prev)}>
+                  Cancel
+                </button>
+              </div>
+            ) : (
               <button className="btn" onClick={() => setIsActive((prev) => !prev)}>
-                Cancel
+                {user.profileImage ? 'Change Picture' : 'Upload Picture'}
               </button>
-            </div>
-          ) : (
-            <button className="btn" onClick={() => setIsActive((prev) => !prev)}>
-              {user.profileImage ? 'Change Picture' : 'Upload Picture'}
-            </button>
-          )}
-        </>
-      )}
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import UserCard from './UserCard';
 import UserDetails from './UserDetails';
 import CreatePost from '../PostForm/CreatePost';
 import UserPost from '../Homepage/UserPost';
+import AdsContent from '../AdsContent/AdsContent';
 import styles from './UserPage.module.css';
 
 function UserPage() {
@@ -37,15 +38,12 @@ function UserPage() {
   return (
     <div id={styles.userPage}>
       <div className={styles.userContainer}>
-        <ImageHeader sessionUserId={sessionUser.id} user={user} />
+        <div className={styles.userHeader}>
+          <ImageHeader sessionUserId={sessionUser.id} user={user} />
+          <UserCard user={user} />
+        </div>
 
         <div className={styles.userFeed}>
-          <div className={styles.userCard}>
-            <UserCard user={user} />
-
-            <UserDetails user={user} />
-          </div>
-
           <div className={styles.feed}>
             {sessionUser.id === user.id && (
               <>
@@ -67,6 +65,10 @@ function UserPage() {
             )}
           </div>
         </div>
+      </div>
+      <div className={styles.userCard}>
+        <UserDetails user={user} />
+        <AdsContent />
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { updateUser } from '../../store/userSlice';
 import { updateFullName } from '../../store/sessionSlice';
+import { useModal } from '../../context/Modal';
+import styles from '../SettingsPage/SettingPage.module.css';
 
 function UpdateUserDetails({ user }) {
   const [updateStatus, setupdateStatus] = useState(false);
@@ -15,6 +16,7 @@ function UpdateUserDetails({ user }) {
   const [gender, setGender] = useState(user.gender || '');
   // const [birthday, setBirthday] = useState(formatDateForInput(user.birthday) || '');
   const [errors, setErrors] = useState({});
+  const { closeModal } = useModal();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
@@ -41,11 +43,13 @@ function UpdateUserDetails({ user }) {
       }
       dispatch(updateFullName({ firstName, lastName }));
       setupdateStatus(true);
+      closeModal();
     });
   };
 
   return (
-    <div>
+    <section className={styles.settingSection}>
+      <h2>Update Your Profile</h2>
       <form onSubmit={handleSubmit} className="userSettings">
         <label>
           First Name:
@@ -109,7 +113,7 @@ function UpdateUserDetails({ user }) {
             <option value="In a Relationship">In a Relationship</option>
             <option value="Engaged">Engaged</option>
             <option value="Married">Married</option>
-            <option value="Complicated">It&apos;s Complicated</option>
+            <option value="It's Complicated">It&apos;s Complicated</option>
           </select>
         </label>
         <label>
@@ -151,12 +155,9 @@ function UpdateUserDetails({ user }) {
         <button type="submit" className="btn" onClick={(e) => handleSubmit(e)}>
           Save Changes
         </button>
-        <Link to={`/user/${user.id}`} className="btn">
-          Go to Page
-        </Link>
       </form>
       {updateStatus && <p className="success">User details updated successfully!</p>}
-    </div>
+    </section>
   );
 }
 

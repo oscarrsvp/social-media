@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { formatDate } from '../../utils/globallyFns';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import UpdateUserDetails from '../UpdateInputs/UpdateUserDetails';
 import styles from './UserPage.module.css';
 
 function UserDetails({ user }) {
@@ -7,6 +9,7 @@ function UserDetails({ user }) {
 
   return (
     <div className={styles.userSection}>
+      <h3>{user.firstName}&apos;s details</h3>
       <>
         <div className={styles.userInfo}>
           <p>
@@ -15,16 +18,20 @@ function UserDetails({ user }) {
           </p>
           <p>City: {user.city ? <strong>{user.city}</strong> : 'N/A'}</p>
           <p>Gender: {user.gender ? <strong>{user.gender}</strong> : 'N/A'}</p>
-          {/* <p>
-            Birthday: <strong>{user.birthday ? formatDate(user.birthday) : 'N/A'}</strong>
-          </p> */}
         </div>
+
+        <span>
+          Memeber Since:{' '}
+          <strong>{user.createdAt ? formatDate(user.createdAt) : null} </strong>{' '}
+        </span>
 
         {sessionUser.id === user.id ? (
           <>
-            <Link to="/settings" className="btn">
-              Update Information
-            </Link>
+            <OpenModalButton
+              buttonText="Update Information"
+              modalComponent={<UpdateUserDetails user={user} />}
+              classNames={'btn'}
+            />
           </>
         ) : null}
       </>
