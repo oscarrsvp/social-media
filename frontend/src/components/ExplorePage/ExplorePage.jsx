@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { fetchExploreUsers } from '../../store/userSlice';
 import { fetchExplorePost, clearPosts } from '../../store/postSlice';
 import UserPost from '../Homepage/UserPost';
+import AdsContent from '../AdsContent/AdsContent';
 import styles from './ExplorePage.module.css';
 
 function ExlorePage() {
@@ -23,14 +24,18 @@ function ExlorePage() {
   if (usersPost.post === null) return <h1>Loading</h1>;
 
   return (
-    <div id={styles.exploreFeed}>
-      <h1>Explore</h1>
-      <div className={styles.postFeed}>
-        {posts.map((post) => (
-          <UserPost post={post} userId={post.userId} key={post.id} />
-        ))}
+    <>
+      <div id={styles.exploreFeed}>
+        <div className={styles.postFeed}>
+          {posts.map((post) => (
+            <UserPost post={post} userId={post.userId} key={post.id} />
+          ))}
+        </div>
+        <div>
+          <AdsContent />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

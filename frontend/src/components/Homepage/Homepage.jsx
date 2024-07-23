@@ -6,6 +6,7 @@ import { fetchUsers } from '../../store/userSlice';
 import CreatePost from '../PostForm/CreatePost';
 import UserPost from './UserPost';
 import FollowingSection from '../FollowingSection/FollowingSection';
+import AdsContent from '../AdsContent/AdsContent';
 import styles from './Homepage.module.css';
 
 function Homepage() {
@@ -39,7 +40,10 @@ function Homepage() {
         ))}
       </div>
 
-      <FollowingSection userId={sessionUser.id} />
+      <div className={styles.SidebarR}>
+        <FollowingSection userId={sessionUser.id} />
+        <AdsContent />
+      </div>
     </div>
   );
 }
