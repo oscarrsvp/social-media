@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiOutlineHome } from 'react-icons/ai';
-import { IoPersonOutline, IoSettingsOutline } from 'react-icons/io5';
+import { IoPersonOutline } from 'react-icons/io5';
 import { FaRegCompass } from 'react-icons/fa';
 // import {FaRegEnvelope} from 'react-icons/fa';
 import { LuLogOut } from 'react-icons/lu';
@@ -65,11 +65,6 @@ function Sidebar() {
       <ul className={styles.sideLinks}>
         <li>
           <h4>Account</h4>
-        </li>
-        <li>
-          <NavLink to="/settings">
-            <IoSettingsOutline /> Settings
-          </NavLink>
         </li>
         <li>
           <NavLink to={' '} onClick={logout}>
