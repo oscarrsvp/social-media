@@ -7,30 +7,38 @@ import styles from './UserPage.module.css';
 
 function ImageHeader({ sessionUserId, user }) {
   const [isActive, setIsActive] = useState(false);
-  const [headerImg, setHeaderImg] = useState('' || user.headerImage);
+  const [headerImg, setHeaderImg] = useState(null);
   const { profileImage } = user;
   const dispatch = useDispatch();
 
-  const updateHeader = async (e) => {
+  const handleFile = (e) => {
     e.preventDefault();
-    const { firstName, lastName, profileImage } = user;
 
-    dispatch(updateUser({ headerImage: headerImg, firstName, lastName, profileImage }));
+    if (!headerImg) return;
+
+    const formData = new FormData();
+    formData.append('headerImg', headerImg);
+
+    dispatch(updateUser(formData));
+
     setIsActive(!isActive);
     return;
   };
 
   const resetImg = () => {
     setIsActive(!isActive);
-    setHeaderImg('');
+    setHeaderImg(null);
   };
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
+  const handleFileChange = (e) => {
+    const image = e.target.files[0];
 
-  //   setIsActive(!isActive);
-  //   setHeaderImg(file);
-  // };
+    if (!image) return;
+
+    setHeaderImg(image);
+
+    setIsActive(!isActive);
+  };
 
   return (
     <div className={styles.imgContainer}>
@@ -44,40 +52,33 @@ function ImageHeader({ sessionUserId, user }) {
 
       {user.id === sessionUserId ? (
         <div className={styles.imgButton}>
-          <form>
-            {isActive ? (
-              <>
-                <input
-                  type="text"
-                  name="image"
-                  id="image"
-                  value={headerImg}
-                  placeholder="Enter Image URL"
-                  onChange={(e) => setHeaderImg(e.target.value)}
-                />
-                <div>
-                  <button className="btn" onClick={updateHeader}>
-                    Add
-                  </button>
-                  <button className="btn" onClick={resetImg}>
-                    Cancel
-                  </button>
-                </div>
-              </>
-            ) : (
-              <label htmlFor="image" onClick={() => setIsActive(true)}>
-                <input
-                  type="file"
-                  name="image"
-                  id="image"
-                  //   onChange={(e) => handleFileChange(e)}
-                />
-                <span className="btn center">
-                  <AiOutlinePlusCircle /> Edit
-                </span>
-              </label>
-            )}
-          </form>
+          {isActive ? (
+            <>
+              <input type="file" name="headerImg" onChange={(e) => handleFileChange(e)} />
+              <div>
+                <button className="btn" onClick={handleFile}>
+                  Add
+                </button>
+                <button className="btn" onClick={resetImg}>
+                  Cancel
+                </button>
+              </div>
+            </>
+          ) : (
+            <label htmlFor="image">
+              <input
+                type="file"
+                name="headerImg"
+                id="image"
+                onChange={(e) => handleFileChange(e)}
+              />
+
+              <span className="btn center" onClick={(prev) => setIsActive(!prev)}>
+                <AiOutlinePlusCircle /> Edit
+              </span>
+            </label>
+          )}
+          {headerImg && <p>Selected File: {headerImg.name}</p>}
         </div>
       ) : null}
     </div>
