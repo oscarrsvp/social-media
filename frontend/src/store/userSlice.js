@@ -41,7 +41,10 @@ export const updateUser = createAsyncThunk(
     try {
       const response = await csrfFetch(`/api/users`, {
         method: 'PUT',
-        body: JSON.stringify(user),
+        body: user,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       const data = await response.json();
