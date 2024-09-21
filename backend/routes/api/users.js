@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup, validateUser } = require('../../utils/validation');
+const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
+
 const { User, Post, Follower } = require('../../db/models');
 
 const router = express.Router();
@@ -52,44 +54,57 @@ router.post('/', validateSignup, async (req, res) => {
 });
 
 // Update User's Information
-router.put('/', requireAuth, validateUser, async (req, res) => {
-  const userId = req.user.id;
-  const {
-    firstName,
-    lastName,
-    middleName,
-    profileImage,
-    headerImage,
-    privacy,
-    gender,
-    birthday,
-    relationship,
-    city,
-  } = req.body;
+router.put(
+  '/',
+  requireAuth,
+  validateUser,
+  singleMulterUpload('headerImg'),
+  async (req, res) => {
+    const userId = req.user.id;
+    const {
+      firstName,
+      lastName,
+      middleName,
+      privacy,
+      gender,
+      birthday,
+      relationship,
+      city,
+    } = req.body;
 
-  const user = await User.findByPk(userId, {
-    attributes: {
-      include: ['createdAt'],
-    },
-  });
+    const user = await User.findByPk(userId, {
+      attributes: {
+        include: ['createdAt'],
+      },
+    });
 
-  if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-  const updateUser = await user.update({
-    firstName,
-    lastName,
-    middleName,
-    profileImage,
-    headerImage,
-    privacy,
-    gender,
-    birthday,
-    relationship,
-    city,
-  });
+    let { profileImage, headerImage } = user;
 
-  return res.json(updateUser);
-});
+    const { file } = req;
+
+    if (file) {
+      const uploadResult = await singlePublicFileUpload(file);
+      headerImage = uploadResult.secure_url;
+    }
+
+    const updateUser = await user.update({
+      firstName,
+      lastName,
+      middleName,
+      profileImage,
+      headerImage,
+      privacy,
+      gender,
+      birthday,
+      relationship,
+      city,
+    });
+
+    return res.json(updateUser);
+  },
+);
 
 // Current User Information
 router.get('/current', requireAuth, async (req, res) => {
