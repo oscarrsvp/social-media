@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { followUser, unfollowUser } from '../../store/followSlice';
-import { updateUser } from '../../store/userSlice';
+import { uploadPhotoToCloudinary } from '../../store/userSlice';
 import { updateProfileImage } from '../../store/sessionSlice';
 import styles from './UserPage.module.css';
 
@@ -15,32 +15,59 @@ function UserCard({ user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { firstName, lastName } = user;
 
-    dispatch(updateProfileImage(profileImg));
-    dispatch(updateUser({ profileImage: profileImg, firstName, lastName }));
+    if (!profileImg) return;
+
+    dispatch(
+      uploadPhotoToCloudinary({ userId: user.id, url: profileImg, preview: true }),
+    ).then((res) => {
+      dispatch(updateProfileImage(res.payload.url));
+    });
+
     setIsActive(!isActive);
     return;
+  };
+
+  const handleProfileImg = (e) => {
+    const image = e.target.files[0];
+
+    if (!image) return;
+
+    setProfileImg(image);
+    setIsActive(!isActive);
   };
 
   return (
     <div className={styles.userActions}>
       <div className={styles.actions}>
         <h2>{fullName}</h2>
-        {isActive ? (
+        {isActive && (
           <>
-            <input
-              type="text"
-              name="profileImg"
-              id="profileImg"
-              value={profileImg}
-              placeholder="Enter Image URL"
-              onChange={(e) => setProfileImg(e.target.value)}
-            />
+            <div>
+              <button className="btn" onClick={handleSubmit}>
+                Add
+              </button>
+              <button className="btn" onClick={() => setIsActive(!isActive)}>
+                Cancel
+              </button>
+            </div>
           </>
-        ) : null}
+        )}
 
-        {sessionUser.id !== user.id ? (
+        {sessionUser.id === user.id ? (
+          <label htmlFor="image" className={styles.ProfileInput}>
+            <input
+              type="file"
+              name="profileImg"
+              id="image"
+              onChange={(e) => handleProfileImg(e)}
+            />
+
+            <button className="btn" onClick={(prev) => setIsActive(!prev)}>
+              {user.userProfileImg ? 'Change Picture' : 'Upload Picture'}
+            </button>
+          </label>
+        ) : (
           <>
             {followingList[user.id] ? (
               <button className="btn" onClick={() => dispatch(unfollowUser(user.id))}>
@@ -49,24 +76,6 @@ function UserCard({ user }) {
             ) : (
               <button className="btn" onClick={() => dispatch(followUser(user.id))}>
                 Follow
-              </button>
-            )}
-          </>
-        ) : (
-          <>
-            {isActive ? (
-              <div>
-                <button className="btn" onClick={(e) => handleSubmit(e)}>
-                  Edit Picture
-                </button>
-
-                <button className="btn" onClick={() => setIsActive((prev) => !prev)}>
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <button className="btn" onClick={() => setIsActive((prev) => !prev)}>
-                {user.profileImage ? 'Change Picture' : 'Upload Picture'}
               </button>
             )}
           </>
