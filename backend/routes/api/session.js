@@ -4,18 +4,24 @@ const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { handleValidationErrors, validateLogin } = require('../../utils/validation');
 const { setTokenCookie } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, UserPhoto } = require('../../db/models');
 
 // Restore session user
 router.get('/', (req, res) => {
   const { user } = req;
+
+  const userData = user.toJSON();
+  profileImage = userData.UserPhotos.length
+    ? userData.UserPhotos[userData.UserPhotos.length - 1].url
+    : '';
+
   if (user) {
     const safeUser = {
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      profileImage: user.profileImage,
+      profileImage,
     };
     return res.json({
       user: safeUser,
@@ -28,6 +34,16 @@ router.post('/', validateLogin, async (req, res, next) => {
   const { email, password } = req.body;
 
   const user = await User.unscoped().findOne({
+    include: [
+      {
+        model: UserPhoto,
+        required: false,
+        where: {
+          preview: true,
+        },
+        attributes: ['url'],
+      },
+    ],
     where: {
       [Op.or]: {
         email,
@@ -43,12 +59,17 @@ router.post('/', validateLogin, async (req, res, next) => {
     return next(err);
   }
 
+  const userData = user.toJSON();
+  profileImage = userData.UserPhotos.length
+    ? userData.UserPhotos[userData.UserPhotos.length - 1].url
+    : '';
+
   const safeUser = {
     id: user.id,
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
-    profileImage: user.profileImage,
+    profileImage,
   };
 
   await setTokenCookie(res, safeUser);
