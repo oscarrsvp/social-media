@@ -5,7 +5,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup, validateUser } = require('../../utils/validation');
 const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
 
-const { User, Post, Follower } = require('../../db/models');
+const { User, UserPhoto, Post, Follower } = require('../../db/models');
 
 const router = express.Router();
 
@@ -16,6 +16,7 @@ router.get('/', requireAuth, async (req, res) => {
     where: {
       userId,
     },
+    required: false,
     attributes: ['followerId'],
   });
 
@@ -23,13 +24,35 @@ router.get('/', requireAuth, async (req, res) => {
   followingIds.push(userId);
 
   const user = await User.findAll({
-    attributes: ['id', 'firstName', 'lastName', 'profileImage'],
+    include: [
+      {
+        model: UserPhoto,
+        where: {
+          preview: true,
+        },
+        required: false,
+        attributes: ['url'],
+      },
+    ],
+    attributes: ['id', 'firstName', 'lastName'],
     where: {
       id: followingIds,
     },
+    required: false,
   });
 
-  return res.json({ User: user });
+  const users = user.map((users) => {
+    const user = users.toJSON();
+
+    user.profileImage = user.UserPhotos.length
+      ? user.UserPhotos[user.UserPhotos.length - 1].url
+      : '';
+
+    delete user.UserPhotos;
+    return user;
+  });
+
+  return res.json({ User: users });
 });
 
 // Sign up
@@ -73,6 +96,17 @@ router.put(
     } = req.body;
 
     const user = await User.findByPk(userId, {
+      include: [
+        {
+          model: UserPhoto,
+          where: {
+            userId,
+            preview: true,
+          },
+          required: false,
+          attributes: ['url'],
+        },
+      ],
       attributes: {
         include: ['createdAt'],
       },
@@ -80,7 +114,7 @@ router.put(
 
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    let { profileImage, headerImage } = user;
+    let { headerImage } = user;
 
     const { file } = req;
 
@@ -93,7 +127,6 @@ router.put(
       firstName,
       lastName,
       middleName,
-      profileImage,
       headerImage,
       privacy,
       gender,
@@ -102,14 +135,32 @@ router.put(
       city,
     });
 
-    return res.json(updateUser);
+    const updatedUser = updateUser.toJSON();
+    updatedUser.profileImage = req.user.UserPhotos.length
+      ? req.user.UserPhotos[0].url
+      : '';
+
+    delete updatedUser.UserPhotos;
+
+    return res.json(updatedUser);
   },
 );
 
 // Current User Information
 router.get('/current', requireAuth, async (req, res) => {
   const userId = req.user.id;
-  const user = await User.findByPk(userId);
+  const user = await User.findByPk(userId, {
+    include: [
+      {
+        model: UserPhoto,
+        where: {
+          userId,
+        },
+        required: false,
+        attributes: ['url'],
+      },
+    ],
+  });
 
   if (!user) return res.status(404).json({ message: 'User not found' });
 
@@ -128,14 +179,34 @@ router.get('/following', requireAuth, async (req, res) => {
       {
         model: User,
         as: 'Followers',
-        attributes: ['id', 'firstName', 'lastName', 'profileImage'],
+        attributes: ['id', 'firstName', 'lastName'],
         required: false,
       },
     ],
     attributes: ['followerId'],
   });
 
-  return res.json(following);
+  const followerIds = following.map((follower) => follower.followerId);
+
+  const userPhotos = await UserPhoto.findAll({
+    where: {
+      userId: followerIds,
+      preview: true,
+    },
+    attributes: ['userId', 'url'],
+  });
+
+  const followersWithPhotos = following.map((follower) => {
+    const photo = userPhotos.find((photo) => photo.userId === follower.followerId);
+
+    const following = follower.toJSON();
+
+    following.Followers.profileImage = photo ? photo.url : null;
+
+    return following;
+  });
+
+  return res.json(followersWithPhotos);
 });
 
 // Get All Users, current User is not following
@@ -153,7 +224,7 @@ router.get('/explore', requireAuth, async (req, res) => {
   followingIds.push(userId);
 
   const user = await User.findAll({
-    attributes: ['id', 'firstName', 'lastName', 'profileImage'],
+    attributes: ['id', 'firstName', 'lastName'],
     where: {
       id: {
         [Op.notIn]: followingIds,
@@ -164,10 +235,29 @@ router.get('/explore', requireAuth, async (req, res) => {
         model: Post,
         required: false,
       },
+      {
+        model: UserPhoto,
+        where: {
+          preview: true,
+        },
+        required: false,
+        attributes: ['url'],
+      },
     ],
   });
 
-  return res.json({ User: user });
+  const users = user.map((users) => {
+    const user = users.toJSON();
+
+    user.profileImage = user.UserPhotos.length
+      ? user.UserPhotos[user.UserPhotos.length - 1].url
+      : '';
+
+    delete user.UserPhotos;
+    return user;
+  });
+
+  return res.json({ User: users });
 });
 
 // Get User By Id
@@ -185,9 +275,17 @@ router.get('/:userId', requireAuth, async (req, res) => {
           {
             model: User,
             as: 'Followers',
-            attributes: ['id', 'firstName', 'lastName', 'profileImage'],
+            attributes: ['id', 'firstName', 'lastName'],
           },
         ],
+      },
+      {
+        model: UserPhoto,
+        where: {
+          userId,
+        },
+        required: false,
+        attributes: ['url'],
       },
     ],
     attributes: {
@@ -197,12 +295,17 @@ router.get('/:userId', requireAuth, async (req, res) => {
 
   const userData = user.toJSON();
 
+  userData.profileImage = userData.UserPhotos.length
+    ? userData.UserPhotos[userData.UserPhotos.length - 1].url
+    : '';
+
   userData.followingList = {};
   userData.Following.forEach((follow) => {
     userData.followingList[follow.followerId] = { ...follow.Followers };
   });
 
   delete userData.Following;
+  delete userData.UserPhotos;
 
   return res.json({ User: userData });
 });

@@ -7,7 +7,7 @@ router.post('/:userId/profileImg', singleMulterUpload('profileImg'), async (req,
   const currentUserID = req.user.id;
   const { userId } = req.params;
 
-  let { url, preview = true } = req.body;
+  let { url, preview } = req.body;
 
   const user = await User.findByPk(userId);
 
@@ -30,6 +30,7 @@ router.post('/:userId/profileImg', singleMulterUpload('profileImg'), async (req,
 
       return res.json({
         id: newImage.id,
+        userId: newImage.userId,
         url: newImage.url,
         preview: newImage.preview,
       });
