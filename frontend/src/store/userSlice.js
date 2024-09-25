@@ -13,6 +13,7 @@ export const fetchUsers = createAsyncThunk('users/allUsers', async () => {
   }
 });
 
+// Get User details
 export const fetchUser = createAsyncThunk('users/singleUser', async (userId) => {
   try {
     const response = await csrfFetch(`/api/users/${userId}`);
@@ -24,6 +25,7 @@ export const fetchUser = createAsyncThunk('users/singleUser', async (userId) => 
   }
 });
 
+// Get current user details
 export const fetchCurrentUser = createAsyncThunk('users/currentUser', async () => {
   try {
     const response = await csrfFetch('/api/users/current');
@@ -35,6 +37,37 @@ export const fetchCurrentUser = createAsyncThunk('users/currentUser', async () =
   }
 });
 
+// Post new photo / Allows user to upload a new profile image
+export const uploadPhotoToCloudinary = createAsyncThunk(
+  'users/uploadPhoto',
+  async (photo) => {
+    try {
+      const { userId, url, preview } = photo;
+      const formData = new FormData();
+
+      formData.append('profileImg', url);
+      formData.append('preview', preview);
+
+      const response = await csrfFetch(`/api/photos/${userId}/profileImg`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      return { message: error };
+    }
+  },
+);
+
+// Update User details
+
+// REFACTOR THIS TO USE FORMDATA
 export const updateUser = createAsyncThunk(
   'users/updateUser',
   async (user, { rejectWithValue }) => {
@@ -59,6 +92,7 @@ export const updateUser = createAsyncThunk(
   },
 );
 
+// Displays all non-following users posts
 export const fetchExploreUsers = createAsyncThunk('users/explorePage', async () => {
   try {
     const response = await csrfFetch('/api/users/explore');
@@ -107,6 +141,24 @@ export const userSlice = createSlice({
         users[user.id] = user;
       });
       return users;
+    });
+
+    builder.addCase(uploadPhotoToCloudinary.fulfilled, (state, action) => {
+      const { userId, url, preview } = action.payload;
+
+      if (!preview) return state;
+
+      if (state[userId]) {
+        return {
+          ...state,
+          [userId]: {
+            ...state[userId],
+            profileImage: url,
+          },
+        };
+      }
+
+      return state;
     });
   },
 });
