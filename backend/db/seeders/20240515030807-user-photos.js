@@ -32,6 +32,26 @@ module.exports = {
           url: 'https://images.unsplash.com/photo-1531901599143-df5010ab9438?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
           preview: true,
         },
+        {
+          userId: 5,
+          url: 'https://images.unsplash.com/photo-1627748868900-f2decee603e9?q=80&w=4000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          preview: true,
+        },
+        {
+          userId: 6,
+          url: 'https://images.unsplash.com/photo-1521132293557-5b908a59d1e1?q=80&w=4074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          preview: true,
+        },
+        {
+          userId: 7,
+          url: 'https://images.unsplash.com/photo-1669475535978-7479ef74e14f?q=80&w=3409&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          preview: true,
+        },
+        {
+          userId: 8,
+          url: 'https://images.unsplash.com/photo-1603217039863-aa0c865404f7?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          preview: true,
+        },
       ],
       { validate: true },
     );

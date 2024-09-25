@@ -87,10 +87,6 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true,
         },
       },
-      profileImage: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       headerImage: {
         type: DataTypes.STRING,
         allowNull: true,
