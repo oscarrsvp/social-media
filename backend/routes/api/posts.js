@@ -3,7 +3,7 @@ const router = express.Router();
 const { Op, where } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { validatePost, validateComment } = require('../../utils/validation');
-const { User, Post, Comment, PostLike, Follower } = require('../../db/models');
+const { User, UserPhoto, Post, Comment, PostLike, Follower } = require('../../db/models');
 
 router.use(requireAuth);
 
@@ -222,6 +222,14 @@ router.get('/:postId/comments', async (req, res) => {
     include: {
       model: User,
       attributes: ['firstName', 'lastName', 'profileImage'],
+      include: {
+        model: UserPhoto,
+        where: {
+          preview: true,
+        },
+        required: false,
+        attributes: ['url'],
+      },
     },
     where: {
       postId,
@@ -230,8 +238,13 @@ router.get('/:postId/comments', async (req, res) => {
 
   const comments = getComments.map((comment) => {
     const comments = comment.toJSON();
-    comments.fullName = `${comments.User.firstName} ${comments.User.lastName}`;
-    comments.profileImg = comments.User.profileImage;
+    const users = comments.User;
+
+    comments.profileImg = users.UserPhotos.length
+      ? users.UserPhotos[users.UserPhotos.length - 1].url
+      : '';
+
+    comments.fullName = `${users.firstName} ${users.lastName}`;
 
     delete comments.User;
 
