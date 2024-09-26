@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { updateUser } from '../../store/userSlice';
-import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './UserPage.module.css';
 
 function ImageHeader({ sessionUserId, user }) {
   const [isActive, setIsActive] = useState(false);
   const [headerImg, setHeaderImg] = useState(null);
-  const { profileImage } = user;
   const dispatch = useDispatch();
 
   const handleFile = (e) => {
@@ -19,7 +17,7 @@ function ImageHeader({ sessionUserId, user }) {
     const formData = new FormData();
     formData.append('headerImg', headerImg);
 
-    dispatch(updateUser(formData));
+    dispatch(updateUser(headerImg));
 
     setIsActive(!isActive);
     return;
@@ -35,22 +33,26 @@ function ImageHeader({ sessionUserId, user }) {
 
     if (!image) return;
 
-    setHeaderImg(image);
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setHeaderImg(reader.result);
+    };
+
+    reader.readAsDataURL(image);
 
     setIsActive(!isActive);
   };
 
   return (
     <div className={styles.imgContainer}>
-      <img src={user.headerImage} alt="" className={styles.bannerImg} />
+      <img
+        src={!headerImg ? user.headerImage : headerImg}
+        alt=""
+        className={styles.bannerImg}
+      />
 
-      {profileImage ? (
-        <img src={profileImage} alt="user-img" className={styles.profileImg} />
-      ) : (
-        <img src={BlankImage} className={styles.profileImg} />
-      )}
-
-      {user.id === sessionUserId ? (
+      {user.id === sessionUserId && (
         <div className={styles.imgButton}>
           {isActive ? (
             <>
@@ -78,9 +80,8 @@ function ImageHeader({ sessionUserId, user }) {
               </span>
             </label>
           )}
-          {headerImg && <p>Selected File: {headerImg.name}</p>}
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

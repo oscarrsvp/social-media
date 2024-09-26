@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { followUser, unfollowUser } from '../../store/followSlice';
 import { uploadPhotoToCloudinary } from '../../store/userSlice';
 import { updateProfileImage } from '../../store/sessionSlice';
+import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './UserPage.module.css';
 
 function UserCard({ user }) {
   const [isActive, setIsActive] = useState(false);
-  const [profileImg, setProfileImg] = useState('' || user.profileImage);
+  const [profileImg, setProfileImg] = useState(null);
+  const [preview, setPreview] = useState(null);
   const sessionUser = useSelector((state) => state.session.user);
   const followingList = useSelector((state) => state.following);
   const fullName = `${user.firstName} ${user.lastName}`;
@@ -25,6 +27,8 @@ function UserCard({ user }) {
     });
 
     setIsActive(!isActive);
+    setPreview(null);
+    setProfileImg(null);
     return;
   };
 
@@ -34,11 +38,36 @@ function UserCard({ user }) {
     if (!image) return;
 
     setProfileImg(image);
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+
+    reader.readAsDataURL(image);
+
     setIsActive(!isActive);
+  };
+
+  const resetImg = () => {
+    setIsActive(!isActive);
+    setProfileImg(null);
+    setPreview(null);
   };
 
   return (
     <div className={styles.userActions}>
+      {user.profileImage ? (
+        <img
+          src={!preview ? user.profileImage : preview}
+          alt="user-img"
+          className={styles.profileImg}
+        />
+      ) : (
+        <img src={BlankImage} className={styles.profileImg} />
+      )}
+
       <div className={styles.actions}>
         <h2>{fullName}</h2>
         {isActive && (
@@ -47,7 +76,7 @@ function UserCard({ user }) {
               <button className="btn" onClick={handleSubmit}>
                 Add
               </button>
-              <button className="btn" onClick={() => setIsActive(!isActive)}>
+              <button className="btn" onClick={resetImg}>
                 Cancel
               </button>
             </div>
@@ -63,9 +92,11 @@ function UserCard({ user }) {
               onChange={(e) => handleProfileImg(e)}
             />
 
-            <button className="btn" onClick={(prev) => setIsActive(!prev)}>
-              {user.userProfileImg ? 'Change Picture' : 'Upload Picture'}
-            </button>
+            {!profileImg && (
+              <button className="btn" onClick={(prev) => setIsActive(!prev)}>
+                {user.profileImage ? 'Change Picture' : 'Upload Picture'}
+              </button>
+            )}
           </label>
         ) : (
           <>
