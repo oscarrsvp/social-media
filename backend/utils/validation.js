@@ -52,10 +52,12 @@ const validateSignup = [
 
 const validateUser = [
   check('firstName')
+    .optional({ checkFalsy: true })
     .isLength({ min: 4 })
     .withMessage('First name must be 4 characters or more.'),
   check('firstName').not().isEmail().withMessage('First name cannot be an email.'),
   check('lastName')
+    .optional({ checkFalsy: true })
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
     .withMessage('Please provide a last name with at least 4 characters.'),

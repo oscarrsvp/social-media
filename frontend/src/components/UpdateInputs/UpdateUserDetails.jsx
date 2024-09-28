@@ -10,11 +10,9 @@ function UpdateUserDetails({ user }) {
   const [firstName, setFirstName] = useState(user.firstName || '');
   const [lastName, setLastName] = useState(user.lastName || '');
   const [middleName, setMiddleName] = useState(user.middleName || '');
-  // const [privacy, setPrivacy] = useState(user.privacy || '');
   const [relationship, setRelationship] = useState(user.relationship || '');
   const [city, setCity] = useState(user.city || '');
   const [gender, setGender] = useState(user.gender || '');
-  // const [birthday, setBirthday] = useState(formatDateForInput(user.birthday) || '');
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const dispatch = useDispatch();
@@ -23,16 +21,26 @@ function UpdateUserDetails({ user }) {
     e.preventDefault();
     setErrors({});
 
-    const userDetails = {
-      firstName,
-      lastName,
-      middleName,
-      relationship,
-      city,
-      gender,
-    };
+    // const userDetails = {
+    //   firstName,
+    //   lastName,
+    //   middleName,
+    //   relationship,
+    //   city,
+    //   gender,
+    //   headerImage: user?.headerImage,
+    // };
 
-    const updateDetails = dispatch(updateUser(userDetails));
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('middleName', middleName);
+    formData.append('city', city);
+    formData.append('gender', gender);
+    formData.append('headerImg', user.headerImage);
+    formData.append('relationship', relationship);
+
+    const updateDetails = dispatch(updateUser(formData));
 
     return updateDetails.then(async (res) => {
       const data = await res;
