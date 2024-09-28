@@ -9,7 +9,7 @@ import styles from './UserPage.module.css';
 function UserCard({ user }) {
   const [isActive, setIsActive] = useState(false);
   const [profileImg, setProfileImg] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [previewImg, setPreviewImg] = useState(null);
   const sessionUser = useSelector((state) => state.session.user);
   const followingList = useSelector((state) => state.following);
   const fullName = `${user.firstName} ${user.lastName}`;
@@ -24,11 +24,12 @@ function UserCard({ user }) {
       uploadPhotoToCloudinary({ userId: user.id, url: profileImg, preview: true }),
     ).then((res) => {
       dispatch(updateProfileImage(res.payload.url));
+      setPreviewImg(null);
     });
 
     setIsActive(!isActive);
-    setPreview(null);
     setProfileImg(null);
+
     return;
   };
 
@@ -42,7 +43,7 @@ function UserCard({ user }) {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setPreview(reader.result);
+      setPreviewImg(reader.result);
     };
 
     reader.readAsDataURL(image);
@@ -53,14 +54,14 @@ function UserCard({ user }) {
   const resetImg = () => {
     setIsActive(!isActive);
     setProfileImg(null);
-    setPreview(null);
+    setPreviewImg(null);
   };
 
   return (
     <div className={styles.userActions}>
       {user.profileImage ? (
         <img
-          src={!preview ? user.profileImage : preview}
+          src={!previewImg ? user.profileImage : previewImg}
           alt="user-img"
           className={styles.profileImg}
         />

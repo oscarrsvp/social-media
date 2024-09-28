@@ -7,6 +7,7 @@ import styles from './UserPage.module.css';
 function ImageHeader({ sessionUserId, user }) {
   const [isActive, setIsActive] = useState(false);
   const [headerImg, setHeaderImg] = useState(null);
+  const [previewImg, setPreviewImg] = useState(null);
   const dispatch = useDispatch();
 
   const handleFile = (e) => {
@@ -17,15 +18,20 @@ function ImageHeader({ sessionUserId, user }) {
     const formData = new FormData();
     formData.append('headerImg', headerImg);
 
-    dispatch(updateUser(headerImg));
+    dispatch(updateUser(formData)).then(() => {
+      setPreviewImg(null);
+    });
 
     setIsActive(!isActive);
+    setHeaderImg(null);
+
     return;
   };
 
   const resetImg = () => {
     setIsActive(!isActive);
     setHeaderImg(null);
+    setPreviewImg(null);
   };
 
   const handleFileChange = (e) => {
@@ -33,10 +39,12 @@ function ImageHeader({ sessionUserId, user }) {
 
     if (!image) return;
 
+    setHeaderImg(image);
+
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setHeaderImg(reader.result);
+      setPreviewImg(reader.result);
     };
 
     reader.readAsDataURL(image);
@@ -47,7 +55,7 @@ function ImageHeader({ sessionUserId, user }) {
   return (
     <div className={styles.imgContainer}>
       <img
-        src={!headerImg ? user.headerImage : headerImg}
+        src={!previewImg ? user.headerImage : previewImg}
         alt=""
         className={styles.bannerImg}
       />
