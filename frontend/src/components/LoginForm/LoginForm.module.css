@@ -29,3 +29,14 @@
     font-size: 18px;
     margin: 0px 8px;
 }
+
+#showPasswordContainer input {
+    margin: 5px 0px;
+    padding: 0;
+    width: auto;
+    margin-right: 8px;
+}
+
+#showPasswordContainer label {
+    color: #81817c;
+}

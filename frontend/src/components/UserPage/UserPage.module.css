@@ -80,6 +80,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
     margin-top: 5px;
 }
 
@@ -120,4 +121,19 @@
 
 .followSection {
     text-align: center;
+}
+
+.ProfileInput {
+    position: relative;
+}
+
+.ProfileInput input[type="file"] {
+    position: absolute;
+    width: 125px;
+    height: 60px;
+    margin: 0;
+}
+
+.ProfileInput button {
+    margin-right: 0px;
 }
