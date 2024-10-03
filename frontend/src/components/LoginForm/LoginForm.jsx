@@ -8,6 +8,7 @@ function LoginForm() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (e) => {
@@ -42,12 +43,19 @@ function LoginForm() {
           {errors.email && <p className="error">{errors.email}</p>}
           <label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               value={password}
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
+
+          <div id={styles.showPasswordContainer}>
+            <label>
+              <input type="checkbox" onClick={() => setShowPassword((value) => !value)} />
+              Show Password
+            </label>
+          </div>
 
           {errors.credential && <p className="error">{errors.credential}</p>}
 
