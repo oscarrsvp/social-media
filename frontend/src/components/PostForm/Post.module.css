@@ -37,3 +37,26 @@
     width: 30px;
     border-radius: 50%;
 }
+
+.UploadImage {
+    font-size: 28px;
+    width: fit-content;
+    margin: 4px 0;
+    color: #003049;
+}
+
+.UploadImage>label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.UploadImage>label input[type="file"] {
+    margin: 0;
+    padding: 0;
+}
+
+.UploadImage>label span {
+    font-size: 16px;
+}
