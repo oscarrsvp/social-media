@@ -45,8 +45,8 @@ function UserPost({ post, userId }) {
         <div className={styles.postDetails}>
           <PostDetails post={post} fullName={fullName} />
           <CommentSection postId={post.id} postLikes={post.likes} />
-          <div>
-            {sessionUser.id === post.userId && (
+          {sessionUser.id === post.userId && (
+            <div>
               <div>
                 <OpenModalButton
                   buttonText="Update Post"
@@ -59,8 +59,8 @@ function UserPost({ post, userId }) {
                   classNames={'btn delete-btn'}
                 />
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </>
