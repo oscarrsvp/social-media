@@ -25,22 +25,22 @@ module.exports = {
         },
         {
           userId: 1,
-          postId: 2,
+          postId: 3,
           context: 'Beautiful! 🐠',
         },
         {
           userId: 1,
-          postId: 4,
+          postId: 5,
           context: 'I love oysters! 🦪',
         },
         {
           userId: 4,
-          postId: 3,
+          postId: 4,
           context: 'catching up over coffee is the best! ☕️',
         },
         {
           userId: 4,
-          postId: 2,
+          postId: 3,
           context: 'I love the colors! Corals look awesome!',
         },
         {
@@ -50,7 +50,7 @@ module.exports = {
         },
         {
           userId: 4,
-          postId: 3,
+          postId: 4,
           context:
             'I love coffee dates! Nothing beats good company and a warm cup of coffee.',
         },

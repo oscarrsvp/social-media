@@ -221,7 +221,7 @@ router.get('/:postId/comments', async (req, res) => {
   const getComments = await Comment.findAll({
     include: {
       model: User,
-      attributes: ['firstName', 'lastName', 'profileImage'],
+      attributes: ['firstName', 'lastName'],
       include: {
         model: UserPhoto,
         where: {
