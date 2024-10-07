@@ -19,7 +19,7 @@ const formatBufferTo64 = (file) =>
 
 const singlePublicFileUpload = async (file) => {
   const data = formatBufferTo64(file);
-  return await cloudinary.uploader.upload(data.content);
+  return await cloudinary.uploader.upload(data.content, { format: 'jpg' });
 };
 
 const storage = multer.memoryStorage({

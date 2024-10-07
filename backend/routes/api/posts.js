@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { Op, where } = require('sequelize');
+const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
+const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
 const { validatePost, validateComment } = require('../../utils/validation');
 const { User, UserPhoto, Post, Comment, PostLike, Follower } = require('../../db/models');
 
@@ -132,20 +133,44 @@ router.get('/user/:userId', async (req, res) => {
 });
 
 // Create a new Post
-router.post('/', validatePost, async (req, res) => {
+router.post('/', singleMulterUpload('postImg'), validatePost, async (req, res) => {
   const userId = req.user.id;
-  const { photo, context } = req.body;
+  let { photo, context } = req.body;
 
-  const newPost = await Post.create({
-    userId,
-    photo,
-    context,
-  });
+  const user = await User.findByPk(userId);
 
-  const postLikes = newPost.toJSON();
-  postLikes.likes = {};
+  if (user.id === userId) {
+    const { file } = req;
 
-  return res.status(201).json(postLikes);
+    if (file) {
+      const postImg = await singlePublicFileUpload(file);
+      photo = postImg.secure_url;
+
+      const newPost = await Post.create({
+        userId,
+        photo,
+        context,
+      });
+
+      const postLikes = newPost.toJSON();
+      postLikes.likes = {};
+
+      return res.status(201).json(postLikes);
+    }
+
+    const newPost = await Post.create({
+      userId,
+      photo,
+      context,
+    });
+
+    const postLikes = newPost.toJSON();
+    postLikes.likes = {};
+
+    return res.status(201).json(postLikes);
+  }
+
+  return res.status(403).json({ message: `Forbidden, Not Authorize` });
 });
 
 // Get a Post by Id
