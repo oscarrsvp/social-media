@@ -80,8 +80,8 @@ router.post('/', validateSignup, async (req, res) => {
 router.put(
   '/',
   requireAuth,
-  validateUser,
   singleMulterUpload('headerImg'),
+  validateUser,
   async (req, res) => {
     const userId = req.user.id;
     const {
@@ -137,7 +137,7 @@ router.put(
 
     const updatedUser = updateUser.toJSON();
     updatedUser.profileImage = req.user.UserPhotos.length
-      ? req.user.UserPhotos[0].url
+      ? req.user.UserPhotos[req.user.UserPhotos.length - 1].url
       : '';
 
     delete updatedUser.UserPhotos;

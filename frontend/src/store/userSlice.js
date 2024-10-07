@@ -72,9 +72,19 @@ export const updateUser = createAsyncThunk(
   'users/updateUser',
   async (user, { rejectWithValue }) => {
     try {
+      const formData = new FormData();
+
+      formData.append('firstName', user.firstName);
+      formData.append('lastName', user.lastName);
+      formData.append('middleName', user.middleName);
+      formData.append('city', user.city);
+      formData.append('gender', user.gender);
+      formData.append('headerImg', user.headerImage);
+      formData.append('relationship', user.relationship);
+
       const response = await csrfFetch(`/api/users`, {
         method: 'PUT',
-        body: user,
+        body: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
