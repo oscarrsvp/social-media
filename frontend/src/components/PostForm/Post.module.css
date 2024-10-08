@@ -60,3 +60,15 @@
 .UploadImage>label span {
     font-size: 16px;
 }
+
+.previewImgSection {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.previewImg {
+    width: 100%;
+    height: 300px;
+    border-radius: 5px;
+}
