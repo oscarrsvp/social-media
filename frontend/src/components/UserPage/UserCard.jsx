@@ -38,6 +38,13 @@ function UserCard({ user }) {
 
     if (!image) return;
 
+    if (image.type === 'image/heic' || image.type === 'image/heif') {
+      alert(
+        'HEIC files are not supported. Please convert your image to JPEG or PNG before uploading.',
+      );
+      return;
+    }
+
     setProfileImg(image);
 
     const reader = new FileReader();
