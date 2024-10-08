@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from '../../store/postSlice';
-import { validateImage } from '../../utils/globallyFns';
 import { BsCardImage } from 'react-icons/bs';
 import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './Post.module.css';
 
 function CreatePost() {
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState(null);
   const [context, setContext] = useState('');
   const [errors, setErrors] = useState({});
   const [disabled, setDisabled] = useState(true);
@@ -28,27 +27,30 @@ function CreatePost() {
 
     try {
       setErrors({});
-      if (photo) {
-        if (!validateImage(photo)) {
-          setErrors({ photo: 'Image format is invalid' });
-          return;
-        }
-      }
 
       const newPost = dispatch(createPost({ photo, context }));
 
       return newPost.then(async (res) => {
         const data = await res;
+
         if (data.error) {
           setErrors(data.payload);
         } else {
-          setPhoto('');
+          setPhoto(null);
           setContext('');
         }
       });
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleFileChange = (e) => {
+    const image = e.target.files[0];
+
+    if (!image) return;
+
+    setPhoto(image);
   };
 
   return (
@@ -72,17 +74,9 @@ function CreatePost() {
           {errors.context && <p className="error">{errors.context}</p>}
         </label>
 
-        {/* <label>
-          <input
-            type="text"
-            placeholder="Photo"
-            value={photo}
-            onChange={(e) => setPhoto(e.target.value)}
-          />
-        </label> */}
         <div className={styles.UploadImage}>
           <label>
-            <input type="file" onChange={(e) => setPhoto(e.target.files[0])} />
+            <input type="file" name="postImg" onChange={(e) => handleFileChange(e)} />
             <BsCardImage />
             <span>Photo</span>
           </label>

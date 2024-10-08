@@ -39,14 +39,17 @@ export const createPost = createAsyncThunk(
   'post/newPost',
   async (post, { rejectWithValue }) => {
     try {
-      const { photo, context } = post;
+      const formData = new FormData();
+
+      formData.append('postImg', post.photo);
+      formData.append('context', post.context);
+
       const response = await csrfFetch('/api/posts', {
         method: 'POST',
-        body: JSON.stringify({
-          photo,
-          context,
-        }),
+        body: formData,
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
+
       const data = await response.json();
 
       return data;
