@@ -21,26 +21,17 @@ function UpdateUserDetails({ user }) {
     e.preventDefault();
     setErrors({});
 
-    // const userDetails = {
-    //   firstName,
-    //   lastName,
-    //   middleName,
-    //   relationship,
-    //   city,
-    //   gender,
-    //   headerImage: user?.headerImage,
-    // };
+    const userDetails = {
+      firstName,
+      lastName,
+      middleName,
+      relationship,
+      city,
+      gender,
+      headerImage: user?.headerImage,
+    };
 
-    const formData = new FormData();
-    formData.append('firstName', firstName);
-    formData.append('lastName', lastName);
-    formData.append('middleName', middleName);
-    formData.append('city', city);
-    formData.append('gender', gender);
-    formData.append('headerImg', user.headerImage);
-    formData.append('relationship', relationship);
-
-    const updateDetails = dispatch(updateUser(formData));
+    const updateDetails = dispatch(updateUser(userDetails));
 
     return updateDetails.then(async (res) => {
       const data = await res;

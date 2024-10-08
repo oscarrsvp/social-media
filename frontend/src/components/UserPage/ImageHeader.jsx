@@ -15,10 +15,9 @@ function ImageHeader({ sessionUserId, user }) {
 
     if (!headerImg) return;
 
-    const formData = new FormData();
-    formData.append('headerImg', headerImg);
+    const userData = { ...user, headerImage: headerImg };
 
-    dispatch(updateUser(formData)).then(() => {
+    dispatch(updateUser(userData)).then(() => {
       setPreviewImg(null);
     });
 
