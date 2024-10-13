@@ -1,59 +1,27 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const { Op } = require('sequelize');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup, validateUser } = require('../../utils/validation');
 const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
 
-const { User, UserPhoto, Post, Follower } = require('../../db/models');
+const { User, UserPhoto, Follower } = require('../../db/models');
+
+const { getFilteredUsers, getUsersFollowingList } = require('../../middleware/users');
 
 const router = express.Router();
 
 // Get User's Information
-router.get('/', requireAuth, async (req, res) => {
-  const userId = req.user.id;
-  const userFollowingList = await Follower.findAll({
-    where: {
-      userId,
-    },
-    required: false,
-    attributes: ['followerId'],
-  });
+router.get(
+  '/',
+  requireAuth,
+  getUsersFollowingList,
+  getFilteredUsers(false),
+  async (req, res) => {
+    const users = req.usersData;
 
-  const followingIds = userFollowingList.map((follow) => follow.followerId);
-  followingIds.push(userId);
-
-  const user = await User.findAll({
-    include: [
-      {
-        model: UserPhoto,
-        where: {
-          preview: true,
-        },
-        required: false,
-        attributes: ['url'],
-      },
-    ],
-    attributes: ['id', 'firstName', 'lastName'],
-    where: {
-      id: followingIds,
-    },
-    required: false,
-  });
-
-  const users = user.map((users) => {
-    const user = users.toJSON();
-
-    user.profileImage = user.UserPhotos.length
-      ? user.UserPhotos[user.UserPhotos.length - 1].url
-      : '';
-
-    delete user.UserPhotos;
-    return user;
-  });
-
-  return res.json({ User: users });
-});
+    return res.json({ User: users });
+  },
+);
 
 // Sign up
 router.post('/', validateSignup, async (req, res) => {
@@ -210,55 +178,17 @@ router.get('/following', requireAuth, async (req, res) => {
 });
 
 // Get All Users, current User is not following
-router.get('/explore', requireAuth, async (req, res) => {
-  const userId = req.user.id;
+router.get(
+  '/explore',
+  requireAuth,
+  getUsersFollowingList,
+  getFilteredUsers(true),
+  async (req, res) => {
+    const users = req.usersData;
 
-  const userFollowingList = await Follower.findAll({
-    where: {
-      userId,
-    },
-    attributes: ['followerId'],
-  });
-
-  const followingIds = userFollowingList.map((follow) => follow.followerId);
-  followingIds.push(userId);
-
-  const user = await User.findAll({
-    attributes: ['id', 'firstName', 'lastName'],
-    where: {
-      id: {
-        [Op.notIn]: followingIds,
-      },
-    },
-    include: [
-      {
-        model: Post,
-        required: false,
-      },
-      {
-        model: UserPhoto,
-        where: {
-          preview: true,
-        },
-        required: false,
-        attributes: ['url'],
-      },
-    ],
-  });
-
-  const users = user.map((users) => {
-    const user = users.toJSON();
-
-    user.profileImage = user.UserPhotos.length
-      ? user.UserPhotos[user.UserPhotos.length - 1].url
-      : '';
-
-    delete user.UserPhotos;
-    return user;
-  });
-
-  return res.json({ User: users });
-});
+    return res.json({ User: users });
+  },
+);
 
 // Get User By Id
 router.get('/:userId', requireAuth, async (req, res) => {
