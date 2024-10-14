@@ -7,7 +7,7 @@ router.post('/:userId/profileImg', singleMulterUpload('profileImg'), async (req,
   const currentUserID = req.user.id;
   const { userId } = req.params;
 
-  let { url, preview } = req.body;
+  let { url } = req.body;
 
   const user = await User.findByPk(userId);
 
@@ -25,7 +25,7 @@ router.post('/:userId/profileImg', singleMulterUpload('profileImg'), async (req,
       const newImage = await UserPhoto.create({
         userId: currentUserID,
         url,
-        preview,
+        preview: false,
       });
 
       return res.json({
@@ -38,6 +38,33 @@ router.post('/:userId/profileImg', singleMulterUpload('profileImg'), async (req,
   }
 
   res.status(403).json({ message: `Forbidden, Not Authorize` });
+});
+
+router.put('/:userId/profileImg', async (req, res) => {
+  const userId = req.user.id;
+  const { id, preview } = req.body;
+
+  await UserPhoto.update(
+    { preview: false },
+    {
+      where: {
+        userId,
+        preview: true,
+      },
+    },
+  );
+
+  if (preview) {
+    const updatedImage = await UserPhoto.findByPk(id);
+
+    if (!updatedImage) {
+      return res.status(404).json({ message: 'Image not found' });
+    }
+
+    await updatedImage.update({ preview: true });
+
+    return res.json(updatedImage);
+  }
 });
 
 module.exports = router;
