@@ -65,9 +65,35 @@ export const uploadPhotoToCloudinary = createAsyncThunk(
   },
 );
 
-// Update User details
+// Update User Profile Image
+export const updateProfileImg = createAsyncThunk(
+  'users/updateProfileImg',
+  async (photo) => {
+    try {
+      const { id, userId } = photo;
 
-// REFACTOR THIS TO USE FORMDATA
+      const response = await csrfFetch(`/api/photos/${userId}/profileImg`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          id,
+          userId,
+          preview: true,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      return { message: error };
+    }
+  },
+);
+
+// Update User details
 export const updateUser = createAsyncThunk(
   'users/updateUser',
   async (user, { rejectWithValue }) => {
@@ -166,6 +192,16 @@ export const userSlice = createSlice({
             profileImage: url,
           },
         };
+      }
+
+      return state;
+    });
+
+    builder.addCase(updateProfileImg.fulfilled, (state, action) => {
+      const { userId, url, preview } = action.payload;
+
+      if (preview) {
+        state[userId].profileImage = url;
       }
 
       return state;

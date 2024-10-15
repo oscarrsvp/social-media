@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { followUser, unfollowUser } from '../../store/followSlice';
-import { uploadPhotoToCloudinary } from '../../store/userSlice';
+import { uploadPhotoToCloudinary, updateProfileImg } from '../../store/userSlice';
 import { updateProfileImage } from '../../store/sessionSlice';
 import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './UserPage.module.css';
@@ -10,6 +10,7 @@ function UserCard({ user }) {
   const [isActive, setIsActive] = useState(false);
   const [profileImg, setProfileImg] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
+  const [profileImage, setProfileImage] = useState(false);
   const sessionUser = useSelector((state) => state.session.user);
   const followingList = useSelector((state) => state.following);
   const fullName = `${user.firstName} ${user.lastName}`;
@@ -20,12 +21,17 @@ function UserCard({ user }) {
 
     if (!profileImg) return;
 
-    dispatch(
-      uploadPhotoToCloudinary({ userId: user.id, url: profileImg, preview: true }),
-    ).then((res) => {
-      dispatch(updateProfileImage(res.payload.url));
-      setPreviewImg(null);
-    });
+    const uploadResponse = await dispatch(
+      uploadPhotoToCloudinary({ userId: user.id, url: profileImg, preview: false }),
+    );
+
+    if (profileImage) {
+      const { id, userId, url } = uploadResponse.payload;
+      dispatch(updateProfileImg({ id, userId })).then(() => {
+        dispatch(updateProfileImage(url));
+        setPreviewImg(null);
+      });
+    }
 
     setIsActive(!isActive);
     setProfileImg(null);
@@ -87,6 +93,13 @@ function UserCard({ user }) {
               <button className="btn" onClick={resetImg}>
                 Cancel
               </button>
+
+              <input
+                type="checkbox"
+                checked={profileImage}
+                onChange={() => setProfileImage((prev) => !prev)}
+              />
+              <label>Set as Profile Image</label>
             </div>
           </>
         )}
