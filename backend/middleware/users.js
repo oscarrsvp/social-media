@@ -34,11 +34,10 @@ const getFilteredUsers = (isPostIncluded) => async (req, res, next) => {
   const users = user.map((users) => {
     const user = users.toJSON();
 
-    user.profileImage = user.UserPhotos.length
-      ? user.UserPhotos[user.UserPhotos.length - 1].url
-      : '';
+    user.profileImage = user.UserPhotos.length ? user.UserPhotos[0].url : '';
 
     delete user.UserPhotos;
+
     return user;
   });
 

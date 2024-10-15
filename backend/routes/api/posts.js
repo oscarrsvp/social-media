@@ -265,9 +265,7 @@ router.get('/:postId/comments', async (req, res) => {
     const comments = comment.toJSON();
     const users = comments.User;
 
-    comments.profileImg = users.UserPhotos.length
-      ? users.UserPhotos[users.UserPhotos.length - 1].url
-      : '';
+    comments.profileImg = users.UserPhotos.length ? users.UserPhotos[0].url : '';
 
     comments.fullName = `${users.firstName} ${users.lastName}`;
 

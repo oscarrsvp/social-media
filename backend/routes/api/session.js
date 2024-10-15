@@ -11,9 +11,7 @@ router.get('/', (req, res) => {
   const { user } = req;
 
   const userData = user.toJSON();
-  profileImage = userData.UserPhotos.length
-    ? userData.UserPhotos[userData.UserPhotos.length - 1].url
-    : '';
+  profileImage = userData.UserPhotos.length ? userData.UserPhotos[0].url : '';
 
   if (user) {
     const safeUser = {
@@ -60,9 +58,7 @@ router.post('/', validateLogin, async (req, res, next) => {
   }
 
   const userData = user.toJSON();
-  profileImage = userData.UserPhotos.length
-    ? userData.UserPhotos[userData.UserPhotos.length - 1].url
-    : '';
+  profileImage = userData.UserPhotos.length ? userData.UserPhotos[0].url : '';
 
   const safeUser = {
     id: user.id,

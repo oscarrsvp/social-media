@@ -105,7 +105,7 @@ router.put(
 
     const updatedUser = updateUser.toJSON();
     updatedUser.profileImage = req.user.UserPhotos.length
-      ? req.user.UserPhotos[req.user.UserPhotos.length - 1].url
+      ? req.user.UserPhotos[0].url
       : '';
 
     delete updatedUser.UserPhotos;
@@ -213,6 +213,7 @@ router.get('/:userId', requireAuth, async (req, res) => {
         model: UserPhoto,
         where: {
           userId,
+          preview: true,
         },
         required: false,
         attributes: ['url'],
@@ -225,9 +226,7 @@ router.get('/:userId', requireAuth, async (req, res) => {
 
   const userData = user.toJSON();
 
-  userData.profileImage = userData.UserPhotos.length
-    ? userData.UserPhotos[userData.UserPhotos.length - 1].url
-    : '';
+  userData.profileImage = userData.UserPhotos.length ? userData.UserPhotos[0].url : '';
 
   userData.followingList = {};
   userData.Following.forEach((follow) => {
