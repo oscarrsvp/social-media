@@ -92,12 +92,20 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       privacy: DataTypes.BOOLEAN,
-      gender: DataTypes.STRING,
+      gender: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'Rather Not Say',
+      },
       birthday: {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      relationship: DataTypes.STRING,
+      relationship: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: 'Rather Not Say',
+      },
       city: DataTypes.STRING,
       hashedPassword: {
         type: DataTypes.STRING.BINARY,

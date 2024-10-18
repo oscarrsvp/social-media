@@ -67,16 +67,23 @@ const validateUser = [
     .withMessage('Middle name must be 30 characters or less.'),
   check('relationship')
     .optional({ checkFalsy: true })
-    .isIn(['Single', 'In a Relationship', 'Engaged', 'Married', "It's Complicated"])
+    .isIn([
+      'Single',
+      'In a Relationship',
+      'Engaged',
+      'Married',
+      "It's Complicated",
+      'Rather Not Say',
+    ])
     .isLength({ min: 1 })
-    .withMessage('Relationship status must not be empty.'),
+    .withMessage('Relationship status must be a valid value or "Rather Not Say".'),
   check('city')
     .optional({ checkFalsy: true })
     .isLength({ max: 35 })
     .withMessage('City must be 35 characters or less.'),
   check('gender')
     .optional({ checkFalsy: true })
-    .isIn(['Male', 'Female', 'Other'])
+    .isIn(['Male', 'Female', 'Other', 'Rather Not Say'])
     .withMessage('Gender must be male, female, or other.'),
   handleValidationErrors,
 ];

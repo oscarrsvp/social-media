@@ -42,6 +42,8 @@ module.exports = {
         },
         gender: {
           type: Sequelize.STRING,
+          allowNull: true,
+          defaultValue: 'Rather Not Say',
         },
         birthday: {
           type: Sequelize.DATE,
@@ -49,6 +51,8 @@ module.exports = {
         },
         relationship: {
           type: Sequelize.STRING,
+          allowNull: true,
+          defaultValue: 'Rather Not Say',
         },
         city: {
           type: Sequelize.STRING,
