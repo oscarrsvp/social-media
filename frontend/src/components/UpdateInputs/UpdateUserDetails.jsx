@@ -113,6 +113,7 @@ function UpdateUserDetails({ user }) {
             <option value="Engaged">Engaged</option>
             <option value="Married">Married</option>
             <option value="It's Complicated">It&apos;s Complicated</option>
+            <option value="Rather Not Say">Rather Not Say</option>
           </select>
         </label>
         <label>
@@ -139,6 +140,7 @@ function UpdateUserDetails({ user }) {
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
+            <option value="Rather Not Say">Rather Not Say</option>
           </select>
         </label>
         {/* <label>

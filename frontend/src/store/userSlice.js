@@ -102,11 +102,13 @@ export const updateUser = createAsyncThunk(
 
       formData.append('firstName', user.firstName);
       formData.append('lastName', user.lastName);
-      formData.append('middleName', user.middleName);
-      formData.append('city', user.city);
       formData.append('gender', user.gender);
       formData.append('headerImg', user.headerImage);
       formData.append('relationship', user.relationship);
+
+      if (user.city !== null) formData.append('city', user.city);
+
+      if (user.middleName !== null) formData.append('middleName', user.middleName);
 
       const response = await csrfFetch(`/api/users`, {
         method: 'PUT',
