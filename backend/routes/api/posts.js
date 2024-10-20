@@ -3,23 +3,15 @@ const router = express.Router();
 const { Op } = require('sequelize');
 const { requireAuth } = require('../../utils/auth');
 const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
+const { getUsersFollowingList } = require('../../middleware/users');
 const { validatePost, validateComment } = require('../../utils/validation');
-const { User, UserPhoto, Post, Comment, PostLike, Follower } = require('../../db/models');
+const { User, UserPhoto, Post, Comment, PostLike } = require('../../db/models');
 
 router.use(requireAuth);
 
 // Get all User's Posts
-router.get('/', async (req, res) => {
-  const userId = req.user.id;
-  const userFollowing = await Follower.findAll({
-    where: {
-      userId,
-    },
-    attributes: ['followerId'],
-  });
-
-  const followingIds = userFollowing.map((follow) => follow.followerId);
-  followingIds.push(userId);
+router.get('/', getUsersFollowingList, async (req, res) => {
+  const followingIds = req.user.followingList;
 
   const post = await Post.findAll({
     where: {
@@ -52,18 +44,8 @@ router.get('/', async (req, res) => {
 });
 
 // Get all Posts current user is not following
-router.get('/explore', async (req, res) => {
-  const userId = req.user.id;
-
-  const userFollowingList = await Follower.findAll({
-    where: {
-      userId,
-    },
-    attributes: ['followerId'],
-  });
-
-  const followingIds = userFollowingList.map((follow) => follow.followerId);
-  followingIds.push(userId);
+router.get('/explore', getUsersFollowingList, async (req, res) => {
+  const followingIds = req.user.followingList;
 
   const posts = await Post.findAll({
     where: {
