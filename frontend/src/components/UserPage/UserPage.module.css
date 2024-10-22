@@ -73,7 +73,6 @@
     align-items: center;
     height: 190px;
     width: 100%;
-    padding: 12px 4px;
 }
 
 .actions {
@@ -136,4 +135,20 @@
 
 .ProfileInput button {
     margin-right: 0px;
+}
+
+.ActionBtn {
+    text-align: center;
+}
+
+.SetProfileImg {
+    display: flex;
+    font-size: 18px;
+}
+
+.SetProfileImg input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    margin-right: 10px;
 }

@@ -10,7 +10,7 @@ function UserCard({ user }) {
   const [isActive, setIsActive] = useState(false);
   const [profileImg, setProfileImg] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
-  const [profileImage, setProfileImage] = useState(false);
+  const [profileImage, setProfileImage] = useState(true);
   const sessionUser = useSelector((state) => state.session.user);
   const followingList = useSelector((state) => state.following);
   const fullName = `${user.firstName} ${user.lastName}`;
@@ -65,7 +65,7 @@ function UserCard({ user }) {
   };
 
   const resetImg = () => {
-    setIsActive(!isActive);
+    setIsActive(false);
     setProfileImg(null);
     setPreviewImg(null);
   };
@@ -86,14 +86,16 @@ function UserCard({ user }) {
         <h2>{fullName}</h2>
         {isActive && (
           <>
-            <div>
+            <div className={styles.ActionBtn}>
               <button className="btn" onClick={handleSubmit}>
                 Add
               </button>
               <button className="btn" onClick={resetImg}>
                 Cancel
               </button>
+            </div>
 
+            <div className={styles.SetProfileImg}>
               <input
                 type="checkbox"
                 checked={profileImage}
