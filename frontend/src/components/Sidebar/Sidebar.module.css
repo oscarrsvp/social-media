@@ -38,12 +38,13 @@
     padding: 10px;
     color: #003049;
     font-size: 20px;
+    transition: background-color 0.3s, border-color 0.3s;
+    border-radius: 5px;
 }
 
 .sideLinks a:hover {
     color: #025e90;
     background-color: #edede9;
-    border-radius: 5px;
     text-decoration: none;
 }
 
