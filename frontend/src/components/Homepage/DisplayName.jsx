@@ -6,14 +6,14 @@ function DisplayName() {
   const fullName = `${sessionUser.firstName} ${sessionUser.lastName}`;
 
   return (
-    <div className="center m-8">
+    <div className="center">
       {sessionUser.profileImage ? (
         <img className="profileImg" src={sessionUser.profileImage} alt="user-image" />
       ) : (
         <img src={BlankImage} className="profileImg" />
       )}
 
-      <h3>{fullName}</h3>
+      <h3 className="font-w-500">{fullName}</h3>
     </div>
   );
 }
