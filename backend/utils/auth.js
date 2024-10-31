@@ -65,6 +65,8 @@ const restoreUser = (req, res, next) => {
 
     if (!req.user) res.clearCookie('token');
 
+    req.user.profileImage = req.user.UserPhotos[0].url;
+
     return next();
   });
 };
