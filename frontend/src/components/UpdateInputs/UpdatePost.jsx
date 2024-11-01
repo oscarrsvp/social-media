@@ -55,7 +55,7 @@ function UpdatePost({ post }) {
           ></textarea>
           {errors.context && <p className="error">{errors.context}</p>}
           <button className="btn update-btn" onClick={handleUpdate}>
-            Update
+            Save
           </button>
         </div>
       </div>
