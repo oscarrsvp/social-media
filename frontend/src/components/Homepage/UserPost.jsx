@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { VscEdit, VscTrash } from 'react-icons/vsc';
-import { useModal } from '../../context/Modal';
 import CommentSection from './CommentSection';
 import DeletePost from '../PostForm/DeletePost';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
@@ -17,7 +16,6 @@ function UserPost({ post, userId }) {
   const users = useSelector((state) => state.users);
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-  const { closeModal } = useModal();
 
   const toggleMenu = (e) => {
     e.stopPropagation();

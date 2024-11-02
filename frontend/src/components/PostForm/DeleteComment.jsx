@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
+import { VscChromeClose } from 'react-icons/vsc';
 import { deleteComment } from '../../store/commentSlice';
 
 function DeleteComment({ commentId, postId, userId }) {
@@ -16,16 +17,23 @@ function DeleteComment({ commentId, postId, userId }) {
     <>
       {sessionUser.id === userId && (
         <div className={`deleteModal`}>
-          <h1>Confirm Delete?</h1>
-          <p>Are you sure you want to delete this comment?</p>
+          <VscChromeClose onClick={closeModal} />
+          <div>
+            <h2>You are about to delete a comment</h2>
+            <p>
+              Are you sure you want to delete this comment? This action cannot be undone.
+            </p>
+          </div>
 
-          <button className="btn delete-btn" onClick={handleDelete}>
-            Yes (Delete Comment)
-          </button>
+          <div className="deleteActions">
+            <button className="btn" onClick={closeModal}>
+              No, cancel
+            </button>
 
-          <button className="btn" onClick={closeModal}>
-            No (Keep Comment)
-          </button>
+            <button className="btn delete-btn" onClick={handleDelete}>
+              Yes, I&apos;m sure
+            </button>
+          </div>
         </div>
       )}
     </>
