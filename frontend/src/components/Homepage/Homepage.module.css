@@ -74,8 +74,10 @@
 /* Comment Section */
 
 .postComments {
-    padding: 10px;
-    border-bottom: 1px solid #000000;
+    padding: 15px 10px;
+    border: 1px solid #dad7cd;
+    background-color: #edede9;
+    border-radius: 5px;
 }
 
 .commentSection {
@@ -83,6 +85,11 @@
     flex-direction: column;
     gap: 8px;
     margin-top: 10px;
+}
+
+.commentHeader {
+    border-bottom: 1px solid #dad7cd;
+    padding-bottom: 8px;
 }
 
 .userImage {
@@ -132,9 +139,9 @@
 
 .comments {
     margin: 8px 0;
-    padding-left: 4px;
     text-overflow: ellipsis;
-    word-break: break-all;
+    word-break: break-word;
+    line-height: 1.4;
 }
 
 .commentsVisible {
