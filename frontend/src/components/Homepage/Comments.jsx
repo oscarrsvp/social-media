@@ -17,9 +17,11 @@ function Comments({ postId }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const [openMenuId, setOpenMenuId] = useState(null);
 
-  const toggleMenu = (e) => {
+  const toggleMenu = (e, commentId) => {
     e.stopPropagation();
+    setOpenMenuId(commentId);
     setShowMenu(!showMenu);
   };
 
@@ -64,43 +66,48 @@ function Comments({ postId }) {
                 <NavLink to={`/user/${comment.userId}`}>{comment.fullName}</NavLink>
               </div>
 
-              <div style={{ position: 'relative' }}>
-                <BsThreeDotsVertical cursor={'pointer'} onClick={toggleMenu} />
+              {sessionUser.id === comment.userId && (
+                <div style={{ position: 'relative' }}>
+                  <BsThreeDotsVertical
+                    cursor={'pointer'}
+                    onClick={(e) => toggleMenu(e, comment.id)}
+                  />
 
-                {sessionUser.id === comment.userId && showMenu && (
-                  <div className={toggleButton} ref={ulRef}>
-                    <div className={styles.postMenu}>
-                      <OpenModalButton
-                        buttonText={
-                          <>
-                            <VscEdit /> {'Edit Post'}
-                          </>
-                        }
-                        modalComponent={<UpdateComment comment={comment} />}
-                        classNames={styles.postButtons}
-                        onButtonClick={() => setShowMenu(false)}
-                      />
+                  {showMenu && comment.id === openMenuId && (
+                    <div className={toggleButton} ref={ulRef}>
+                      <div className={styles.postMenu}>
+                        <OpenModalButton
+                          buttonText={
+                            <>
+                              <VscEdit /> {'Edit Post'}
+                            </>
+                          }
+                          modalComponent={<UpdateComment comment={comment} />}
+                          classNames={styles.postButtons}
+                          onButtonClick={() => setShowMenu(false)}
+                        />
 
-                      <OpenModalButton
-                        buttonText={
-                          <>
-                            <VscTrash /> {'Delete'}
-                          </>
-                        }
-                        modalComponent={
-                          <DeleteComment
-                            commentId={comment.id}
-                            postId={comment.postId}
-                            userId={comment.userId}
-                          />
-                        }
-                        classNames={styles.postButtons}
-                        onButtonClick={() => setShowMenu(false)}
-                      />
+                        <OpenModalButton
+                          buttonText={
+                            <>
+                              <VscTrash /> {'Delete'}
+                            </>
+                          }
+                          modalComponent={
+                            <DeleteComment
+                              commentId={comment.id}
+                              postId={comment.postId}
+                              userId={comment.userId}
+                            />
+                          }
+                          classNames={styles.postButtons}
+                          onButtonClick={() => setShowMenu(false)}
+                        />
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div>
