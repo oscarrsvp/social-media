@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   const { user } = req;
 
   const userData = user.toJSON();
-  profileImage = userData.UserPhotos.length ? userData.UserPhotos[0].url : '';
+  const profileImage = userData.UserPhotos.length ? userData.UserPhotos[0].url : '';
 
   if (user) {
     const safeUser = {

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateComment } from '../../store/commentSlice';
+import { VscChromeClose } from 'react-icons/vsc';
 import DisplayName from '../Homepage/DisplayName';
 import { useModal } from '../../context/Modal';
+import styles from './UpdateInputs.module.css';
 
 function UpdateComment({ comment }) {
   const { id } = comment;
@@ -29,17 +31,23 @@ function UpdateComment({ comment }) {
   return (
     <>
       <div>
-        <h2>Edit Comment</h2>
-        <DisplayName />
-        <textarea
-          value={context}
-          onChange={(e) => setContext(e.target.value)}
-          placeholder="Whats on your mind?"
-        ></textarea>
-        {errors.context && <p className="error">{errors.context}</p>}
-        <button className="btn update-btn" onClick={handleUpdate}>
-          Update Comment
-        </button>
+        <div className={`${styles.header} p-15 border-line`}>
+          <DisplayName />
+          <VscChromeClose onClick={closeModal} />
+        </div>
+
+        <div className="p-15">
+          <textarea
+            value={context}
+            onChange={(e) => setContext(e.target.value)}
+            placeholder="Whats on your mind?"
+            autoFocus
+          ></textarea>
+          {errors.context && <p className="error">{errors.context}</p>}
+          <button className="btn update-btn" onClick={handleUpdate}>
+            Save
+          </button>
+        </div>
       </div>
     </>
   );

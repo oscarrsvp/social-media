@@ -8,21 +8,42 @@
 :global(.deleteModal) {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 10px 20px;
+    padding: 15px;
+    padding-left: 20px;
+}
+
+:global(.deleteModal svg) {
+    align-self: flex-end;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 :global(.deleteModal p) {
-    margin: 4px 0;
-    font-size: 18px;
+    margin: 8px 0;
+    font-size: 16px;
+    line-height: 1.4;
+    width: 80%;
 }
 
 :global(.deleteModal button) {
-    width: 250px;
     margin: 5px 0;
 }
 
+:global(.deleteActions) {
+    display: flex;
+    gap: 12px;
+}
+
+:global(.deleteActions button:nth-child(1)) {
+    color: #000000;
+    background: #edede9;
+    border: 1px solid #dad7cd;
+}
+
+:global(.deleteActions button:nth-child(1):hover) {
+    background: #e4e4e2;
+}
 
 .userDetails {
     display: flex;

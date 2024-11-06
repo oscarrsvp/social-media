@@ -1,4 +1,11 @@
-import { useRef, useState, useContext, createContext } from 'react';
+import {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useCallback,
+} from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
 
@@ -10,7 +17,7 @@ export function ModalProvider({ children }) {
   // callback function that will be called when modal is closing
   const [onModalClose, setOnModalClose] = useState(null);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModalContent(null); // clear the modal contents
     // If callback function is truthy, call the callback function and reset it
     // to null:
@@ -18,7 +25,20 @@ export function ModalProvider({ children }) {
       setOnModalClose(null);
       onModalClose();
     }
-  };
+  }, [onModalClose]);
+
+  useEffect(() => {
+    // Close modal on history change (e.g., back or forward navigation)
+    const handlePopState = () => closeModal();
+
+    // Listen for popstate events
+    window.addEventListener('popstate', handlePopState);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [closeModal]);
 
   const contextValue = {
     modalRef, // reference to modal div

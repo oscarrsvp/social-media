@@ -20,7 +20,7 @@ function FollowingSection({ userId }) {
     <div className={styles.followingSection}>
       <div>
         <div className={styles.userFollowing}>
-          <h2>Following</h2>
+          <h3>Following</h3>
           <div className={styles.userSection}>
             {currentFollowing.length === 0 ? (
               <div className={styles.discoverUser}>

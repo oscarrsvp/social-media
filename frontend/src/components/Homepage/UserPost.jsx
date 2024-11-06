@@ -1,7 +1,8 @@
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { featureComingSoon } from '../../utils/globallyFns';
+import { VscEdit, VscTrash } from 'react-icons/vsc';
 import CommentSection from './CommentSection';
 import DeletePost from '../PostForm/DeletePost';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
@@ -13,12 +14,35 @@ import styles from './Homepage.module.css';
 function UserPost({ post, userId }) {
   const sessionUser = useSelector((state) => state.session.user);
   const users = useSelector((state) => state.users);
+  const [showMenu, setShowMenu] = useState(false);
+  const ulRef = useRef();
+
+  const toggleMenu = (e) => {
+    e.stopPropagation();
+    setShowMenu(!showMenu);
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = (e) => {
+      if (ulRef.current && !ulRef.current.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener('click', closeMenu);
+
+    return () => document.removeEventListener('click', closeMenu);
+  }, [showMenu]);
 
   if (!users) return <h1>Loading</h1>;
 
   const fullName = users
     ? `${users[userId]?.firstName || ''} ${users[userId]?.lastName || ''}`
     : '';
+
+  const toggleButton = styles.dropdownMenu + (showMenu ? '' : styles.hidden);
 
   return (
     <>
@@ -35,32 +59,41 @@ function UserPost({ post, userId }) {
 
             <Link to={`/user/${users[userId]?.id}`}>{fullName}</Link>
           </div>
-          <BsThreeDotsVertical
-            cursor={'pointer'}
-            size={20}
-            onClick={(e) => featureComingSoon(e)}
-          />
+          <div style={{ position: 'relative' }}>
+            <BsThreeDotsVertical cursor={'pointer'} size={20} onClick={toggleMenu} />
+
+            {sessionUser.id === post.userId && showMenu && (
+              <div className={toggleButton} ref={ulRef}>
+                <div className={styles.postMenu}>
+                  <OpenModalButton
+                    buttonText={
+                      <>
+                        <VscEdit /> {'Edit Post'}
+                      </>
+                    }
+                    modalComponent={<UpdatePost post={post} />}
+                    classNames={styles.postButtons}
+                    onButtonClick={() => setShowMenu(false)}
+                  />
+                  <OpenModalButton
+                    buttonText={
+                      <>
+                        <VscTrash /> {'Delete'}
+                      </>
+                    }
+                    modalComponent={<DeletePost postId={post.id} userId={post.userId} />}
+                    classNames={styles.postButtons}
+                    onButtonClick={() => setShowMenu(false)}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className={styles.postDetails}>
           <PostDetails post={post} fullName={fullName} />
           <CommentSection postId={post.id} postLikes={post.likes} />
-          {sessionUser.id === post.userId && (
-            <div>
-              <div>
-                <OpenModalButton
-                  buttonText="Update Post"
-                  modalComponent={<UpdatePost post={post} />}
-                  classNames={'btn update-btn'}
-                />
-                <OpenModalButton
-                  buttonText="Delete Post"
-                  modalComponent={<DeletePost postId={post.id} userId={post.userId} />}
-                  classNames={'btn delete-btn'}
-                />
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </>

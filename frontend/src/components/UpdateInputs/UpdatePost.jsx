@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updatePost } from '../../store/postSlice';
-import DisplayName from '../Homepage/DisplayName';
-import { validateImage } from '../../utils/globallyFns';
 import { useModal } from '../../context/Modal';
+import { VscChromeClose } from 'react-icons/vsc';
+import DisplayName from '../Homepage/DisplayName';
+import styles from './UpdateInputs.module.css';
 
 function UpdatePost({ post }) {
   const { id } = post;
@@ -17,12 +18,6 @@ function UpdatePost({ post }) {
   const handleUpdate = () => {
     try {
       setErrors({});
-      if (photo) {
-        if (!validateImage(photo)) {
-          setErrors({ photo: 'Image format is invalid' });
-          return;
-        }
-      }
 
       const editPost = dispatch(updatePost({ id, photo, context }));
 
@@ -43,25 +38,26 @@ function UpdatePost({ post }) {
 
   return (
     <>
-      <div>
-        <h2>Edit Post</h2>
+      <div className={`${styles.header} p-15 border-line`}>
         <DisplayName />
-        <input
-          type="text"
-          value={photo}
-          onChange={(e) => setPhoto(e.target.value)}
-          placeholder="Photo url"
-        />
-        {errors.photo && <p className="error">{errors.photo}</p>}
-        <textarea
-          value={context}
-          onChange={(e) => setContext(e.target.value)}
-          placeholder="Whats on your mind?"
-        ></textarea>
-        {errors.context && <p className="error">{errors.context}</p>}
-        <button className="btn update-btn" onClick={handleUpdate}>
-          Update Post
-        </button>
+        <VscChromeClose onClick={closeModal} />
+      </div>
+
+      <div className="p-15">
+        {photo && <img src={photo} alt="" className={styles.imagePost} />}
+
+        <div>
+          <textarea
+            value={context}
+            onChange={(e) => setContext(e.target.value)}
+            placeholder="Whats on your mind?"
+            autoFocus
+          ></textarea>
+          {errors.context && <p className="error">{errors.context}</p>}
+          <button className="btn update-btn" onClick={handleUpdate}>
+            Save
+          </button>
+        </div>
       </div>
     </>
   );
