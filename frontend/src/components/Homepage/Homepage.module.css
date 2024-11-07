@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
 }
 
@@ -18,9 +19,7 @@
 }
 
 .feed h1 {
-    position: absolute;
-    top: 50%;
-    transform: translateY(50%);
+    margin-bottom: 60px;
 }
 
 .userPost {
