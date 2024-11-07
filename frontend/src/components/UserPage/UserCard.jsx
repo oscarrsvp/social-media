@@ -72,7 +72,7 @@ function UserCard({ user }) {
 
   return (
     <div className={styles.userActions}>
-      {user.profileImage ? (
+      {user.profileImage || previewImg ? (
         <img
           src={!previewImg ? user.profileImage : previewImg}
           alt="user-img"
