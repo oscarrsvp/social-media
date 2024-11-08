@@ -29,6 +29,10 @@
     flex-direction: column;
 }
 
+.discoverUser a {
+    text-align: center;
+}
+
 .discoverUser a:hover {
     text-decoration: none;
     color: #ffffff;

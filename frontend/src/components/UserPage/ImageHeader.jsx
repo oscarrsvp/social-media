@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { updateUser } from '../../store/userSlice';
+import MissingPicture from '../../assets/missing-picture.jpg';
 import styles from './UserPage.module.css';
 
 function ImageHeader({ sessionUserId, user }) {
@@ -28,7 +29,7 @@ function ImageHeader({ sessionUserId, user }) {
   };
 
   const resetImg = () => {
-    setIsActive(!isActive);
+    setIsActive(false);
     setHeaderImg(null);
     setPreviewImg(null);
   };
@@ -60,11 +61,15 @@ function ImageHeader({ sessionUserId, user }) {
 
   return (
     <div className={styles.imgContainer}>
-      <img
-        src={!previewImg ? user.headerImage : previewImg}
-        alt=""
-        className={styles.bannerImg}
-      />
+      {user.headerImage || previewImg ? (
+        <img
+          src={!previewImg ? user.headerImage : previewImg}
+          alt="banner-img"
+          className={styles.bannerImg}
+        />
+      ) : (
+        <img src={MissingPicture} className={styles.bannerImg} />
+      )}
 
       {user.id === sessionUserId && (
         <div className={styles.imgButton}>
