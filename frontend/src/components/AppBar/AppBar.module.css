@@ -1,0 +1,34 @@
+.actionBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #003049;
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+}
+
+.actionBar ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actionBar ul li {
+    flex: 1 1 auto;
+}
+
+.actionBar ul a {
+    display: flex;
+    padding: 8px;
+    gap: 8px;
+    font-size: 20px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff !important;
+}
+
+.actionBar ul a:active {
+    background: #025E95;
+    border-radius: 5px;
+}
