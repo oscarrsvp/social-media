@@ -93,3 +93,15 @@
     height: 300px;
     border-radius: 5px;
 }
+
+@media screen and (max-width: 480px) {
+    .createPost {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .createPost {
+        width: 100%;
+    }
+}

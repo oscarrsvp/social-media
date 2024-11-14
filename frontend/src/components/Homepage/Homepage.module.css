@@ -198,3 +198,66 @@
     background-color: #edede9;
     color: #003049;
 }
+
+@media screen and (max-width: 480px) {
+    #homePage {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pageHeightNoPost {
+        height: calc(100vh - 110px - 70px) !important;
+    }
+
+    .feed {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .feed h1 {
+        margin: auto;
+    }
+
+    .createPost {
+        width: 430px;
+    }
+
+    .userPost {
+        width: 100%;
+    }
+
+    .SidebarR {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+
+    #homePage {
+        flex-direction: column;
+    }
+
+    .pageHeightNoPost {
+        height: calc(100vh - 110px - 70px) !important;
+    }
+
+    .feed {
+        justify-content: flex-start;
+        width: 100%;
+        height: 100%;
+    }
+
+    .feed h1 {
+        margin: auto;
+    }
+
+    .userPost {
+        width: 100%;
+    }
+
+    .SidebarR {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {}
