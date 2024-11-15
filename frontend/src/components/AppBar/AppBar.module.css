@@ -19,13 +19,15 @@
 
 .actionBar ul a {
     display: flex;
+    flex-direction: column;
     padding: 8px;
     gap: 8px;
-    font-size: 20px;
+    font-size: 16px;
     height: 70px;
     justify-content: center;
     align-items: center;
     color: #ffffff !important;
+    text-decoration: none;
 }
 
 .actionBar ul a:active {

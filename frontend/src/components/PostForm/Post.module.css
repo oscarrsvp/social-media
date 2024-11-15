@@ -104,4 +104,8 @@
     .createPost {
         width: 100%;
     }
+
+    .userDetails h3 {
+        font-size: 20px;
+    }
 }

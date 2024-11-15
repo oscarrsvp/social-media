@@ -226,10 +226,20 @@ button:disabled {
     justify-content: flex-start;
     gap: 0px;
   }
+
+  .active {
+    background-color: #025E95;
+    color: #003049;
+  }
 }
 
 @media screen and (min-width: 481px) and (max-width: 767px) {
   .feedContainer {
     gap: 0px;
+  }
+
+  .active {
+    background-color: #025E95;
+    color: #003049;
   }
 }

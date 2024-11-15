@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { FaRegCompass } from 'react-icons/fa';
@@ -26,22 +26,22 @@ function AppBar() {
     <div className={styles.actionBar}>
       <ul>
         <li>
-          <Link to="/homepage">
-            <AiOutlineHome />
+          <NavLink to="/homepage">
+            <AiOutlineHome size={30} />
             Home
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/explore">
-            <FaRegCompass />
+          <NavLink to="/explore">
+            <FaRegCompass size={30} />
             Explore
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={`/user/${user.id}`}>
-            <IoPersonOutline />
+          <NavLink to={`/user/${user.id}`}>
+            <IoPersonOutline size={30} />
             User
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </div>
