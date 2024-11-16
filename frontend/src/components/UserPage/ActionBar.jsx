@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import styles from './UserPage.module.css';
 
