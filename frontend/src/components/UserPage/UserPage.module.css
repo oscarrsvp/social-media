@@ -152,3 +152,78 @@
     margin: 0;
     margin-right: 10px;
 }
+
+.actionTabs {
+    background-color: #ffffff;
+    font-size: 20px;
+    width: 20%;
+    border-radius: 5px;
+}
+
+.actionTabs ul {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.actionTabs ul li {
+    padding: 8px;
+}
+
+.actionTabs ul li:active {
+    background-color: #d0d0d0;
+}
+
+
+
+
+@media screen and (max-width: 480px) {
+    #userPage {
+        flex-direction: column;
+        height: calc(100vh - 70px - 70px - 40px)
+    }
+
+    .userHeader {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .userFeed {
+        width: 100%;
+    }
+
+    .feed {
+        width: 100%;
+    }
+
+    .userSection {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    #userPage {
+        flex-direction: column;
+    }
+
+    .userHeader {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .userFeed {
+        width: 100%;
+    }
+
+    .userActions {
+        margin-bottom: 12px;
+    }
+
+    .feed {
+        width: 100%;
+    }
+
+    .userSection {
+        width: 100%;
+    }
+}
