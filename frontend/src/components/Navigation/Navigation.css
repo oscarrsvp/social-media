@@ -18,6 +18,11 @@ nav a {
     align-items: center;
 }
 
+.navLinks a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
 .hidden {
     display: none;
 }

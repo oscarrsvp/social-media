@@ -24,12 +24,14 @@ function Homepage() {
     dispatch(fetchUsers());
   }, [dispatch]);
 
+  const heightDimension = userPost.length === 0 ? styles.pageHeightNoPost : '';
+
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
   if (posts.post === null) return <h1>Loading...</h1>;
 
   return (
-    <div id={styles.homePage}>
+    <div id={styles.homePage} className={heightDimension}>
       <div className={styles.feed}>
         <CreatePost />
         {userPost.length === 0 ? (

@@ -9,6 +9,7 @@ import Homepage from './components/Homepage/Homepage';
 import UserPage from './components/UserPage/UserPage';
 import Sidebar from './components/Sidebar/Sidebar';
 import ExplorePage from './components/ExplorePage/ExplorePage';
+import AppBar from './components/AppBar/AppBar';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function Layout() {
         <Sidebar />
         {isLoaded && <Outlet />}
       </div>
+      <AppBar />
     </>
   );
 }

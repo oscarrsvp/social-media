@@ -57,3 +57,17 @@
     border-bottom: 2px solid #edede9;
     margin: 40px 0;
 }
+
+
+@media screen and (max-width: 480px) {
+
+    .sideBar {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .sideBar {
+        display: none;
+    }
+}

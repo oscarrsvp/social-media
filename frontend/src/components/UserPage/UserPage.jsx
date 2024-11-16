@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import { fetchUser } from '../../store/userSlice';
@@ -10,10 +10,13 @@ import UserDetails from './UserDetails';
 import CreatePost from '../PostForm/CreatePost';
 import UserPost from '../Homepage/UserPost';
 import AdsContent from '../AdsContent/AdsContent';
+import ActionBar from './ActionBar';
 import styles from './UserPage.module.css';
 
 function UserPage() {
   const { userId } = useParams();
+  const [selectedTab, setSelectedTab] = useState('Post');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const sessionUser = useSelector((state) => state.session.user);
   const user = useSelector((state) => state.users[userId]);
   const posts = useSelector((state) => state.posts);
@@ -31,6 +34,12 @@ function UserPage() {
     dispatch(fetchFollowing());
   }, [dispatch, userId]);
 
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
   if (!user || posts.post === null) return <h1>Loading...</h1>;
@@ -41,35 +50,55 @@ function UserPage() {
         <div className={styles.userHeader}>
           <ImageHeader sessionUserId={sessionUser.id} user={user} />
           <UserCard user={user} />
+          {isMobile && <ActionBar onSelectTab={setSelectedTab} />}
         </div>
 
         <div className={styles.userFeed}>
           <div className={styles.feed}>
-            {sessionUser.id === user.id && (
+            {sessionUser.id === user.id && <CreatePost />}
+
+            {isMobile && selectedTab === 'Post' ? (
               <>
-                <CreatePost />
-              </>
-            )}
-            {userPost.length > 0 ? (
-              postByDate.map((post) => (
-                <UserPost post={post} userId={userId} key={post.id} />
-              ))
-            ) : (
-              <>
-                {sessionUser.id === user.id ? (
-                  <h1>You don&apos;t have any posts</h1>
+                {userPost.length > 0 ? (
+                  postByDate.map((post) => (
+                    <UserPost post={post} userId={userId} key={post.id} />
+                  ))
                 ) : (
-                  <h1>{user.firstName} doesn&apos;t have any posts</h1>
+                  <h1>
+                    {sessionUser.id === user.id
+                      ? "You don't have any posts"
+                      : `${user.firstName} doesn't have any posts`}
+                  </h1>
                 )}
               </>
+            ) : (
+              <div className={styles.userCard}>
+                <UserDetails user={user} />
+              </div>
             )}
+
+            {!isMobile &&
+              (userPost.length > 0 ? (
+                postByDate.map((post) => (
+                  <UserPost post={post} userId={userId} key={post.id} />
+                ))
+              ) : (
+                <h1>
+                  {sessionUser.id === user.id
+                    ? "You don't have any posts"
+                    : `${user.firstName} doesn't have any posts`}
+                </h1>
+              ))}
           </div>
         </div>
       </div>
-      <div className={styles.userCard}>
-        <UserDetails user={user} />
-        <AdsContent />
-      </div>
+
+      {!isMobile && (
+        <div className={styles.userCard}>
+          <UserDetails user={user} />
+          <AdsContent />
+        </div>
+      )}
     </div>
   );
 }

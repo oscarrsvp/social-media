@@ -219,3 +219,27 @@ button:disabled {
   border-radius: 5px;
   color: #003049;
 }
+
+
+@media screen and (max-width: 480px) {
+  .feedContainer {
+    justify-content: flex-start;
+    gap: 0px;
+  }
+
+  .active {
+    background-color: #025E95;
+    color: #003049;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+  .feedContainer {
+    gap: 0px;
+  }
+
+  .active {
+    background-color: #025E95;
+    color: #003049;
+  }
+}
