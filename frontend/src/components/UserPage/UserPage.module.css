@@ -156,22 +156,36 @@
 .actionTabs {
     background-color: #ffffff;
     font-size: 20px;
-    width: 20%;
     border-radius: 5px;
 }
 
 .actionTabs ul {
     display: flex;
     justify-content: space-between;
-    gap: 8px;
+    border: 2px solid #dad7cd;
+    border-radius: 5px;
 }
 
 .actionTabs ul li {
-    padding: 8px;
+    display: inline-flex;
+    padding: 8px 12px;
+    align-items: center;
+    gap: 4px;
+}
+
+.actionTabs ul li:first-child {
+    border-right: 2px solid #dad7cd;
 }
 
 .actionTabs ul li:active {
-    background-color: #d0d0d0;
+    background-color: #025E95;
+    border-radius: 5px;
+}
+
+.active {
+    background-color: #025E95;
+    color: #ffffff;
+    border-radius: 5px;
 }
 
 

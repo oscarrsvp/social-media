@@ -75,14 +75,13 @@
 .postComments {
     padding: 15px 10px;
     border: 1px solid #dad7cd;
-    background-color: #edede9;
     border-radius: 5px;
 }
 
 .commentSection {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     margin-top: 10px;
 }
 
@@ -258,6 +257,10 @@
 
     .SidebarR {
         display: none;
+    }
+
+    .commentHeader div a {
+        background-color: inherit !important;
     }
 }
 

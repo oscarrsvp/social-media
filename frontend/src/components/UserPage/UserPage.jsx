@@ -72,9 +72,11 @@ function UserPage() {
                 )}
               </>
             ) : (
-              <div className={styles.userCard}>
-                <UserDetails user={user} />
-              </div>
+              isMobile && (
+                <div className={styles.userCard}>
+                  <UserDetails user={user} />
+                </div>
+              )
             )}
 
             {!isMobile &&
