@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import { fetchUser } from '../../store/userSlice';
@@ -11,16 +11,17 @@ import CreatePost from '../PostForm/CreatePost';
 import UserPost from '../Homepage/UserPost';
 import AdsContent from '../AdsContent/AdsContent';
 import ActionBar from './ActionBar';
+import { MobileContext } from '../../App';
 import styles from './UserPage.module.css';
 
 function UserPage() {
   const { userId } = useParams();
   const [selectedTab, setSelectedTab] = useState('Post');
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const sessionUser = useSelector((state) => state.session.user);
   const user = useSelector((state) => state.users[userId]);
   const posts = useSelector((state) => state.posts);
   const userPost = Object.values(posts);
+  const isMobile = useContext(MobileContext);
   const dispatch = useDispatch();
 
   const postByDate = userPost.sort((a, b) => {
@@ -33,12 +34,6 @@ function UserPage() {
     dispatch(fetchUserPosts(userId));
     dispatch(fetchFollowing());
   }, [dispatch, userId]);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 

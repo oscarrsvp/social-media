@@ -1,24 +1,15 @@
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { AiOutlineHome } from 'react-icons/ai';
 import { FaRegCompass } from 'react-icons/fa';
 import { IoPersonOutline } from 'react-icons/io5';
+import { MobileContext } from '../../App';
 import styles from './AppBar.module.css';
 
 function AppBar() {
   const user = useSelector((state) => state.session.user);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const isMobile = useContext(MobileContext);
 
   if (!isMobile || !user) return null;
 
