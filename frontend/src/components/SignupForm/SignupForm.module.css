@@ -1,5 +1,5 @@
 #signupForm {
-    height: 100vh;
+    height: calc(100vh - 40px);
     width: 100%;
     gap: 20px;
     flex-grow: 2;

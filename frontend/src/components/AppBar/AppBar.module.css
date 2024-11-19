@@ -28,9 +28,10 @@
     align-items: center;
     color: #ffffff !important;
     text-decoration: none;
+    border-radius: 0px !important;
 }
 
 .actionBar ul a:active {
     background: #025E95;
-    border-radius: 5px;
+    border-radius: 0px !important;
 }
