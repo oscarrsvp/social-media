@@ -79,7 +79,7 @@ function Comments({ postId }) {
                         <OpenModalButton
                           buttonText={
                             <>
-                              <VscEdit /> {'Edit Post'}
+                              <VscEdit /> {'Edit Comment'}
                             </>
                           }
                           modalComponent={<UpdateComment comment={comment} />}

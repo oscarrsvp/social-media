@@ -13,9 +13,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+    align-items: flex-start;
 }
 
 .postFeed>div {
-    flex: 1 1 auto;
     width: 380px;
 }
