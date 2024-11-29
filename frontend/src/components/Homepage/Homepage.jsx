@@ -23,8 +23,7 @@ function Homepage() {
 
   useEffect(() => {
     dispatch(fetchPosts());
-    dispatch(fetchUsers());
-    setIsLoading(false);
+    dispatch(fetchUsers()).then(() => setIsLoading(false));
   }, [dispatch]);
 
   const heightDimension = userPost.length === 0 ? styles.pageHeightNoPost : '';
@@ -35,7 +34,7 @@ function Homepage() {
     return (
       isLoading && (
         <div className={styles.feed}>
-          <SkeletonCard length={8} />
+          <SkeletonCard length={4} />
         </div>
       )
     );
