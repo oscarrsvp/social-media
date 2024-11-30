@@ -1,0 +1,42 @@
+.skeletonCard {
+    background: #ffffff;
+    width: 750px;
+    padding: 16px;
+    border-radius: 5px;
+}
+
+.skeletonCard .postHeader {
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.skeletonCard .postDetails {
+    flex: 1;
+    margin: 12px 0;
+}
+
+.skeletonCard .commentSection {
+    display: flex;
+    gap: 8px;
+}
+
+.skeletonFollowSection {
+    background: #ffffff;
+    width: 350px;
+    border-radius: 5px;
+    padding: 16px;
+}
+
+.skeletonFollowSection .followHeader {
+    border-bottom: 1px solid #edede9;
+    padding-bottom: 8px;
+}
+
+.skeletonFollowSection .following {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

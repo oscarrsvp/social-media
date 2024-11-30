@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { fetchPosts } from '../../store/postSlice';
@@ -7,11 +7,13 @@ import CreatePost from '../PostForm/CreatePost';
 import UserPost from './UserPost';
 import FollowingSection from '../FollowingSection/FollowingSection';
 import AdsContent from '../AdsContent/AdsContent';
+import SkeletonCard from '../SkeletonCard/SkeletonCard';
 import styles from './Homepage.module.css';
 
 function Homepage() {
   const sessionUser = useSelector((state) => state.session.user);
   const posts = useSelector((state) => state.posts);
+  const [isLoading, setIsLoading] = useState(true);
   const userPost = Object.values(posts);
   const dispatch = useDispatch();
 
@@ -21,14 +23,21 @@ function Homepage() {
 
   useEffect(() => {
     dispatch(fetchPosts());
-    dispatch(fetchUsers());
+    dispatch(fetchUsers()).then(() => setIsLoading(false));
   }, [dispatch]);
 
   const heightDimension = userPost.length === 0 ? styles.pageHeightNoPost : '';
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
-  if (posts.post === null) return <h1>Loading...</h1>;
+  if (posts.post === null)
+    return (
+      isLoading && (
+        <div className={styles.feed}>
+          <SkeletonCard length={4} />
+        </div>
+      )
+    );
 
   return (
     <div id={styles.homePage} className={heightDimension}>

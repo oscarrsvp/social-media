@@ -1,20 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchFollowing } from '../../store/followSlice';
+import SkeletonFollowingSection from '../SkeletonCard/SkeletonFollowingSection';
 import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './FollowingSection.module.css';
 
 function FollowingSection({ userId }) {
+  const [isLoading, setIsLoading] = useState(true);
   const following = useSelector((state) => state.following);
   const currentFollowing = Object.values(following);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchFollowing());
+    dispatch(fetchFollowing()).then(() => setIsLoading(false));
   }, [dispatch]);
 
-  if (following.followingList === null) return <h1>Loading...</h1>;
+  if (following.followingList === null) return isLoading && <SkeletonFollowingSection />;
 
   return (
     <div className={styles.followingSection}>
