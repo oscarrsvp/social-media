@@ -3,6 +3,42 @@ const router = express.Router();
 const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
 const { User, UserPhoto } = require('../../db/models');
 
+// Delete user photos
+router.delete('/profileImg/:photoId', async (req, res) => {
+  const { photoId } = req.params;
+  const currentUserID = req.user.id;
+
+  const userImages = UserPhoto.findOne({
+    where: {
+      id: photoId,
+      userId: currentUserID,
+    },
+  });
+
+  if (!userImages) return res.json({ message: 'User photos not found' });
+
+  if (userImages.id === currentUserID) {
+    await userImages.destory();
+
+    return res.json({ message: 'Photo deleted' });
+  }
+});
+
+// Get all photos from user
+router.get('/:userId/profileImg', async (req, res) => {
+  const { userId } = req.params;
+
+  const userPhotos = await UserPhoto.findAll({
+    where: {
+      userId,
+    },
+  });
+
+  if (!userPhotos) return res.json({ message: 'No photos found ' });
+
+  return res.json({ User: userPhotos });
+});
+
 router.post('/:userId/profileImg', singleMulterUpload('profileImg'), async (req, res) => {
   const currentUserID = req.user.id;
   const { userId } = req.params;
