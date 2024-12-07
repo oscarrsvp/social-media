@@ -142,6 +142,17 @@ export const fetchExploreUsers = createAsyncThunk('users/explorePage', async () 
   }
 });
 
+export const deleteUserPhotos = createAsyncThunk('users/deleteUserPhoto', async (id) => {
+  try {
+    const response = await csrfFetch(`api/photos/profileImg/${id}`);
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    return { message: error };
+  }
+});
+
 // Reducer
 const initialState = { users: null };
 
