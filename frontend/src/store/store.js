@@ -4,6 +4,7 @@ import postReducer from './postSlice';
 import userReducer from './userSlice';
 import commentReducer from './commentSlice';
 import followReducer from './followSlice';
+import userPhotos from './userPhotosSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     posts: postReducer,
     comments: commentReducer,
     following: followReducer,
+    userPhotos: userPhotos,
   },
 });
 
