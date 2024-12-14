@@ -50,7 +50,7 @@ export const userPhotosSlice = createSlice({
 
     builder.addCase(deleteUserPhotos.fulfilled, (state, action) => {
       const userPhotos = { ...state };
-      delete posts[action.payload];
+      delete userPhotos[action.payload];
       return userPhotos;
     });
   },
