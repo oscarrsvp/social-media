@@ -4,6 +4,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { fetchUser } from '../../store/userSlice';
 import { fetchUserPosts, clearPosts } from '../../store/postSlice';
 import { fetchFollowing } from '../../store/followSlice';
+import { fetchUsersPhotos } from '../../store/userPhotosSlice';
 import ImageHeader from './ImageHeader';
 import UserCard from './UserCard';
 import UserDetails from './UserDetails';
@@ -33,6 +34,7 @@ function UserPage() {
     dispatch(fetchUser(userId));
     dispatch(fetchUserPosts(userId));
     dispatch(fetchFollowing());
+    dispatch(fetchUsersPhotos(userId));
   }, [dispatch, userId]);
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
