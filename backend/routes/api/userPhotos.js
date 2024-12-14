@@ -4,7 +4,7 @@ const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary
 const { User, UserPhoto } = require('../../db/models');
 
 // Delete user photos
-router.delete('/profileImg/:photoId', async (req, res) => {
+router.delete('/images/:photoId', async (req, res) => {
   const { photoId } = req.params;
   const currentUserID = req.user.id;
 
@@ -25,7 +25,7 @@ router.delete('/profileImg/:photoId', async (req, res) => {
 });
 
 // Get all photos from user
-router.get('/:userId/profileImg', async (req, res) => {
+router.get('/:userId/images', async (req, res) => {
   const { userId } = req.params;
 
   const userPhotos = await UserPhoto.findAll({
@@ -36,7 +36,7 @@ router.get('/:userId/profileImg', async (req, res) => {
 
   if (!userPhotos) return res.json({ message: 'No photos found ' });
 
-  return res.json({ User: userPhotos });
+  return res.json({ Photos: userPhotos });
 });
 
 router.post('/:userId/profileImg', singleMulterUpload('profileImg'), async (req, res) => {
