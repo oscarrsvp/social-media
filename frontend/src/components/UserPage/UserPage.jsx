@@ -12,6 +12,7 @@ import CreatePost from '../PostForm/CreatePost';
 import UserPost from '../Homepage/UserPost';
 import AdsContent from '../AdsContent/AdsContent';
 import ActionBar from './ActionBar';
+import UserPhotos from '../UserPhotos/UserPhotos';
 import { MobileContext } from '../../App';
 import styles from './UserPage.module.css';
 
@@ -68,12 +69,12 @@ function UserPage() {
                   </h1>
                 )}
               </>
+            ) : isMobile && selectedTab === 'About' ? (
+              <div className={styles.userCard}>
+                <UserDetails user={user} />
+              </div>
             ) : (
-              isMobile && (
-                <div className={styles.userCard}>
-                  <UserDetails user={user} />
-                </div>
-              )
+              isMobile && selectedTab === 'Photos' && <UserPhotos />
             )}
 
             {!isMobile &&

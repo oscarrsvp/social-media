@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { MdOutlineFeed } from 'react-icons/md';
-import { IoPersonOutline } from 'react-icons/io5';
+import { IoPersonOutline, IoImageOutline } from 'react-icons/io5';
 import styles from './UserPage.module.css';
 
 function ActionBar({ onSelectTab }) {
@@ -27,6 +27,13 @@ function ActionBar({ onSelectTab }) {
         >
           <IoPersonOutline />
           About
+        </li>
+        <li
+          className={activeTab === 'Photos' ? styles.active : ''}
+          onClick={() => handleTabClick('Photos')}
+        >
+          <IoImageOutline />
+          Photos
         </li>
       </ul>
     </div>
