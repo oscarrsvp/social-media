@@ -222,9 +222,16 @@ button:disabled {
 
 
 @media screen and (max-width: 480px) {
+  #root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
   .feedContainer {
     justify-content: flex-start;
     gap: 0px;
+    flex: 1 1 auto;
   }
 
   .active {
@@ -234,8 +241,15 @@ button:disabled {
 }
 
 @media screen and (min-width: 481px) and (max-width: 767px) {
+  #root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
   .feedContainer {
     gap: 0px;
+    flex: 1 1 auto;
   }
 
   .active {

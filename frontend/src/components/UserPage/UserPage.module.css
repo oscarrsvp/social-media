@@ -154,14 +154,15 @@
 }
 
 .actionTabs {
-    background-color: #ffffff;
-    font-size: 20px;
+    display: flex;
+    width: 100%;
     border-radius: 5px;
 }
 
 .actionTabs ul {
     display: flex;
     justify-content: space-between;
+    background: #ffffff;
     border: 2px solid #dad7cd;
     border-radius: 5px;
 }
@@ -187,9 +188,6 @@
     color: #ffffff;
     border-radius: 5px;
 }
-
-
-
 
 @media screen and (max-width: 480px) {
     #userPage {

@@ -62,7 +62,7 @@ function UserPage() {
                     <UserPost post={post} userId={userId} key={post.id} />
                   ))
                 ) : (
-                  <h1>
+                  <h1 className="noContent">
                     {sessionUser.id === user.id
                       ? "You don't have any posts"
                       : `${user.firstName} doesn't have any posts`}
