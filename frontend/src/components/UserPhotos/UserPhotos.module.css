@@ -1,0 +1,16 @@
+:global(.noContent) {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.userPictures {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.userPictures img {
+    height: 350px;
+    width: 230px;
+}
