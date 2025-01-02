@@ -3,7 +3,7 @@ import { MdOutlineFeed } from 'react-icons/md';
 import { IoPersonOutline, IoImageOutline } from 'react-icons/io5';
 import styles from './UserPage.module.css';
 
-function ActionBar({ onSelectTab }) {
+function ActionBar({ onSelectTab, isMobile }) {
   const [activeTab, setActiveTab] = useState('Post');
 
   const handleTabClick = (tab) => {
@@ -21,13 +21,16 @@ function ActionBar({ onSelectTab }) {
           <MdOutlineFeed />
           Post
         </li>
-        <li
-          className={activeTab === 'About' ? styles.active : ''}
-          onClick={() => handleTabClick('About')}
-        >
-          <IoPersonOutline />
-          About
-        </li>
+
+        {isMobile && (
+          <li
+            className={activeTab === 'About' ? styles.active : ''}
+            onClick={() => handleTabClick('About')}
+          >
+            <IoPersonOutline />
+            About
+          </li>
+        )}
         <li
           className={activeTab === 'Photos' ? styles.active : ''}
           onClick={() => handleTabClick('Photos')}

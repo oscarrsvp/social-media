@@ -47,13 +47,15 @@ function UserPage() {
       <div className={styles.userContainer}>
         <div className={styles.userHeader}>
           <ImageHeader sessionUserId={sessionUser.id} user={user} />
+
           <UserCard user={user} />
-          {isMobile && <ActionBar onSelectTab={setSelectedTab} />}
+
+          <ActionBar onSelectTab={setSelectedTab} isMobile={isMobile} />
         </div>
 
         <div className={styles.userFeed}>
           <div className={styles.feed}>
-            {sessionUser.id === user.id && <CreatePost />}
+            {sessionUser.id === user.id && selectedTab === 'Post' && <CreatePost />}
 
             {isMobile && selectedTab === 'Post' ? (
               <>
@@ -77,8 +79,8 @@ function UserPage() {
               isMobile && selectedTab === 'Photos' && <UserPhotos />
             )}
 
-            {!isMobile &&
-              (userPost.length > 0 ? (
+            {!isMobile && selectedTab === 'Post' ? (
+              userPost.length > 0 ? (
                 postByDate.map((post) => (
                   <UserPost post={post} userId={userId} key={post.id} />
                 ))
@@ -88,7 +90,10 @@ function UserPage() {
                     ? "You don't have any posts"
                     : `${user.firstName} doesn't have any posts`}
                 </h1>
-              ))}
+              )
+            ) : (
+              !isMobile && selectedTab === 'Photos' && <UserPhotos />
+            )}
           </div>
         </div>
       </div>
