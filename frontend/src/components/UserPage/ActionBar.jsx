@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdOutlineFeed } from 'react-icons/md';
 import { IoPersonOutline, IoImageOutline } from 'react-icons/io5';
 import styles from './UserPage.module.css';
@@ -10,6 +10,10 @@ function ActionBar({ onSelectTab, isMobile }) {
     setActiveTab(tab);
     onSelectTab(tab);
   };
+
+  useEffect(() => {
+    return setActiveTab('Post');
+  }, []);
 
   return (
     <div className={styles.actionTabs}>

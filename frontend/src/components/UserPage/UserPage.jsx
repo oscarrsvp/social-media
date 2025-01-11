@@ -36,6 +36,7 @@ function UserPage() {
     dispatch(fetchUserPosts(userId));
     dispatch(fetchFollowing());
     dispatch(fetchUsersPhotos(userId));
+    return setSelectedTab('Post');
   }, [dispatch, userId]);
 
   if (!sessionUser) return <Navigate to="/" replace={true} />;
