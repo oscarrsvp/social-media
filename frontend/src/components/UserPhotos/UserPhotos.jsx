@@ -7,14 +7,14 @@ function UserPhotos() {
   const photos = Object.values(userPhotos);
 
   return (
-    <div>
+    <div id={styles.userPhotosSection}>
       {photos.length === 0 ? (
         <div className="noContent">
           <h1>{firstName} doesn&apos;t have any photos</h1>
         </div>
       ) : (
         <>
-          <h1>{firstName}&apos;s Photos</h1>
+          <h2>Photos</h2>
           <div className={styles.userPictures}>
             {photos.map((photo) => (
               <img src={photo?.url} key={photo?.id} />

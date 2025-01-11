@@ -1,3 +1,13 @@
+#userPhotosSection {
+    width: 750px;
+}
+
+#userPhotosSection h2 {
+    text-align: left;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
 :global(.noContent) {
     text-align: center;
     margin-top: 100px;
@@ -6,11 +16,16 @@
 .userPictures {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap: 12px;
+    width: 100%;
 }
 
 .userPictures img {
     height: 350px;
     width: 230px;
+}
+
+.userPictures:has(+ h1) {
+    color: red
 }
