@@ -1,10 +1,12 @@
 #userPhotosSection {
     width: 750px;
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 5px;
 }
 
 #userPhotosSection h2 {
     text-align: left;
-    margin-bottom: 12px;
     font-weight: 500;
 }
 
@@ -28,4 +30,22 @@
 
 .userPictures:has(+ h1) {
     color: red
+}
+
+.photoSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.photoSection span {
+    padding: 8px;
+    color: #025E92;
+}
+
+.photoSection span:hover {
+    background-color: #edede9;
+    cursor: pointer;
+    border-radius: 5px;
 }
