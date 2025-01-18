@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const { Op } = require('sequelize');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup, validateUser } = require('../../utils/validation');
 const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
@@ -189,6 +190,26 @@ router.get(
     return res.json({ User: users });
   },
 );
+
+router.get('/search', async (req, res) => {
+  const { name } = req.query;
+
+  try {
+    const users = await User.findAll({
+      where: {
+        [Op.or]: [
+          { firstName: { [Op.iLike]: `%${name}%` } },
+          { lastName: { [Op.iLike]: `%${name}%` } },
+        ],
+      },
+      attributes: ['firstName', 'lastName', 'profileImg'],
+    });
+
+    return res.json(users);
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+});
 
 // Get User By Id
 router.get('/:userId', requireAuth, async (req, res) => {
