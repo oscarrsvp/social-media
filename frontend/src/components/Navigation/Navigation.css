@@ -50,3 +50,21 @@ nav a {
 .profile-dropdown button {
     width: 100%;
 }
+
+.search-section {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#search-bar {
+    width: 300px;
+    padding: 8px;
+    padding-left: 32px;
+    background-color: #ffffff;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+}
