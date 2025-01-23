@@ -142,6 +142,19 @@ export const fetchExploreUsers = createAsyncThunk('users/explorePage', async () 
   }
 });
 
+export const searchUsers = createAsyncThunk('users/search', async (searchValue) => {
+  try {
+    const response = await csrfFetch(`/api/users/search?name=${searchValue}`);
+    const data = await response.json();
+
+    if (response.ok) {
+      return data;
+    }
+  } catch (err) {
+    console.error('Network error:', err);
+  }
+});
+
 // Reducer
 const initialState = { users: null };
 
