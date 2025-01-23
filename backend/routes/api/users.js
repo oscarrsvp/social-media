@@ -194,6 +194,10 @@ router.get(
 router.get('/search', async (req, res) => {
   const { name } = req.query;
 
+  if (!name) {
+    return res.status(400).json({ error: 'Search query is required.' });
+  }
+
   try {
     const users = await User.findAll({
       where: {
