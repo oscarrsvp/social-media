@@ -206,7 +206,7 @@ router.get('/search', async (req, res) => {
           { lastName: { [Op.like]: `${name}%` } },
         ],
       },
-      attributes: ['firstName', 'lastName'],
+      attributes: ['id', 'firstName', 'lastName'],
 
       include: [
         {
