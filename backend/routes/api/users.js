@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateSignup, validateUser } = require('../../utils/validation');
 const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
@@ -202,14 +202,34 @@ router.get('/search', async (req, res) => {
     const users = await User.findAll({
       where: {
         [Op.or]: [
-          { firstName: { [Op.iLike]: `%${name}%` } },
-          { lastName: { [Op.iLike]: `%${name}%` } },
+          { firstName: { [Op.like]: `${name}%` } },
+          { lastName: { [Op.like]: `${name}%` } },
         ],
       },
-      attributes: ['firstName', 'lastName', 'profileImg'],
+      attributes: ['firstName', 'lastName'],
+
+      include: [
+        {
+          model: UserPhoto,
+          where: {
+            preview: true,
+          },
+          attributes: ['url'],
+          required: false,
+        },
+      ],
     });
 
-    return res.json(users);
+    const userData = users.map((user) => {
+      const singleUser = user.toJSON();
+      singleUser.profileImg = singleUser.UserPhotos[0].url;
+
+      delete singleUser.UserPhotos;
+
+      return singleUser;
+    });
+
+    return res.json(userData);
   } catch (error) {
     return res.status(500).json({ message: error });
   }
