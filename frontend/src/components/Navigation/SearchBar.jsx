@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
-import { searchUsers } from '../../store/userSlice';
+import { searchUsers } from '../../store/searchBarSlice';
 
 function SearchBar() {
   const [search, setSearch] = useState('');
