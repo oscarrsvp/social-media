@@ -7,6 +7,7 @@ import { searchUsers } from '../../store/searchBarSlice';
 function SearchBar() {
   const searchResults = useSelector((state) => state.searchResults);
   const [search, setSearch] = useState('');
+  const [showResults, setShowResults] = useState(true);
   const results = Object.values(searchResults);
   const dispatch = useDispatch();
 
@@ -14,6 +15,7 @@ function SearchBar() {
     const searchValue = e.target.value;
     setSearch(searchValue);
     dispatch(searchUsers(searchValue));
+    setShowResults(true);
 
     if (searchValue.trim() === '') {
       dispatch(searchUsers(null));
@@ -32,16 +34,18 @@ function SearchBar() {
           value={search}
           onChange={handleSearchChange}
           placeholder="Search for a user..."
+          onFocus={() => setShowResults(true)}
+          onBlur={() => setTimeout(() => setShowResults(false), 200)}
         />
         <IoSearchOutline className="search-icon" />
       </div>
 
-      {searchResults.search !== null && results.length !== 0 && (
+      {showResults && searchResults.search !== null && results.length !== 0 && (
         <div className="search-results">
           {results.map((users) => (
             <div key={`user${users?.id}`} className="search-results-users">
               <img src={users?.profileImg} alt="" className="profile-picture" />
-              <Link to={`/user/${users?.id}`}>
+              <Link to={`/user/${users?.id}`} onClick={() => setShowResults(false)}>
                 {users?.firstName} {users?.lastName}
               </Link>
             </div>
