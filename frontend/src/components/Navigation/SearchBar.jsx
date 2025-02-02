@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IoSearchOutline } from 'react-icons/io5';
 import { searchUsers } from '../../store/searchBarSlice';
 
@@ -22,7 +23,7 @@ function SearchBar() {
   };
 
   return (
-    <>
+    <div className="search-input">
       <div className="search-section">
         <input
           type="search"
@@ -35,19 +36,19 @@ function SearchBar() {
         <IoSearchOutline className="search-icon" />
       </div>
 
-      {searchResults.search !== null && results !== 0 && (
-        <div>
+      {searchResults.search !== null && results.length !== 0 && (
+        <div className="search-results">
           {results.map((users) => (
-            <div key={`user${users?.id}`}>
-              <img src={users?.profileImg} alt="" />
-              <h1>
+            <div key={`user${users?.id}`} className="search-results-users">
+              <img src={users?.profileImg} alt="" className="profile-picture" />
+              <Link to={`/user/${users?.id}`}>
                 {users?.firstName} {users?.lastName}
-              </h1>
+              </Link>
             </div>
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }
 
