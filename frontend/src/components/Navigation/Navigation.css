@@ -58,7 +58,7 @@ nav a {
 }
 
 #search-bar {
-    width: 300px;
+    width: 340px;
     padding: 8px;
     padding-left: 32px;
     background-color: #ffffff;
@@ -67,4 +67,42 @@ nav a {
 .search-icon {
     position: absolute;
     left: 10px;
+}
+
+.search-input {
+    position: relative;
+}
+
+.search-results {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: 1px solid #dad7cd;
+    position: absolute;
+    width: 100%;
+}
+
+.search-results-users {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s;
+    cursor: pointer;
+}
+
+.search-results-users:hover {
+    background-color: #edede9;
+    border-color: #dad7cd;
+}
+
+.search-results-users a {
+    color: #003049;
+    text-decoration: none !important;
+}
+
+.search-results-users a:hover {
+    color: #025e90;
 }
