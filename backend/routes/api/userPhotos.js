@@ -8,7 +8,7 @@ router.delete('/images/:photoId', async (req, res) => {
   const { photoId } = req.params;
   const currentUserID = req.user.id;
 
-  const userImages = UserPhoto.findOne({
+  const userImages = await UserPhoto.findOne({
     where: {
       id: photoId,
       userId: currentUserID,
@@ -17,8 +17,8 @@ router.delete('/images/:photoId', async (req, res) => {
 
   if (!userImages) return res.json({ message: 'User photos not found' });
 
-  if (userImages.id === currentUserID) {
-    await userImages.destory();
+  if (userImages.userId === currentUserID) {
+    await userImages.destroy();
 
     return res.json({ message: 'Photo deleted' });
   }

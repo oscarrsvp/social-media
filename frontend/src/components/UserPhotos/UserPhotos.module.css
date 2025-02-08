@@ -49,3 +49,12 @@
     cursor: pointer;
     border-radius: 5px;
 }
+
+.userPhoto {
+    display: flex;
+    flex-direction: column;
+}
+
+.userPhoto button {
+    margin-right: 0;
+}
