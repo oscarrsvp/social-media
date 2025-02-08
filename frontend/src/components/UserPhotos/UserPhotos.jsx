@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteUserPhotos } from '../../store/userPhotosSlice';
 import styles from './UserPhotos.module.css';
 
 function UserPhotos() {
@@ -7,8 +8,13 @@ function UserPhotos() {
   const sessionUser = useSelector((state) => state.session.user);
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const photos = Object.values(userPhotos);
+  const dispatch = useDispatch();
 
   const displayedPhotos = showAllPhotos ? photos : photos.slice(0, 3);
+
+  const deletePhoto = (id) => {
+    dispatch(deleteUserPhotos(id));
+  };
 
   return (
     <div id={styles.userPhotosSection}>
@@ -29,7 +35,12 @@ function UserPhotos() {
               <div className={styles.userPhoto} key={`photos${photo.id}`}>
                 <img src={photo?.url} key={photo?.id} />
                 {sessionUser.id === photo.userId && (
-                  <button className="delete-btn btn">Remove photo</button>
+                  <button
+                    className="delete-btn btn"
+                    onClick={() => deletePhoto(photo.id)}
+                  >
+                    Remove photo
+                  </button>
                 )}
               </div>
             ))}
