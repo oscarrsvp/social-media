@@ -14,19 +14,22 @@ export const fetchUsersPhotos = createAsyncThunk('users/usersPhotos', async (use
 });
 
 // Delete user photos
-export const deleteUserPhotos = createAsyncThunk('users/deleteUserPhoto', async (id) => {
-  try {
-    const response = await csrfFetch(`/api/photos/images/${id}`, {
-      method: 'DELETE',
-    });
+export const deleteUserPhotos = createAsyncThunk(
+  'users/deleteUserPhoto',
+  async (photoId) => {
+    try {
+      const response = await csrfFetch(`/api/photos/images/${photoId}`, {
+        method: 'DELETE',
+      });
 
-    await response.json();
+      await response.json();
 
-    return id;
-  } catch (error) {
-    return { message: error };
-  }
-});
+      return photoId;
+    } catch (error) {
+      return { message: error };
+    }
+  },
+);
 
 // Reducer
 const initialState = { userPhotos: null };

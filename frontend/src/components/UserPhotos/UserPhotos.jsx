@@ -1,20 +1,26 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteUserPhotos } from '../../store/userPhotosSlice';
 import styles from './UserPhotos.module.css';
 
 function UserPhotos() {
   const userPhotos = useSelector((state) => state.userPhotos);
-  const firstName = useSelector((state) => state.session.user.firstName);
+  const sessionUser = useSelector((state) => state.session.user);
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const photos = Object.values(userPhotos);
+  const dispatch = useDispatch();
 
   const displayedPhotos = showAllPhotos ? photos : photos.slice(0, 3);
+
+  const deletePhoto = (id) => {
+    dispatch(deleteUserPhotos(id));
+  };
 
   return (
     <div id={styles.userPhotosSection}>
       {photos.length === 0 ? (
         <div className="noContent">
-          <h1>{firstName} doesn&apos;t have any photos</h1>
+          <h1>{sessionUser.firstName} doesn&apos;t have any photos</h1>
         </div>
       ) : (
         <>
@@ -26,7 +32,17 @@ function UserPhotos() {
           </div>
           <div className={styles.userPictures}>
             {displayedPhotos.map((photo) => (
-              <img src={photo?.url} key={photo?.id} />
+              <div className={styles.userPhoto} key={`photos${photo.id}`}>
+                <img src={photo?.url} key={photo?.id} />
+                {sessionUser.id === photo.userId && (
+                  <button
+                    className="delete-btn btn"
+                    onClick={() => deletePhoto(photo.id)}
+                  >
+                    Remove photo
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         </>
