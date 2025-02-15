@@ -22,6 +22,7 @@ module.exports = {
           gender: 'Female',
           birthday: '05/12/1996',
           relationship: 'Single',
+          bio: 'Love spending time with friends, exploring new trails, and chasing breathtaking views. Whether its a cozy hangout or a spontaneous hike, Im always up for making memories and enjoying the little moments in life!',
           hashedPassword: bcrypt.hashSync('password'),
         },
         {
@@ -36,6 +37,7 @@ module.exports = {
           birthday: '08/25/1987',
           relationship: 'Married',
           city: 'Evanston',
+          bio: 'Reef tank enthusiast 🌊🐠',
           hashedPassword: bcrypt.hashSync('password2'),
         },
         {
@@ -74,6 +76,7 @@ module.exports = {
           birthday: '10/10/1991',
           relationship: 'Single',
           city: 'Gurnee',
+          bio: 'Lover of the finer things in life ✨ Fashion, luxury, and elegant experiences are my vibe.',
           hashedPassword: bcrypt.hashSync('password5'),
         },
         {
@@ -106,6 +109,7 @@ module.exports = {
             'https://images.unsplash.com/photo-1592780828756-c418d71faa1f?q=80&w=4140&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
           gender: 'Female',
           birthday: '07/25/1997',
+          bio: 'I love watching movies, from 90s classics to recent hits. Always up for a good film night!',
           hashedPassword: bcrypt.hashSync('password'),
         },
       ],
