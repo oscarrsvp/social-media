@@ -58,3 +58,9 @@
 .userPhoto button {
     margin-right: 0;
 }
+
+@media screen and (max-width: 480px) {
+    #userPhotosSection {
+        width: 100%;
+    }
+}

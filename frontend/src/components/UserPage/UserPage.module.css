@@ -18,7 +18,8 @@
     border-radius: 50%;
     border: 8px solid #ffffff;
     position: absolute;
-    top: 150px;
+    top: 100px;
+    left: 0;
 }
 
 .userContainer {
@@ -69,18 +70,25 @@
 .userActions {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    height: 190px;
+    justify-content: center;
+    align-items: flex-start;
+    height: 180px;
     width: 100%;
 }
 
 .actions {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 5px;
+    align-items: flex-start;
+    margin-top: 10px;
+}
+
+.actions p {
+    margin: 8px 0;
+}
+
+.actions button {
+    margin: 0;
 }
 
 .userSection {
@@ -157,6 +165,7 @@
     display: flex;
     width: 100%;
     border-radius: 5px;
+    margin-top: 16px;
 }
 
 .actionTabs ul {
@@ -210,7 +219,7 @@
 @media screen and (max-width: 480px) {
     #userPage {
         flex-direction: column;
-        height: calc(100vh - 70px - 70px - 40px)
+        /* height: calc(100vh - 70px - 70px - 40px) */
     }
 
     .userHeader {
@@ -228,6 +237,11 @@
 
     .userSection {
         width: 100%;
+    }
+
+    .profileImg {
+        top: 82px;
+        left: -10px;
     }
 }
 

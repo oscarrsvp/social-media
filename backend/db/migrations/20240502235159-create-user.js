@@ -57,6 +57,10 @@ module.exports = {
         city: {
           type: Sequelize.STRING,
         },
+        bio: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
         hashedPassword: {
           type: Sequelize.STRING.BINARY,
           allowNull: false,
