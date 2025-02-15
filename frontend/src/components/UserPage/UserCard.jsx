@@ -84,6 +84,7 @@ function UserCard({ user }) {
 
       <div className={styles.actions}>
         <h2>{fullName}</h2>
+        <p>{user.bio}</p>
         {isActive && (
           <>
             <div className={styles.ActionBtn}>
