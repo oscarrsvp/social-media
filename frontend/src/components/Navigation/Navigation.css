@@ -81,6 +81,7 @@ nav a {
     border: 1px solid #dad7cd;
     position: absolute;
     width: 100%;
+    z-index: 150;
 }
 
 .search-results-users {
@@ -98,7 +99,7 @@ nav a {
     border-color: #dad7cd;
 }
 
-.search-results-users a {
+.search-results-users span {
     color: #003049;
     text-decoration: none !important;
 }

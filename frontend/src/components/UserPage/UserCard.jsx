@@ -71,7 +71,7 @@ function UserCard({ user }) {
   };
 
   return (
-    <div className={styles.userActions}>
+    <div className={user.bio ? styles.userActions : styles.userNoBio}>
       {user.profileImage || previewImg ? (
         <img
           src={!previewImg ? user.profileImage : previewImg}
@@ -84,7 +84,7 @@ function UserCard({ user }) {
 
       <div className={styles.actions}>
         <h2>{fullName}</h2>
-        <p>{user.bio}</p>
+        {user.bio && <p>{user.bio}</p>}
         {isActive && (
           <>
             <div className={styles.ActionBtn}>
