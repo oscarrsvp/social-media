@@ -99,7 +99,7 @@ nav a {
     border-color: #dad7cd;
 }
 
-.search-results-users a {
+.search-results-users span {
     color: #003049;
     text-decoration: none !important;
 }

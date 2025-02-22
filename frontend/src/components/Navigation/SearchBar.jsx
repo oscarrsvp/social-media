@@ -28,7 +28,7 @@ function SearchBar() {
     <div className="search-input">
       <div className="search-section">
         <input
-          type="search"
+          type="text"
           name="search"
           id="search-bar"
           value={search}
@@ -43,12 +43,19 @@ function SearchBar() {
       {showResults && searchResults.search !== null && results.length !== 0 && (
         <div className="search-results">
           {results.map((users) => (
-            <div key={`user${users?.id}`} className="search-results-users">
-              <img src={users?.profileImg} alt="" className="profile-picture" />
-              <Link to={`/user/${users?.id}`} onClick={() => setShowResults(false)}>
-                {users?.firstName} {users?.lastName}
-              </Link>
-            </div>
+            <Link
+              to={`/user/${users?.id}`}
+              onClick={() => setShowResults(false)}
+              key={`user${users?.id}`}
+            >
+              <div className="search-results-users">
+                <img src={users?.profileImg} alt="" className="profile-picture" />
+
+                <span>
+                  {users?.firstName} {users?.lastName}
+                </span>
+              </div>
+            </Link>
           ))}
         </div>
       )}
