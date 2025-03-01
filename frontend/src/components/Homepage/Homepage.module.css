@@ -90,6 +90,10 @@
     padding-bottom: 8px;
 }
 
+.commentHeader div a {
+    background-color: inherit !important;
+}
+
 .userImage {
     display: flex;
     align-items: center;

@@ -83,6 +83,7 @@
     align-items: flex-start;
     height: 110px !important;
     width: 100%;
+    margin-bottom: 12px;
 }
 
 .actions {
@@ -171,7 +172,6 @@
     display: flex;
     width: 100%;
     border-radius: 5px;
-    margin-top: 16px;
 }
 
 .actionTabs ul {
