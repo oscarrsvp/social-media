@@ -4,9 +4,20 @@
 }
 
 .settingSection h2 {
-    margin-bottom: 12px;
     font-weight: 600;
     text-align: left;
+}
+
+:global(.header) {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+}
+
+:global(.header svg) {
+    cursor: pointer;
 }
 
 :global(.userSettings) {

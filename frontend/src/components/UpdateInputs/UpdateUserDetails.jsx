@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/userSlice';
 import { updateFullName } from '../../store/sessionSlice';
 import { useModal } from '../../context/Modal';
+import { VscChromeClose } from 'react-icons/vsc';
 import styles from '../SettingsPage/SettingPage.module.css';
 
 function UpdateUserDetails({ user }) {
@@ -50,7 +51,10 @@ function UpdateUserDetails({ user }) {
 
   return (
     <section className={styles.settingSection}>
-      <h2>Update Your Profile</h2>
+      <div className={`header`}>
+        <h2>Update Your Profile</h2>
+        <VscChromeClose onClick={closeModal} />
+      </div>
       <form onSubmit={handleSubmit} className="userSettings">
         <label>
           First Name:
