@@ -14,3 +14,9 @@
     object-fit: fill;
     padding-bottom: 8px;
 }
+
+label textarea {
+    background-color: #ffffff;
+    color: #000000;
+    height: 70px !important;
+}

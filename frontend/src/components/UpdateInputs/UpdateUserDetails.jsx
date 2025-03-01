@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/userSlice';
 import { updateFullName } from '../../store/sessionSlice';
 import { useModal } from '../../context/Modal';
+import { VscChromeClose } from 'react-icons/vsc';
 import styles from '../SettingsPage/SettingPage.module.css';
 
 function UpdateUserDetails({ user }) {
@@ -13,6 +14,7 @@ function UpdateUserDetails({ user }) {
   const [relationship, setRelationship] = useState(user.relationship || '');
   const [city, setCity] = useState(user.city || '');
   const [gender, setGender] = useState(user.gender || '');
+  const [bio, setBio] = useState(user.bio || '');
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ function UpdateUserDetails({ user }) {
       city,
       gender,
       headerImage: user?.headerImage,
+      bio,
     };
 
     const updateDetails = dispatch(updateUser(userDetails));
@@ -48,7 +51,10 @@ function UpdateUserDetails({ user }) {
 
   return (
     <section className={styles.settingSection}>
-      <h2>Update Your Profile</h2>
+      <div className={`header`}>
+        <h2>Update Your Profile</h2>
+        <VscChromeClose onClick={closeModal} />
+      </div>
       <form onSubmit={handleSubmit} className="userSettings">
         <label>
           First Name:
@@ -153,6 +159,16 @@ function UpdateUserDetails({ user }) {
           />
         </label>
         {errors.birthday && <p className="error">{errors.birthday}</p>} */}
+
+        <label>
+          <textarea
+            name="bio"
+            id="bio"
+            placeholder="Bio..."
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          ></textarea>
+        </label>
         <button type="submit" className="btn" onClick={(e) => handleSubmit(e)}>
           Save Changes
         </button>
