@@ -62,6 +62,7 @@ router.put(
       birthday,
       relationship,
       city,
+      bio,
     } = req.body;
 
     const user = await User.findByPk(userId, {
@@ -102,6 +103,7 @@ router.put(
       birthday,
       relationship,
       city,
+      bio,
     });
 
     const updatedUser = updateUser.toJSON();
