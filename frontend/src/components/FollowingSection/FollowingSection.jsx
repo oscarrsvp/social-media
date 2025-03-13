@@ -8,8 +8,11 @@ import styles from './FollowingSection.module.css';
 
 function FollowingSection({ userId }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [showAllUsers, setShowAllUsers] = useState(false);
   const following = useSelector((state) => state.following);
   const currentFollowing = Object.values(following);
+  const displayUsers = showAllUsers ? currentFollowing : currentFollowing.slice(0, 4);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,7 +27,7 @@ function FollowingSection({ userId }) {
         <div className={styles.userFollowing}>
           <h3>Following</h3>
           <div className={styles.userSection}>
-            {currentFollowing.length === 0 ? (
+            {displayUsers.length === 0 ? (
               <div className={styles.discoverUser}>
                 <p>Visit the Explore page to discover new users</p>
                 <Link to={'/explore'} className="btn">
@@ -32,7 +35,7 @@ function FollowingSection({ userId }) {
                 </Link>
               </div>
             ) : null}
-            {currentFollowing.map((user) => (
+            {displayUsers.map((user) => (
               <div className={styles.user} key={`following${user.id}`}>
                 {user.id === userId ? null : (
                   <div>
@@ -50,6 +53,9 @@ function FollowingSection({ userId }) {
                 {user.bio ? <small>{user.bio}</small> : null}
               </div>
             ))}
+            {currentFollowing.length > 4 && !showAllUsers && (
+              <span onClick={() => setShowAllUsers(true)}>View All</span>
+            )}
           </div>
         </div>
       </div>
