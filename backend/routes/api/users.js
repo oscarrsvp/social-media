@@ -150,7 +150,7 @@ router.get('/following', requireAuth, async (req, res) => {
       {
         model: User,
         as: 'Followers',
-        attributes: ['id', 'firstName', 'lastName'],
+        attributes: ['id', 'firstName', 'lastName', 'bio'],
         required: false,
       },
     ],

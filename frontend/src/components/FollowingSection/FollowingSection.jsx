@@ -35,7 +35,7 @@ function FollowingSection({ userId }) {
             {currentFollowing.map((user) => (
               <div className={styles.user} key={`following${user.id}`}>
                 {user.id === userId ? null : (
-                  <>
+                  <div>
                     {user.profileImage ? (
                       <img className="profileImg" src={user.profileImage} alt="" />
                     ) : (
@@ -45,8 +45,9 @@ function FollowingSection({ userId }) {
                     <Link to={`/user/${user.id}`}>
                       {user.firstName} {user.lastName}
                     </Link>
-                  </>
+                  </div>
                 )}
+                {user.bio ? <small>{user.bio}</small> : null}
               </div>
             ))}
           </div>
