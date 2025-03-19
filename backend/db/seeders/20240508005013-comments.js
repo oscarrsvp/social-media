@@ -1,6 +1,5 @@
 'use strict';
 
-const { post } = require('../../routes/api/comments');
 const { Comment } = require('../models');
 
 let options = {};
