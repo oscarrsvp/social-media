@@ -24,6 +24,41 @@ router.delete('/images/:photoId', async (req, res) => {
   }
 });
 
+// Get single photo via ID with comments
+router.get('/images/:photoId', async (req, res) => {
+  const { photoId } = req.params;
+
+  const userSingleImage = await User.findAll({
+    include: [
+      {
+        model: ProfileImagesComments,
+        attributes: ['context', 'photoId', 'createdAt'],
+        where: { photoId },
+        required: true,
+      },
+      {
+        model: UserPhoto,
+        attributes: ['url'],
+        where: { preview: true },
+        required: false,
+      },
+    ],
+    attributes: ['id', 'firstName', 'lastName'],
+  });
+
+  if (!userSingleImage) return res.json({ message: 'User photo not found' });
+
+  const filteredData = userSingleImage.map((user) => ({
+    userId: user.id,
+    name: `${user.firstName} ${user.lastName}`,
+    profileImage: user.UserPhotos[0]?.url || null,
+    comment: user.ProfileImagesComments[0].context,
+    createdAt: user.ProfileImagesComments[0].createdAt,
+  }));
+
+  return res.json({ photoData: filteredData });
+});
+
 // Get all photos from user
 router.get('/:userId/images', async (req, res) => {
   const { userId } = req.params;
@@ -32,14 +67,6 @@ router.get('/:userId/images', async (req, res) => {
     where: {
       userId,
     },
-    include: [
-      {
-        model: ProfileImagesComments,
-        attributes: ['context', 'userId'],
-        required: true,
-        separate: true,
-      },
-    ],
   });
 
   if (!userPhotos) return res.json({ message: 'No photos found ' });
