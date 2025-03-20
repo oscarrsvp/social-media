@@ -6,6 +6,7 @@ import commentReducer from './commentSlice';
 import followReducer from './followSlice';
 import userPhotos from './userPhotosSlice';
 import searchBar from './searchBarSlice';
+import photoCommentReducer from './photoCommentSlice';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     following: followReducer,
     userPhotos: userPhotos,
     searchResults: searchBar,
+    photoComments: photoCommentReducer,
   },
 });
 
