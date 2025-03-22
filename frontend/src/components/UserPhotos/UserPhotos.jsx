@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteUserPhotos } from '../../store/userPhotosSlice';
+import UserProfilePhotos from './UserProfilePhotos';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import styles from './UserPhotos.module.css';
 
 function UserPhotos() {
@@ -32,12 +34,16 @@ function UserPhotos() {
           </div>
           <div className={styles.userPictures}>
             {displayedPhotos.map((photo) => (
-              <div className={styles.userPhoto} key={`photos${photo.id}`}>
-                <img src={photo?.url} key={photo?.id} />
-                {sessionUser.id === photo.userId && (
+              <div className={styles.userPhoto} key={`photos${photo?.id}`}>
+                <OpenModalButton
+                  buttonText={<img src={photo?.url} key={photo?.id} />}
+                  modalComponent={<UserProfilePhotos photo={photo} />}
+                />
+
+                {sessionUser.id === photo?.userId && (
                   <button
                     className="delete-btn btn"
-                    onClick={() => deletePhoto(photo.id)}
+                    onClick={() => deletePhoto(photo?.id)}
                   >
                     Remove photo
                   </button>

@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       UserPhoto.belongsTo(models.User, {
         foreignKey: 'userId',
       });
+      UserPhoto.hasMany(models.ProfileImagesComments, {
+        foreignKey: 'photoId',
+        onDelete: 'CASCADE',
+        hooks: true,
+      });
     }
   }
   UserPhoto.init(

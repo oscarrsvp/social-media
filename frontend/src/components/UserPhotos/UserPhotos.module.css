@@ -57,6 +57,65 @@
 
 .userPhoto button {
     margin-right: 0;
+    border: 0 !important;
+    cursor: pointer;
+}
+
+.userProfileSingle {
+    width: 700px;
+    position: relative;
+}
+
+.closeIcon {
+    position: absolute;
+    top: -30px;
+    right: -20px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.singlePhoto {
+    display: flex;
+}
+
+.singlePhoto img {
+    width: 60%;
+}
+
+.commentSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.comments {
+    padding: 8px
+}
+
+.userComment {
+    margin: 8px 0;
+}
+
+.commentHeader {
+    border-bottom: 1px solid #dad7cd;
+    padding-bottom: 4px;
+}
+
+.userImage {
+    display: flex;
+    align-items: center;
+}
+
+.userImage a {
+    font-size: 16px;
+    margin-left: 4px;
+}
+
+.userImage img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
 }
 
 @media screen and (max-width: 480px) {

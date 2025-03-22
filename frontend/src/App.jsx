@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { restoreUser } from './store/sessionSlice';
+import { Modal, ModalProvider } from './context/Modal';
 import LandingPage from './components/LandingPage/LandingPage';
 import SignupForm from './components/SignupForm/SignupForm';
 import Navigation from './components/Navigation/Navigation';
@@ -35,12 +36,15 @@ function Layout() {
 
   return (
     <MobileContext.Provider value={isMobile}>
-      <Navigation isLoaded={isLoaded} />
-      <div className="feedContainer">
-        <Sidebar />
-        {isLoaded && <Outlet />}
-      </div>
-      {isMobile && <AppBar />}
+      <ModalProvider>
+        <Navigation isLoaded={isLoaded} />
+        <div className="feedContainer">
+          <Sidebar />
+          <Modal />
+          {isLoaded && <Outlet />}
+        </div>
+        {isMobile && <AppBar />}
+      </ModalProvider>
     </MobileContext.Provider>
   );
 }
