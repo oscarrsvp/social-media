@@ -76,6 +76,7 @@
 
 .singlePhoto {
     display: flex;
+    min-height: 550px;
 }
 
 .singlePhoto img {
@@ -87,10 +88,17 @@
     flex-direction: column;
     gap: 8px;
     flex: 1;
+    padding: 8px;
+}
+
+.userComments {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .comments {
-    padding: 8px
+    gap: 8px;
 }
 
 .userComment {
@@ -107,15 +115,34 @@
     align-items: center;
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: 1px solid #dad7cd;
+    padding-bottom: 4px;
+    gap: 8px;
+}
+
 .userImage a {
     font-size: 16px;
     margin-left: 4px;
+    background-color: inherit;
 }
 
-.userImage img {
+.userImage img,
+.header img {
     border-radius: 50%;
     width: 40px;
     height: 40px;
+}
+
+.noComments {
+    margin-top: 16px;
+    color: #4d4c4b;
+    font-style: italic;
+    text-align: center;
+    opacity: 0.8;
 }
 
 @media screen and (max-width: 480px) {
