@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { singleMulterUpload, singlePublicFileUpload } = require('../../cloudinary');
 const { User, UserPhoto, ProfileImagesComments } = require('../../db/models');
+const { validateComment } = require('../../utils/validation');
 
 // Delete user photos
 router.delete('/images/:photoId', async (req, res) => {
@@ -57,6 +58,29 @@ router.get('/images/:photoId', async (req, res) => {
   }));
 
   return res.json({ photoData: filteredData });
+});
+
+// Create new comment to user photo
+router.post('/images/:photoId', validateComment, async (req, res) => {
+  const userId = req.user.id;
+  const { photoId } = req.params;
+  const { context } = req.body;
+
+  const photo = await UserPhoto.findByPk(photoId);
+
+  if (!photo) return res.status(404).json({ message: 'Photo not found' });
+
+  const newPhotoComment = await ProfileImagesComments.create({
+    userId,
+    photoId,
+    context,
+  });
+
+  const photoComment = newPhotoComment.toJSON();
+  photoComment.fullName = `${req.user.firstName} ${req.user.lastName}`;
+  photoComment.profileImg = req.user.profileImage;
+
+  return res.status(201).json(photoComment);
 });
 
 // Get all photos from user
