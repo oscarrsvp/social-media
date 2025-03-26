@@ -84,7 +84,7 @@ function UserCard({ user }) {
 
       <div className={styles.actions}>
         <h2>{fullName}</h2>
-        {user.bio && <p>{user.bio}</p>}
+        {user.bio && <small>{user.bio}</small>}
         {isActive && (
           <>
             <div className={styles.ActionBtn}>

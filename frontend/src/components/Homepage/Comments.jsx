@@ -113,7 +113,7 @@ function Comments({ postId }) {
             <div>
               <p className={styles.comments}>{comment.context}</p>
 
-              <h5>Posted: {createdAt(comment.createdAt)}</h5>
+              <small>Posted: {createdAt(comment.createdAt)}</small>
             </div>
           </div>
         ))

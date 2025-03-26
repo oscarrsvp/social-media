@@ -14,7 +14,7 @@ function PostDetails({ post, fullName }) {
           {post.context}
         </p>
 
-        {<h5>Posted: {createdAt(post.createdAt)}</h5>}
+        <small>Posted: {createdAt(post.createdAt)}</small>
       </div>
     </div>
   );
