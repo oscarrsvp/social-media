@@ -17,14 +17,14 @@ function PhotoCommentSection({ data }) {
             <img src={BlankImage} />
           )}
           <NavLink onClick={closeModal} to={`/user/${data.userId}`}>
-            {data.name}
+            {data.fullName}
           </NavLink>
         </div>
       </div>
 
-      <p className={styles.userComment}>{data.comment}</p>
+      <p className={styles.userComment}>{data.context}</p>
 
-      <h5>Posted: {formatDate(data.createdAt)}</h5>
+      <small>Posted: {formatDate(data.createdAt)}</small>
     </div>
   );
 }
