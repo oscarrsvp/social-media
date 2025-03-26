@@ -25,39 +25,45 @@ router.delete('/images/:photoId', async (req, res) => {
   }
 });
 
-// Get single photo via ID with comments
-router.get('/images/:photoId', async (req, res) => {
+// Get all Comments from Photo
+router.get('/:photoId/comments', async (req, res) => {
   const { photoId } = req.params;
 
-  const userSingleImage = await User.findAll({
-    include: [
-      {
-        model: ProfileImagesComments,
-        attributes: ['context', 'photoId', 'createdAt'],
-        where: { photoId },
-        required: true,
-      },
-      {
+  const photo = await UserPhoto.findByPk(photoId);
+
+  if (!photo) return res.status(404).json({ message: `Photo not found` });
+
+  const photoComments = await ProfileImagesComments.findAll({
+    include: {
+      model: User,
+      attributes: ['firstName', 'lastName'],
+      include: {
         model: UserPhoto,
-        attributes: ['url'],
-        where: { preview: true },
+        where: {
+          preview: true,
+        },
         required: false,
+        attributes: ['url'],
       },
-    ],
-    attributes: ['id', 'firstName', 'lastName'],
+    },
+    where: {
+      photoId,
+    },
   });
 
-  if (!userSingleImage) return res.json({ message: 'User photo not found' });
+  const comments = photoComments.map((comment) => {
+    const comments = comment.toJSON();
+    const user = comments.User;
 
-  const filteredData = userSingleImage.map((user) => ({
-    userId: user.id,
-    name: `${user.firstName} ${user.lastName}`,
-    profileImage: user.UserPhotos[0]?.url || null,
-    comment: user.ProfileImagesComments[0].context,
-    createdAt: user.ProfileImagesComments[0].createdAt,
-  }));
+    comments.profileImage = user.UserPhotos.length ? user.UserPhotos[0].url : '';
+    comments.fullName = `${user.firstName} ${user.lastName}`;
 
-  return res.json({ photoData: filteredData });
+    delete comments.User;
+
+    return comments;
+  });
+
+  return res.json(comments);
 });
 
 // Create new comment to user photo
@@ -76,9 +82,13 @@ router.post('/images/:photoId', validateComment, async (req, res) => {
     context,
   });
 
-  const photoComment = newPhotoComment.toJSON();
-  photoComment.fullName = `${req.user.firstName} ${req.user.lastName}`;
-  photoComment.profileImg = req.user.profileImage;
+  const photoComment = {
+    fullName: `${req.user.firstName} ${req.user.lastName}`,
+    profileImage: req.user.profileImage,
+    context: newPhotoComment.context,
+    commentId: newPhotoComment.id,
+    createdAt: newPhotoComment.createdAt,
+  };
 
   return res.status(201).json(photoComment);
 });
