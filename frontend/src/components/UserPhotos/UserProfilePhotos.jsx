@@ -6,6 +6,7 @@ import { VscChromeClose } from 'react-icons/vsc';
 import { fetchPhotoData } from '../../store/photoCommentSlice';
 import { formatDate } from '../../utils/globallyFns';
 import PhotoCommentSection from './photoCommentSection';
+import NewPhotoComment from './NewPhotoComment';
 import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './UserPhotos.module.css';
 
@@ -41,21 +42,22 @@ function UserProfilePhotos({ photo }) {
               </NavLink>
             </div>
 
-            <p>Posted: {formatDate(userProfile.createdAt)}</p>
+            <small>Posted: {formatDate(userProfile.createdAt)}</small>
           </div>
 
-          {photoData.length > 1 ? (
+          {photoData.length >= 1 ? (
             <div className={styles.userComments}>
               {photoData.map((comments) => (
                 <PhotoCommentSection
                   data={comments}
-                  key={`userComments-${comments.userId}`}
+                  key={`userComments-${comments.id}`}
                 />
               ))}
             </div>
           ) : (
             <p className={styles.noComments}>Be the first to leave a comment!</p>
           )}
+          <NewPhotoComment photoId={photo?.id} />
         </div>
       </div>
     </div>
