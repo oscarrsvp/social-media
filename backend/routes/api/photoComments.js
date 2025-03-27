@@ -18,7 +18,7 @@ router.put('/:commentId', validateComment, async (req, res) => {
   if (!photoComment) return res.status(404).json({ message: `Comment not found` });
 
   if (photoComment.userId === userId) {
-    const updatePhotoComment = await ProfileImagesComments.update({
+    const updatePhotoComment = await photoComment.update({
       context,
     });
 
