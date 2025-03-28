@@ -42,7 +42,7 @@ function UpdatePhotoComment({ comment }) {
             placeholder="Whats on your mind?"
             autoFocus
           ></textarea>
-          {/* {errors.context && <p className="error">{errors.context}</p>} */}
+          {errors.context && <p className="error">{errors.context}</p>}
           <button className="btn update-btn" onClick={handleUpdate}>
             Save
           </button>
