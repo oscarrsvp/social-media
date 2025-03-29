@@ -45,7 +45,7 @@ function Comments({ postId }) {
 
   if (!comment[postId]) return null;
 
-  const toggleButton = styles.dropdownMenu + (showMenu ? '' : styles.hidden);
+  const toggleButton = 'dropdownMenu' + (showMenu ? '' : 'hidden');
 
   const postComments = Object.values(comment[postId]);
 
@@ -75,7 +75,7 @@ function Comments({ postId }) {
 
                   {showMenu && comment.id === openMenuId && (
                     <div className={toggleButton} ref={ulRef}>
-                      <div className={styles.postMenu}>
+                      <div className="postMenu">
                         <OpenModalButton
                           buttonText={
                             <>
@@ -83,7 +83,7 @@ function Comments({ postId }) {
                             </>
                           }
                           modalComponent={<UpdateComment comment={comment} />}
-                          classNames={styles.postButtons}
+                          classNames="postButtons"
                           onButtonClick={() => setShowMenu(false)}
                         />
 
@@ -100,7 +100,7 @@ function Comments({ postId }) {
                               userId={comment.userId}
                             />
                           }
-                          classNames={styles.postButtons}
+                          classNames="postButtons"
                           onButtonClick={() => setShowMenu(false)}
                         />
                       </div>
@@ -113,7 +113,7 @@ function Comments({ postId }) {
             <div>
               <p className={styles.comments}>{comment.context}</p>
 
-              <h5>Posted: {createdAt(comment.createdAt)}</h5>
+              <small>Posted: {createdAt(comment.createdAt)}</small>
             </div>
           </div>
         ))

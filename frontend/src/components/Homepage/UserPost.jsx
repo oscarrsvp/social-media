@@ -42,7 +42,7 @@ function UserPost({ post, userId }) {
     ? `${users[userId]?.firstName || ''} ${users[userId]?.lastName || ''}`
     : '';
 
-  const toggleButton = styles.dropdownMenu + (showMenu ? '' : styles.hidden);
+  const toggleButton = 'dropdownMenu' + (showMenu ? '' : 'hidden');
 
   return (
     <>
@@ -64,7 +64,7 @@ function UserPost({ post, userId }) {
 
             {sessionUser.id === post.userId && showMenu && (
               <div className={toggleButton} ref={ulRef}>
-                <div className={styles.postMenu}>
+                <div className="postMenu">
                   <OpenModalButton
                     buttonText={
                       <>
@@ -72,7 +72,7 @@ function UserPost({ post, userId }) {
                       </>
                     }
                     modalComponent={<UpdatePost post={post} />}
-                    classNames={styles.postButtons}
+                    classNames="postButtons"
                     onButtonClick={() => setShowMenu(false)}
                   />
                   <OpenModalButton
@@ -82,7 +82,7 @@ function UserPost({ post, userId }) {
                       </>
                     }
                     modalComponent={<DeletePost postId={post.id} userId={post.userId} />}
-                    classNames={styles.postButtons}
+                    classNames="postButtons"
                     onButtonClick={() => setShowMenu(false)}
                   />
                 </div>

@@ -1,14 +1,19 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import { VscChromeClose } from 'react-icons/vsc';
 import { fetchPhotoData } from '../../store/photoCommentSlice';
+import { formatDate } from '../../utils/globallyFns';
 import PhotoCommentSection from './photoCommentSection';
+import NewPhotoComment from './NewPhotoComment';
+import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './UserPhotos.module.css';
 
 function UserProfilePhotos({ photo }) {
   const { closeModal } = useModal();
   const photosComments = useSelector((state) => state.photoComments);
+  const userProfile = useSelector((state) => state.users[photo?.userId]);
   const photoData = Object.values(photosComments[photo?.id] || []);
   const dispatch = useDispatch();
 
@@ -23,18 +28,37 @@ function UserProfilePhotos({ photo }) {
       <VscChromeClose onClick={closeModal} className={styles.closeIcon} size={25} />
       <div className={styles.singlePhoto}>
         <img src={photo.url} alt="" />
-        {photoData.length > 1 ? (
-          <div className={styles.commentSection}>
-            {photoData.map((comments) => (
-              <PhotoCommentSection
-                data={comments}
-                key={`userComments-${comments.userId}`}
-              />
-            ))}
+        <div className={styles.commentSection}>
+          <div className={styles.header}>
+            <div className={styles.userImage}>
+              {userProfile.profileImage ? (
+                <img src={userProfile.profileImage} alt="" />
+              ) : (
+                <img src={BlankImage} />
+              )}
+
+              <NavLink to={`/user/${userProfile.id}`}>
+                {userProfile.firstName} {userProfile.lastName}
+              </NavLink>
+            </div>
+
+            <small>Posted: {formatDate(userProfile.createdAt)}</small>
           </div>
-        ) : (
-          <p>No Comments yet...</p>
-        )}
+
+          {photoData.length >= 1 ? (
+            <div className={styles.userComments}>
+              {photoData.map((comments) => (
+                <PhotoCommentSection
+                  data={comments}
+                  key={`userComments-${comments.id}`}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className={styles.noComments}>Be the first to leave a comment!</p>
+          )}
+          <NewPhotoComment photoId={photo?.id} />
+        </div>
       </div>
     </div>
   );

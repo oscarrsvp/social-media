@@ -72,6 +72,11 @@ button:disabled {
   opacity: 0.5;
 }
 
+small {
+  color: #4d4c4b;
+  line-height: 1.4;
+}
+
 .flex {
   display: flex;
   justify-content: center;
