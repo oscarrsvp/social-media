@@ -13,6 +13,7 @@ export const fetchPhotoData = createAsyncThunk('users/singlePhoto', async (photo
   }
 });
 
+// Create new Comment on Photo
 export const newPhotoComment = createAsyncThunk(
   'images/picture',
   async (data, { rejectWithValue }) => {
@@ -31,6 +32,46 @@ export const newPhotoComment = createAsyncThunk(
         const errors = await error.json();
         return rejectWithValue(errors.errors);
       }
+    }
+  },
+);
+
+// Edit Photo Comment
+export const EditPhotoComment = createAsyncThunk(
+  'photoComment/updatePhotoComment',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { id } = data;
+      const response = await csrfFetch(`/api/images/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      });
+      const comment = await response.json();
+
+      return comment;
+    } catch (error) {
+      if (!error.ok) {
+        const errors = await error.json();
+        return rejectWithValue(errors.errors);
+      }
+    }
+  },
+);
+
+// Delete Photo Comment
+export const deletePhotoComment = createAsyncThunk(
+  'photoComment/deletePhotoComment',
+  async (data) => {
+    try {
+      const { id } = data;
+      const response = await csrfFetch(`/api/images/${id}`, {
+        method: 'DELETE',
+      });
+      await response.json();
+
+      return data;
+    } catch (error) {
+      return { error: error };
     }
   },
 );
@@ -71,6 +112,19 @@ export const photoCommentSlice = createSlice({
       }
 
       state[photoId][commentId] = data;
+    });
+
+    builder.addCase(EditPhotoComment.fulfilled, (state, action) => {
+      const { photoId, id } = action.payload;
+
+      if (!state[photoId]) {
+        state[photoId] = {};
+      }
+      state[photoId][id] = action.payload;
+    });
+
+    builder.addCase(deletePhotoComment.fulfilled, (state, action) => {
+      delete state[action.payload.postId][action.payload.id];
     });
   },
 });
