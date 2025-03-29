@@ -96,7 +96,7 @@
 .userComments {
     display: inline-flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
     flex: 1;
     overflow: scroll;
 }
