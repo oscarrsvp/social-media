@@ -105,7 +105,7 @@ export const photoCommentSlice = createSlice({
 
     builder.addCase(newPhotoComment.fulfilled, (state, action) => {
       const { photoId, data } = action.payload;
-      const { commentId } = data;
+      const commentId = data.id;
 
       if (!state[photoId]) {
         state[photoId] = {};
