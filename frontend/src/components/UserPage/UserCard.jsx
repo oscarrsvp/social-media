@@ -34,6 +34,7 @@ function UserCard({ user }) {
     }
 
     setIsActive(!isActive);
+    setPreviewImg(null);
     setProfileImg(null);
 
     return;
@@ -74,7 +75,7 @@ function UserCard({ user }) {
     <div className={user.bio ? styles.userActions : styles.userNoBio}>
       {user.profileImage || previewImg ? (
         <img
-          src={!previewImg ? user.profileImage : previewImg}
+          src={previewImg || user.profileImage}
           alt="user-img"
           className={styles.profileImg}
         />
@@ -109,17 +110,19 @@ function UserCard({ user }) {
 
         {sessionUser.id === user.id ? (
           <label htmlFor="image" className={styles.ProfileInput}>
-            <input
-              type="file"
-              name="profileImg"
-              id="image"
-              onChange={(e) => handleProfileImg(e)}
-            />
-
             {!profileImg && (
-              <button className="btn" onClick={(prev) => setIsActive(!prev)}>
-                {user.profileImage ? 'Change Picture' : 'Upload Picture'}
-              </button>
+              <>
+                <input
+                  type="file"
+                  name="profileImg"
+                  id="image"
+                  onChange={(e) => handleProfileImg(e)}
+                />
+
+                <button className="btn" onClick={(prev) => setIsActive(!prev)}>
+                  {user.profileImage ? 'Change Picture' : 'Upload Picture'}
+                </button>
+              </>
             )}
           </label>
         ) : (
