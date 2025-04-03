@@ -25,3 +25,10 @@
     background-color: white;
     border-radius: 5px;
 }
+
+@media screen and (max-width: 480px) {
+    #modal-content {
+        min-width: fit-content;
+        max-width: fit-content;
+    }
+}

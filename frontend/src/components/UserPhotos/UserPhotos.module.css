@@ -154,4 +154,36 @@
     #userPhotosSection {
         width: 100%;
     }
+
+    .userProfileSingle {
+        width: 380px;
+    }
+
+    .userPhoto img {
+        width: 350px;
+    }
+
+    .singlePhoto {
+        max-height: 780px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .singlePhoto>img {
+        width: 100%;
+        height: 430px;
+    }
+
+    .header {
+        display: none;
+    }
+
+    .commentSection {
+        width: 100%;
+        overflow: scroll;
+    }
+
+    .noComments {
+        padding: 12px 0px;
+    }
 }
