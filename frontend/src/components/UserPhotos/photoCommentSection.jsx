@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { VscEdit, VscTrash } from 'react-icons/vsc';
 import { formatDate } from '../../utils/globallyFns';
+import { deletePhotoComment } from '../../store/photoCommentSlice';
 import BlankImage from '../../assets/blank-profile-picture.png';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import UpdatePhotoComment from '../UpdateInputs/UpdatePhotoComment';
@@ -16,11 +17,17 @@ function PhotoCommentSection({ data }) {
   const [showMenu, setShowMenu] = useState(false);
   const [openMenuId, setOpenMenuId] = useState(null);
   const { closeModal } = useModal();
+  const dispatch = useDispatch();
 
   const toggleMenu = (e, id) => {
     e.stopPropagation();
     setOpenMenuId(id);
     setShowMenu(!showMenu);
+  };
+
+  const handleDeleteComment = () => {
+    setShowMenu(false);
+    dispatch(deletePhotoComment({ id: data.id, photoId: data.photoId }));
   };
 
   useEffect(() => {
@@ -74,15 +81,9 @@ function PhotoCommentSection({ data }) {
                     onButtonClick={() => setShowMenu(false)}
                   />
 
-                  <OpenModalButton
-                    buttonText={
-                      <>
-                        <VscTrash /> {'Delete'}
-                      </>
-                    }
-                    classNames="postButtons"
-                    onButtonClick={() => setShowMenu(false)}
-                  />
+                  <button className="postButtons" onClick={handleDeleteComment}>
+                    <VscTrash /> {'Delete'}
+                  </button>
                 </div>
               </div>
             )}

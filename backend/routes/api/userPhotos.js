@@ -86,8 +86,10 @@ router.post('/images/:photoId', validateComment, async (req, res) => {
     fullName: `${req.user.firstName} ${req.user.lastName}`,
     profileImage: req.user.profileImage,
     context: newPhotoComment.context,
-    commentId: newPhotoComment.id,
+    id: newPhotoComment.id,
     createdAt: newPhotoComment.createdAt,
+    photoId,
+    userId,
   };
 
   return res.status(201).json(photoComment);
