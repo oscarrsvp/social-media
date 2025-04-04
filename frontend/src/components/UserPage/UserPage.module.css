@@ -171,6 +171,7 @@
 
 .actionTabs {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     border-radius: 5px;
 }
@@ -222,6 +223,29 @@
     background-color: #025E95;
     color: #ffffff;
     border-radius: 5px;
+}
+
+.gridMode {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 750px;
+}
+
+.gridStyle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+}
+
+.gridStyle span {
+    color: #b3b3b3;
+    cursor: pointer;
+}
+
+.styleAction {
+    color: #025E95 !important;
 }
 
 @media screen and (max-width: 480px) {

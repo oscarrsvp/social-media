@@ -105,7 +105,7 @@
 
 .userImage img {
     width: 100%;
-    height: 100%;
+    height: 100% !important;
     border-radius: 50%;
 }
 
@@ -123,8 +123,8 @@
 
 .newComment img {
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 30px !important;
+    width: 30px !important;
     margin-top: 8px;
 }
 
@@ -158,6 +158,20 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.gridModeActive {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 5px;
+    width: 371px;
+    height: fit-content;
+}
+
+.gridModeActive img {
+    width: 100%;
+    height: 400px;
 }
 
 :global(.dropdownMenu) {
