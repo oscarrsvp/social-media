@@ -5,6 +5,10 @@
     border-radius: 5px;
 }
 
+.createPost textarea {
+    background-color: #edede9 !important;
+}
+
 :global(.deleteModal) {
     display: flex;
     flex-direction: column;

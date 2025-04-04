@@ -81,9 +81,7 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
-    height: 110px !important;
     width: 100%;
-    margin-bottom: 12px;
 }
 
 .actions {
@@ -190,6 +188,7 @@
     align-items: center;
     border-radius: 5px;
     gap: 4px;
+    cursor: pointer;
 }
 
 .actionTabs ul li:first-child {
