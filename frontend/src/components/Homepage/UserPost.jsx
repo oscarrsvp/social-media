@@ -11,7 +11,7 @@ import PostDetails from './PostDetails';
 import BlankImage from '../../assets/blank-profile-picture.png';
 import styles from './Homepage.module.css';
 
-function UserPost({ post, userId }) {
+function UserPost({ post, userId, viewDisplay }) {
   const sessionUser = useSelector((state) => state.session.user);
   const users = useSelector((state) => state.users);
   const [showMenu, setShowMenu] = useState(false);
@@ -46,7 +46,7 @@ function UserPost({ post, userId }) {
 
   return (
     <>
-      <div className={styles.userPost}>
+      <div className={viewDisplay === 'Grid' ? styles.gridModeActive : styles.userPost}>
         <div className={`flexBetween p-16 ${styles.userHeading}`}>
           <div className="flexBetween">
             <p className={styles.userImage}>
