@@ -4,7 +4,6 @@ import { Navigate } from 'react-router-dom';
 import { MobileContext } from '../../App';
 import LoginForm from '../LoginForm/LoginForm';
 import styles from './LandingPage.module.css';
-import socialGathering from '../../assets/friends-gathering.jpeg';
 
 function LandingPage() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -22,14 +21,13 @@ function LandingPage() {
       )}
 
       {!isMobile && (
-        <div className={`flex ${styles.sections}`}>
+        <div className={`flex ${styles.sectionOne}`}>
           <div className={styles.heading}>
-            <h1>Bring Moments to Life: Share with Family and Friends</h1>
+            <h1>Share the Moments that Matter Most with Family and Friends</h1>
           </div>
-          <img src={socialGathering} alt="friends-gathering" srcSet="" />
         </div>
       )}
-      <div id={styles.sectionForm} className={`flex ${isMobile ? null : styles.section}`}>
+      <div id={styles.sectionForm} className={`flex`}>
         <LoginForm />
       </div>
     </div>
