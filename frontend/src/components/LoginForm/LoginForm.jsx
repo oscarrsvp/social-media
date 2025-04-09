@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { login } from '../../store/sessionSlice';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import styles from './LoginForm.module.css';
 
 function LoginForm() {
@@ -70,13 +69,6 @@ function LoginForm() {
             Demo User
           </button>
         </form>
-      </div>
-
-      <div>
-        <div className={styles.signUpBox}>
-          <span>Don&apos;t have an account?</span>
-          <NavLink to="/signup">Sign Up</NavLink>
-        </div>
       </div>
     </>
   );
