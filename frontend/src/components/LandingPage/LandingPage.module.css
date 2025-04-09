@@ -40,6 +40,23 @@
     font-size: 36px;
 }
 
+.signUpBox {
+    border: 1px solid #000000;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 15px;
+    width: 400px;
+    text-align: center;
+}
+
+.signUpBox span {
+    margin-right: 4px;
+}
+
+.signUpBox a {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 480px) {
     .landingPage {
         flex-direction: column;
