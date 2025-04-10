@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, NavLink } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { MobileContext } from '../../App';
 import LoginForm from '../LoginForm/LoginForm';
 import SignupForm from '../SignupForm/SignupForm';
