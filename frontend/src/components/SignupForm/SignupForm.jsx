@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, NavLink } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { signup } from '../../store/sessionSlice';
 import styles from './SignupForm.module.css';
 
@@ -103,12 +103,6 @@ function SignupForm() {
             Sign Up
           </button>
         </form>
-      </div>
-      <div>
-        <div className={styles.signUpBox}>
-          <span>Already have an account?</span>
-          <NavLink to="/">Log in</NavLink>
-        </div>
       </div>
     </div>
   );

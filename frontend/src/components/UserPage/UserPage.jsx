@@ -19,6 +19,7 @@ import styles from './UserPage.module.css';
 function UserPage() {
   const { userId } = useParams();
   const [selectedTab, setSelectedTab] = useState('Post');
+  const [viewDisplay, SetViewDisplay] = useState('Standard');
   const sessionUser = useSelector((state) => state.session.user);
   const user = useSelector((state) => state.users[userId]);
   const posts = useSelector((state) => state.posts);
@@ -51,7 +52,11 @@ function UserPage() {
 
           <UserCard user={user} />
 
-          <ActionBar onSelectTab={setSelectedTab} isMobile={isMobile} />
+          <ActionBar
+            onSelectTab={setSelectedTab}
+            isMobile={isMobile}
+            SetViewDisplay={SetViewDisplay}
+          />
         </div>
 
         <div className={styles.userFeed}>
@@ -82,9 +87,16 @@ function UserPage() {
 
             {!isMobile && selectedTab === 'Post' ? (
               userPost.length > 0 ? (
-                postByDate.map((post) => (
-                  <UserPost post={post} userId={userId} key={post.id} />
-                ))
+                <div className={styles.gridMode}>
+                  {postByDate.map((post) => (
+                    <UserPost
+                      post={post}
+                      userId={userId}
+                      key={post.id}
+                      viewDisplay={viewDisplay}
+                    />
+                  ))}
+                </div>
               ) : (
                 <h1>
                   {sessionUser.id === user.id

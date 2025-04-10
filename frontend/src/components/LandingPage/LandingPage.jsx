@@ -1,14 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import { MobileContext } from '../../App';
 import LoginForm from '../LoginForm/LoginForm';
+import SignupForm from '../SignupForm/SignupForm';
 import styles from './LandingPage.module.css';
-import socialGathering from '../../assets/friends-gathering.jpeg';
 
 function LandingPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const isMobile = useContext(MobileContext);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   if (sessionUser) return <Navigate to="/homepage" replace={true} />;
 
@@ -22,15 +23,37 @@ function LandingPage() {
       )}
 
       {!isMobile && (
-        <div className={`flex ${styles.sections}`}>
+        <div className={`flex ${styles.sectionOne}`}>
           <div className={styles.heading}>
-            <h1>Bring Moments to Life: Share with Family and Friends</h1>
+            <h1>Share the Moments that Matter Most with Family and Friends</h1>
           </div>
-          <img src={socialGathering} alt="friends-gathering" srcSet="" />
         </div>
       )}
-      <div id={styles.sectionForm} className={`flex ${isMobile ? null : styles.section}`}>
-        <LoginForm />
+      <div id={styles.sectionForm} className={`flex`}>
+        {isSignUp ? (
+          <SignupForm />
+        ) : (
+          <>
+            <LoginForm />
+          </>
+        )}
+        <div className={styles.signUpBox}>
+          {isSignUp ? (
+            <>
+              <span>Already have an account?</span>
+              <a role="button" onClick={() => setIsSignUp(false)}>
+                Log in
+              </a>
+            </>
+          ) : (
+            <>
+              <span>Don&apos;t have an account?</span>
+              <a role="button" onClick={() => setIsSignUp(true)}>
+                Sign Up
+              </a>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

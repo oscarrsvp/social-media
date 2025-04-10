@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { login } from '../../store/sessionSlice';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import styles from './LoginForm.module.css';
 
 function LoginForm() {
@@ -30,7 +29,11 @@ function LoginForm() {
   return (
     <>
       <div className={styles.loginForm}>
-        <h1>Log in</h1>
+        <div className={styles.loginHeader}>
+          <h1>Welcome back!</h1>
+          <p>Let&apos;s get you reconnected.</p>
+        </div>
+
         <form onSubmit={handleSubmit}>
           <label>
             <input
@@ -60,19 +63,12 @@ function LoginForm() {
           {errors.credential && <p className="error">{errors.credential}</p>}
 
           <button className="btn" type="submit">
-            Log In
+            Log in
           </button>
           <button className="btn" onClick={(e) => handleDemoUser(e)}>
             Demo User
           </button>
         </form>
-      </div>
-
-      <div>
-        <div className={styles.signUpBox}>
-          <span>Don&apos;t have an account?</span>
-          <NavLink to="/signup">Sign Up</NavLink>
-        </div>
       </div>
     </>
   );

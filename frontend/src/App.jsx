@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { restoreUser } from './store/sessionSlice';
 import { Modal, ModalProvider } from './context/Modal';
 import LandingPage from './components/LandingPage/LandingPage';
-import SignupForm from './components/SignupForm/SignupForm';
 import Navigation from './components/Navigation/Navigation';
 import Homepage from './components/Homepage/Homepage';
 import UserPage from './components/UserPage/UserPage';
@@ -60,10 +59,6 @@ const router = createBrowserRouter([
       {
         path: '/homepage',
         element: <Homepage />,
-      },
-      {
-        path: '/signup',
-        element: <SignupForm />,
       },
       {
         path: '/user/:userId',

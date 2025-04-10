@@ -110,12 +110,12 @@ small {
 }
 
 .error {
-  color: red;
+  color: #DC2626;
   font-size: 14px;
 }
 
 .success {
-  color: green;
+  color: #2E7D32;
   font-size: 15px;
 }
 
@@ -154,12 +154,12 @@ small {
 }
 
 .success-btn {
-  background-color: #008000;
+  background-color: #2E7D32;
   padding: 8px;
 }
 
 .success-btn:hover {
-  background-color: #00a000;
+  background-color: #338d37;
 }
 
 .p-16 {

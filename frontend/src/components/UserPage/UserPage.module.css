@@ -81,9 +81,7 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
-    height: 110px !important;
     width: 100%;
-    margin-bottom: 12px;
 }
 
 .actions {
@@ -173,6 +171,7 @@
 
 .actionTabs {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     border-radius: 5px;
 }
@@ -190,6 +189,7 @@
     align-items: center;
     border-radius: 5px;
     gap: 4px;
+    cursor: pointer;
 }
 
 .actionTabs ul li:first-child {
@@ -223,6 +223,29 @@
     background-color: #025E95;
     color: #ffffff;
     border-radius: 5px;
+}
+
+.gridMode {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 750px;
+}
+
+.gridStyle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+}
+
+.gridStyle span {
+    color: #b3b3b3;
+    cursor: pointer;
+}
+
+.styleAction {
+    color: #025E95 !important;
 }
 
 @media screen and (max-width: 480px) {
