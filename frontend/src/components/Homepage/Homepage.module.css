@@ -72,22 +72,10 @@
 
 /* Comment Section */
 
-.postComments {
-    padding: 15px 10px;
-    border: 1px solid #dad7cd;
-    border-radius: 5px;
-}
-
 .commentSection {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 10px;
-}
-
-.commentHeader {
-    border-bottom: 1px solid #dad7cd;
-    padding-bottom: 8px;
+    gap: 20px;
 }
 
 .commentHeader div a {
