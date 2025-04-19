@@ -36,22 +36,21 @@ function FollowingSection({ userId }) {
               </div>
             ) : null}
             {displayUsers.map((user) => (
-              <div className={styles.user} key={`following${user.id}`}>
-                {user.id === userId ? null : (
-                  <div>
-                    {user.profileImage ? (
-                      <img className="profileImg" src={user.profileImage} alt="" />
-                    ) : (
-                      <img src={BlankImage} className={styles.noProfileImg} />
-                    )}
-
-                    <Link to={`/user/${user.id}`}>
+              <Link to={`/user/${user.id}`} key={`following${user.id}`}>
+                <div className={styles.user}>
+                  {user.id === userId ? null : (
+                    <div>
+                      {user.profileImage ? (
+                        <img className="profileImg" src={user.profileImage} alt="" />
+                      ) : (
+                        <img src={BlankImage} className={styles.noProfileImg} />
+                      )}
                       {user.firstName} {user.lastName}
-                    </Link>
-                  </div>
-                )}
-                {user.bio ? <small>{user.bio}</small> : null}
-              </div>
+                    </div>
+                  )}
+                  {user.bio ? <small>{user.bio}</small> : null}
+                </div>
+              </Link>
             ))}
             {currentFollowing.length > 4 && !showAllUsers && (
               <span onClick={() => setShowAllUsers(true)}>View All</span>
