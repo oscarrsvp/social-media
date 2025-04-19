@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MdOutlineCancel } from 'react-icons/md';
+import { VscChromeClose } from 'react-icons/vsc';
 import { createPost } from '../../store/postSlice';
 import { BsCardImage } from 'react-icons/bs';
 import BlankImage from '../../assets/blank-profile-picture.png';
@@ -115,7 +115,7 @@ function CreatePost() {
             <div className={styles.previewImgSection}>
               <img src={previewImg} alt="" className={styles.previewImg} />
 
-              <MdOutlineCancel
+              <VscChromeClose
                 cursor={'pointer'}
                 overflow={'visible'}
                 onClick={resetImg}
@@ -125,13 +125,15 @@ function CreatePost() {
         </div>
 
         {errors.photo && <p className="error">{errors.photo}</p>}
-        <button
-          className="btn success-btn"
-          type="submit"
-          disabled={disabled || isLoading}
-        >
-          Share Post
-        </button>
+        {!disabled && (
+          <button
+            className="btn success-btn"
+            type="submit"
+            disabled={disabled || isLoading}
+          >
+            Share Post
+          </button>
+        )}
       </form>
     </div>
   );

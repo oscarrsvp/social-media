@@ -155,6 +155,7 @@
     border-radius: 5px;
     width: 371px;
     height: fit-content;
+    flex: 1 1 auto;
 }
 
 .gridModeActive img {
