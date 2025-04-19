@@ -31,6 +31,14 @@
     cursor: pointer;
 }
 
+.userSection a {
+    text-decoration: none !important;
+}
+
+.userSection a:hover {
+    text-decoration: none;
+}
+
 .discoverUser {
     display: flex;
     flex-direction: column;
@@ -59,10 +67,6 @@
 .user:hover {
     background-color: #edede9;
     border-color: #dad7cd;
-}
-
-.user a {
-    text-decoration: none !important;
 }
 
 .user div {
